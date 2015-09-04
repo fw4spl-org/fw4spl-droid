@@ -1,0 +1,34 @@
+<plugin id="visuVTKDroidAdaptor" class="::visuVTKDroidAdaptor::Plugin" version="0.1" >
+
+    <library name="visuVTKDroidAdaptor" />
+    
+    <requirement id="visu" />
+    <requirement id="visuVTKAndroid" />
+
+    <extension implements="::fwServices::registry::ServiceFactory">
+        <type>::fwRenderVTK::IVtkAdaptorService</type>
+        <service>::visuVTKDroidAdaptor::SMesh</service>
+        <object>::fwData::Mesh</object>
+    </extension>
+
+    <extension implements="::fwServices::registry::ServiceFactory">
+        <type>::fwRenderVTK::IVtkAdaptorService</type>
+        <service>::visuVTKDroidAdaptor::STransform</service>
+        <object>::fwData::TransformationMatrix3D</object>
+    </extension>
+
+    <extension implements="::fwServices::registry::ServiceFactory">
+        <type>::fwRenderVTK::IVtkAdaptorService</type>
+        <service>::visuVTKDroidAdaptor::SVideoAdapter</service>
+        <object>::fwData::Image</object>
+    </extension>
+
+    <extension implements="::fwServices::registry::ServiceFactory">
+        <type>::fwRenderVTK::IVtkAdaptorService</type>
+        <service>::visuVTKDroidAdaptor::InteractorStyle</service>
+        <object>::fwData::Object</object>
+    </extension>
+</plugin>
+
+
+

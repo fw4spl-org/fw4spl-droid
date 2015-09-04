@@ -1,0 +1,24 @@
+
+<plugin id="PoC09Android" version="0.1" >
+    
+    <extension implements="::fwServices::registry::AppConfig">
+        <id>PoC09AndroidConfig</id>
+        <type>parameters</type>
+        <config>
+            <object type="::fwData::Mesh">
+            
+                <service impl="::vtkSimpleMesh::RendererService" type="::fwRender::IRender" uid="renderingMesh" autoConnect="yes"/>
+                <service uid="meshReader" impl="::ioVTK::MeshReaderService" type="::io::IReader" autoConnect="yes">
+                    <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android_0-1/cube.vtk</file>
+                </service>
+                
+                <start uid="renderingMesh" />
+                <start uid="meshReader" />
+                
+                <update uid="renderingMesh" />
+                <update uid="meshReader" />
+
+            </object>
+        </config>
+    </extension> 
+</plugin>
