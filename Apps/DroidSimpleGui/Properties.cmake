@@ -7,7 +7,7 @@ set( REQUIREMENTS
     appXml
     servicesReg
     dataReg
-    launcher
+    launcherDroid
     visu
     visuVTKAndroid
     visuVTKDroidAdaptor
@@ -17,7 +17,7 @@ set( REQUIREMENTS
     ioVTK
 )
 set( PLATFORM DROID)
-set( JAVA_PACKAGES 
+set( JAVA_PACKAGES
     ndkgui
 )
 

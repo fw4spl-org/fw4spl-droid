@@ -26,7 +26,7 @@ set(QT_REQUIREMENTS @QT_REQUIREMENTS@)
 ##################################################
 set(FWPROJECT_NAME @FWPROJECT_NAME@)
 set(BASE_APP_NAME "@FWPROJECT_NAME@_@DASH_VERSION@")
-set(BASE_APP_LIB_NAME "launcher")
+set(BASE_APP_LIB_NAME "launcherDroid")
 
 set(PROJECTS_TO_INSTALL @PROJECTS_TO_INSTALL@)
 
@@ -53,7 +53,7 @@ set(APK_BUILD_TOOL @APK_BUILD_TOOL@)
 ##################################################
 # Java Qt variable
 ##################################################
-#set(QT_START_ACTIVITY "org.fw4spl.bindings.Fw4splActivity") 
+#set(QT_START_ACTIVITY "org.fw4spl.bindings.Fw4splActivity")
 
 ##################################################
 #  usefull programs
@@ -72,7 +72,7 @@ set(GRADLE_PRG @GRADLE_PRG@)
 setup_dependencies()
 
 ##################################################
-# Remove all directory 
+# Remove all directory
 ##################################################
 # Remove old directories
  execute_process(
@@ -83,7 +83,7 @@ setup_dependencies()
     COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/gen
     COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/bin
 )
-       
+
 ##################################################
 #  Configure files
 ##################################################

@@ -7,7 +7,7 @@ set( REQUIREMENTS
     appXml
     servicesReg
     dataReg
-    launcher
+    launcherDroid
     visu
     visuVTKAndroid
     vtkSimpleMesh

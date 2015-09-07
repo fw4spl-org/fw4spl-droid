@@ -4,12 +4,12 @@ set( VERSION 0.1 )
 set( TYPE APP )
 set( PLATFORM DROID )
 set( DEPENDENCIES  )
-set( REQUIREMENTS 
-    appXml 
-    servicesReg 
+set( REQUIREMENTS
+    appXml
+    servicesReg
     dataReg
     extDataReg
-    launcher 
+    launcherDroid 
     ctrlCamera
     arDataReg
     visuVTKAndroid
