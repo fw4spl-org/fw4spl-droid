@@ -17,8 +17,5 @@ set( REQUIREMENTS
     ioVTK
 )
 set( PLATFORM DROID)
-set( JAVA_PACKAGES
-    ndkgui
-)
 
 bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidSimpleGuiConfig)

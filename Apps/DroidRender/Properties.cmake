@@ -20,8 +20,5 @@ set( REQUIREMENTS
     ctrlCamp
     gui
 )
-set( JAVA_PACKAGES
-    ndkgui
-)
 
 bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidRenderConfig)
