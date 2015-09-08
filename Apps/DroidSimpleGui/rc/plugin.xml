@@ -1,6 +1,6 @@
 
 <plugin id="DroidSimpleGui" version="0.1" >
-    
+
     <extension implements="::fwServices::registry::AppConfig">
         <id>DroidSimpleGuiConfig</id>
         <type>parameters</type>
@@ -32,12 +32,12 @@
                     <scene autoRender="true">
                        <renderer id="default" layer="0" background="#000000"/>
 
-                         <adaptor id="meshAdaptor" uid="meshAdaptorUid" class="::visuVTKDroidAdaptor::SMesh" objectId="meshKey">
+                         <adaptor id="meshAdaptor" uid="meshAdaptorUid" class="::visuVTKAdaptor::Mesh" objectId="meshKey">
                             <config renderer="default" picker="" />
                         </adaptor>
 
                     </scene>
-                    </service> 
+                    </service>
 
                 <item key="meshKey">
                     <object uid="meshUid" type="::fwData::Mesh">
@@ -51,10 +51,10 @@
                 <start uid="renderingMesh" />
                 <start uid="meshReader" />
                 <start uid="guiManagerUID" />
-                
+
                 <update uid="renderingMesh" />
 
             </object>
         </config>
-    </extension> 
+    </extension>
 </plugin>

@@ -10,7 +10,7 @@ set( REQUIREMENTS
     launcherDroid
     visu
     visuVTKAndroid
-    visuVTKDroidAdaptor
+    visuVTKAdaptor
     vtkSimpleMesh
     guiDroid
     io

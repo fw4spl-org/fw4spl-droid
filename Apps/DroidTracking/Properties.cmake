@@ -9,11 +9,11 @@ set( REQUIREMENTS
     servicesReg
     dataReg
     extDataReg
-    launcherDroid 
+    launcherDroid
     ctrlCamera
     arDataReg
+    visuVTKAdaptor
     visuVTKAndroid
-    visuVTKDroidAdaptor
     visuVTKARAdaptor
     visuVideoAndroid
     visu

@@ -13,11 +13,11 @@
                        <renderer id="background" layer="0" background="#000000"/>
                         <renderer id="default" layer="1" background="#000000" />
 
-                        <adaptor id="transformAdaptor" class="::visuVTKDroidAdaptor::STransform" objectId="transform">
+                        <adaptor id="transformAdaptor" class="::visuVTKAdaptor::Transform" objectId="transform">
                             <config renderer="default" transform="transformMesh"/>
                         </adaptor>
 
-                        <adaptor id="meshAdaptor" class="::visuVTKDroidAdaptor::SMesh" objectId="mesh">
+                        <adaptor id="meshAdaptor" class="::visuVTKAdaptor::Mesh" objectId="mesh">
                             <config renderer="default" transform="transformMesh" autoresetcamera="no" />
                         </adaptor>
 
@@ -29,12 +29,12 @@
                             <config renderer="background" cameraUID="camera"/>
                         </adaptor>
 
-                         <adaptor id="interactorStyle" class="::visuVTKDroidAdaptor::InteractorStyle" objectId="self">
+                         <adaptor id="interactorStyle" class="::visuVTKAdaptor::InteractorStyle" objectId="self">
                             <config renderer="default" style="FixedInteractorStyle" />
                         </adaptor>
                     </scene>
                 </service>
-                
+
                 <service uid="tracker" impl="::trackerAruco::SArucoTracker" autoConnect="no" worker="tracking">
                     <config>
                         <timelineVideo>frameTL</timelineVideo>
@@ -51,7 +51,7 @@
                         <debugMarkers>yes</debugMarkers>
                     </config>
                 </service>
-                
+
                 <service uid="markerRegistration" impl="::tracker::SHomography" autoConnect="no" worker="registration">
                     <config>
                         <markerTL>
@@ -64,7 +64,7 @@
                         <patternWidth>60</patternWidth>
                     </config>
                 </service>
-                
+
                 <service uid="synchronizer" impl="::videoTools::SFrameMatrixSynchronizer" autoConnect="no" worker="videoWorker">
                     <frames>
                         <frame from="frameTL" to="image" />
@@ -76,15 +76,15 @@
                     </matrices>
                     <framerate>60</framerate>
                 </service>
-                
+
                 <item key="markerTL">
                     <object uid="markerTLUid" type="::arData::MarkerTL" />
                 </item>
-                
+
                 <item key="markerMatrixTL">
                     <object uid="markerMatrixTLUid" type="::extData::MatrixTL" />
                 </item>
-                
+
                 <item key="transform">
                     <object uid="transform" type="::fwData::TransformationMatrix3D">
                     </object>
@@ -98,7 +98,7 @@
                         </service>
                     </object>
                 </item>
-                
+
                <item key="mesh">
                     <object uid="mesh" type="::fwData::Mesh">
                         <service uid="meshReader" impl="::ioVTK::MeshReaderService" type="::io::IReader" autoConnect="yes">
@@ -106,7 +106,7 @@
                         </service>
                     </object>
                 </item>
-                
+
                 <item key="frameTL">
                     <object uid="frameTLUid" type="::extData::FrameTL">
                         <service uid="androidCamera" impl="::visuVideoAndroid::camera::SAndroidCamera" type="::fwServices::IService" autoConnect="no">
@@ -124,7 +124,7 @@
                     <object uid="cameraTransform" type="::fwData::TransformationMatrix3D">
                     </object>
                 </item>
-                
+
                 <item key="image">
                     <object uid="image" type="::fwData::Image">
                     </object>
@@ -134,16 +134,16 @@
                 <start uid="meshReader" />
                 <start uid="scene" />
                 <start uid="androidCamera" />
-    
+
                 <start uid="synchronizer" />
                 <start uid="tracker" />
                 <start uid="markerRegistration" />
-                
+
                 <update uid="extractDeviceInfo" />
                 <update uid="meshReader" />
                 <update uid="androidCamera" />
 
             </object>
         </config>
-    </extension> 
+    </extension>
 </plugin>
