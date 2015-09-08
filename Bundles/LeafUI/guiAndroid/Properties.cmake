@@ -1,7 +1,8 @@
 
-set( NAME guiDroid )
+set( NAME guiAndroid )
 set( VERSION 0.1 )
 set( TYPE BUNDLE )
+set( PRIORITY 3 )
 set( DEPENDENCIES
         fwCom
         fwComEd
@@ -9,6 +10,7 @@ set( DEPENDENCIES
         fwRuntime
         fwTools
         fwServices
+        fwGuiAndroid
 )
 
 set( REQUIREMENTS  )

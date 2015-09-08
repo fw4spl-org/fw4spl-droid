@@ -1,0 +1,9 @@
+<plugin id="guiAndroid" class="::guiAndroid::Plugin" version="0.1">
+
+    <library name="guiAndroid" />
+
+    <requirement id="dataReg"/>
+    <requirement id="servicesReg"/>
+    <requirement id="gui"/>
+
+</plugin>

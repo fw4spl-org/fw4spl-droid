@@ -39,7 +39,7 @@ public:
     VISUVTKANDROID_API virtual ~VtkRenderWindowInteractorManager();
 
     /// Creates an interactor and installs it in window.
-    VISUVTKANDROID_API virtual void installInteractor();
+    VISUVTKANDROID_API virtual void installInteractor(::fwGui::container::fwContainer::sptr _parent);
 
     /// Deletes interactor and manage correctly the window (removing layout).
     VISUVTKANDROID_API virtual void uninstallInteractor();
@@ -55,5 +55,3 @@ private:
 } // namespace visuVTKAndroid
 
 #endif // __VISUVTKANDROID_VTKRENDERWINDOWINTERACTORMANAGER_HPP__
-
-

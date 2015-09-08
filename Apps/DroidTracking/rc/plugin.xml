@@ -8,6 +8,16 @@
         <type>parameters</type>
         <config>
             <object type="::fwData::Composite">
+
+                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::DefaultFrame" autoConnect="no">
+                    <gui>
+                        <frame />
+                    </gui>
+                    <registry>
+                        <view sid="scene" start="yes" />
+                    </registry>
+                </service>
+
                 <service uid="scene" impl="::fwRenderVTK::VtkRenderService" type="::fwRender::IRender" autoConnect="yes">
                     <scene autoRender="true">
                        <renderer id="background" layer="0" background="#000000"/>
@@ -132,7 +142,7 @@
 
                 <start uid="extractDeviceInfo" />
                 <start uid="meshReader" />
-                <start uid="scene" />
+                <start uid="frame" />
                 <start uid="androidCamera" />
 
                 <start uid="synchronizer" />

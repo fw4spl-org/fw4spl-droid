@@ -13,6 +13,8 @@ set( REQUIREMENTS
     vtkSimpleMesh
     io
     ioVTK
+    gui
+    guiAndroid
 )
 set( PLATFORM DROID)
 

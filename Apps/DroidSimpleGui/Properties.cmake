@@ -9,12 +9,15 @@ set( REQUIREMENTS
     dataReg
     launcherDroid
     visu
+    visuVTK
     visuVTKAndroid
     visuVTKAdaptor
     vtkSimpleMesh
     guiDroid
     io
     ioVTK
+    gui
+    guiAndroid
 )
 set( PLATFORM DROID)
 

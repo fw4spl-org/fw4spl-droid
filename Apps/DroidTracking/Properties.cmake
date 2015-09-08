@@ -24,6 +24,8 @@ set( REQUIREMENTS
     ioVTK
     tracker
     trackerAruco
+    gui
+    guiAndroid
 )
 
 bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidTrackingConfig )

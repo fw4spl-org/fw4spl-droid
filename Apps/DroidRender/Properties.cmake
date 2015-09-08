@@ -19,6 +19,7 @@ set( REQUIREMENTS
     ioAtoms
     ctrlCamp
     gui
+    guiAndroid
 )
 
 bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidRenderConfig)

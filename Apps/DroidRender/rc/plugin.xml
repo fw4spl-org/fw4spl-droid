@@ -7,7 +7,17 @@
         <config>
 
             <object type="::fwData::Composite">
-               <service uid="guiManagerUID" impl="::guiDroid::SManager" type="::fwServices::IService" autoConnect="no">
+
+                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::DefaultFrame" autoConnect="no">
+                    <gui>
+                        <frame />
+                    </gui>
+                    <registry>
+                        <view sid="scene" start="yes" />
+                    </registry>
+                </service>
+
+                <service uid="guiManagerUID" impl="::guiDroid::SManager" type="::fwServices::IService" autoConnect="no">
                     <gui>
                         <widget type="button" label="Load" align="top|left" >
                             <width>200</width>
@@ -76,12 +86,12 @@
                 </item>
 
                 <connect>
-                    <signal>seriesDB/modified</signal>
+                    <signal>seriesDB/addedSeries</signal>
                     <slot>extractObject/update</slot>
                 </connect>
 
 
-                <start uid="scene" />
+                <start uid="frame" />
                 <start uid="guiManagerUID" />
                 <start uid="loaderUid" />
                 <start uid="extractObject" />

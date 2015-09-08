@@ -43,7 +43,7 @@ VtkRenderWindowInteractorManager::~VtkRenderWindowInteractorManager()
 
 //-----------------------------------------------------------------------------
 
-void VtkRenderWindowInteractorManager::installInteractor()
+void VtkRenderWindowInteractorManager::installInteractor(::fwGui::container::fwContainer::sptr /*_parent*/)
 {
     ::fwRuntime::profile::Profile::sptr profile = ::fwRuntime::profile::getCurrentProfile();
     SLM_ASSERT("Profile is not initialized", profile);
@@ -93,7 +93,3 @@ void VtkRenderWindowInteractorManager::uninstallInteractor()
 //-----------------------------------------------------------------------------
 
 } // namespace visuVTKAndroid
-
-
-
-
