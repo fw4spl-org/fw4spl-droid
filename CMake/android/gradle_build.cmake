@@ -43,7 +43,7 @@ macro(gradle_build)
         COMMAND ${WRAPPER} ${BUILD_APK_OPTIONS}
         WORKING_DIRECTORY "${APK_INSTALL_DIR}"
     )
-    
+    string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
     set(APK_FINAL_NAME ${BASE_APP_NAME}-${CMAKE_BUILD_TYPE}.apk) 
     
     
