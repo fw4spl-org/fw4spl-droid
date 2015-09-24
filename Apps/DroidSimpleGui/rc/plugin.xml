@@ -1,5 +1,5 @@
 
-<plugin id="DroidSimpleGui" version="0.1" >
+<plugin id="DroidSimpleGui" version="@DASH_VERSION@" >
 
     <extension implements="::fwServices::registry::AppConfig">
         <id>DroidSimpleGuiConfig</id>

@@ -1,5 +1,5 @@
 
-<plugin id="PoC09Android" version="0.1" >
+<plugin id="PoC09Android" version="@DASH_VERSION@" >
 
     <extension implements="::fwServices::registry::AppConfig">
         <id>PoC09AndroidConfig</id>

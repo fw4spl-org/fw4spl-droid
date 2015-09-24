@@ -1,4 +1,4 @@
-<plugin id="guiAndroid" class="::guiAndroid::Plugin" version="0.1">
+<plugin id="guiAndroid" class="::guiAndroid::Plugin" version="@DASH_VERSION@">
 
     <library name="guiAndroid" />
 

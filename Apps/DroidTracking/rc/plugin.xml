@@ -1,5 +1,5 @@
 
-<plugin id="DroidTracking" version="0.1" >
+<plugin id="DroidTracking" version="@DASH_VERSION@" >
 
     <xi:include href="configurations/deviceParameters.xml" xmlns:xi="http://www.w3.org/2003/XInclude" />
 

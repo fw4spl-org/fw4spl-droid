@@ -1,5 +1,5 @@
 
-<plugin id="DroidRender" version="0.1" >
+<plugin id="DroidRender" version="@DASH_VERSION@" >
 
     <extension implements="::fwServices::registry::AppConfig">
         <id>DroidRenderConfig</id>
