@@ -88,8 +88,6 @@ void SAndroidCamera::configuring() throw( ::fwTools::Failed )
 
     cfg = m_configuration->findConfigurationElement("fps");
     std::istringstream(cfg->getValue()) >> m_frameRate;
-
-    m_timeline = this->getObject< ::extData::FrameTL >();
 }
 
 //-----------------------------------------------------------------------------
@@ -97,6 +95,8 @@ void SAndroidCamera::configuring() throw( ::fwTools::Failed )
 void SAndroidCamera::starting() throw(::fwTools::Failed)
 {
     SLM_TRACE_FUNC();
+
+    m_timeline = this->getObject< ::extData::FrameTL >();
 
     m_camera = new ::arAndroidTools::Camera();
     m_camera->m_sigFrameFetched.connect(bind(&SAndroidCamera::fetchFrame, this, _1));
