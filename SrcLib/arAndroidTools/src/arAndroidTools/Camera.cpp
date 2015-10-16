@@ -30,14 +30,13 @@ static void convertYUVtoRGB(int y, int u, int v, int index, unsigned char* pixel
     float uf = static_cast<float>(u);
     float vf = static_cast<float>(v);
 
-    int r = y + static_cast<int>(1.596f*vf);
-    int g = y -  static_cast<int>(0.391f*uf + 0.813f*vf);
-    int b = y + static_cast<int>(2.018f*uf);
+    int r = y + static_cast<int>(1.370705f*vf);
+    int g = y -  static_cast<int>(0.337633f*uf + 0.698001f*vf);
+    int b = y + static_cast<int>(1.732446f*uf);
 
     r = r>255 ? 255 : r<0 ? 0 : r;
     g = g>255 ? 255 : g<0 ? 0 : g;
     b = b>255 ? 255 : b<0 ? 0 : b;
-
 
     pixels[index]   = static_cast<char>(r);
     pixels[index+1] = static_cast<char>(g);
