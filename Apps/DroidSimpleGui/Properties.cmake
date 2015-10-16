@@ -21,4 +21,4 @@ set( REQUIREMENTS
 )
 set( PLATFORM DROID)
 
-bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidSimpleGuiConfig)
+bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidSimpleGuiConfig)

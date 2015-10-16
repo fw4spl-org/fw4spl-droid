@@ -18,4 +18,4 @@ set( REQUIREMENTS
 )
 set( PLATFORM DROID)
 
-bundle_param(appXml PARAM_LIST config PARAM_VALUES PoC09AndroidConfig)
+bundleParam(appXml PARAM_LIST config PARAM_VALUES PoC09AndroidConfig)

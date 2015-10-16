@@ -28,4 +28,4 @@ set( REQUIREMENTS
     guiAndroid
 )
 
-bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidTrackingConfig )
+bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidTrackingConfig )

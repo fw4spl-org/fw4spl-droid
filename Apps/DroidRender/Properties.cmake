@@ -22,4 +22,4 @@ set( REQUIREMENTS
     guiAndroid
 )
 
-bundle_param(appXml PARAM_LIST config PARAM_VALUES DroidRenderConfig)
+bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidRenderConfig)
