@@ -5,7 +5,6 @@
 
     <extension implements="::fwServices::registry::AppConfig">
         <id>DroidTrackingConfig</id>
-        <type>parameters</type>
         <config>
             <object type="::fwData::Composite">
 
@@ -20,15 +19,16 @@
 
                 <service uid="scene" impl="::fwRenderVTK::VtkRenderService" type="::fwRender::IRender" autoConnect="yes">
                     <scene autoRender="true">
-                       <renderer id="background" layer="0" background="#000000"/>
+                        <renderer id="background" layer="0" background="#000000"/>
                         <renderer id="default" layer="1" background="#000000" />
+                        <picker id="myPicker" vtkclass="fwVtkCellPicker" />
 
                         <adaptor id="transformAdaptor" class="::visuVTKAdaptor::Transform" objectId="transform">
                             <config renderer="default" transform="transformMesh"/>
                         </adaptor>
 
                         <adaptor id="meshAdaptor" class="::visuVTKAdaptor::Mesh" objectId="mesh">
-                            <config renderer="default" transform="transformMesh" autoresetcamera="no" />
+                            <config renderer="default" transform="transformMesh" autoresetcamera="no" picker="myPicker" />
                         </adaptor>
 
                         <adaptor id="cameraAdaptor" class="::visuVTKARAdaptor::SCamera" objectId="cameraTransform">

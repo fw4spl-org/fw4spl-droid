@@ -3,7 +3,6 @@
 
     <extension implements="::fwServices::registry::AppConfig">
         <id>PoC09AndroidConfig</id>
-        <type>parameters</type>
         <config>
             <object type="::fwData::Mesh">
 
