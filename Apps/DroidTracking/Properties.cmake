@@ -16,7 +16,6 @@ set( REQUIREMENTS
     visuVTKAndroid
     visuVTKARAdaptor
     visuVideoAndroid
-    visu
     visuVTK
     videoTools
     vtkSimpleMesh

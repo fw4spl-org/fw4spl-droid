@@ -8,7 +8,6 @@ set( REQUIREMENTS
     servicesReg
     dataReg
     launcherDroid
-    visu
     visuVTKAndroid
     vtkSimpleMesh
     io

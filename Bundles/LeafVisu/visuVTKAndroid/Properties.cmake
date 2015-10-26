@@ -17,5 +17,5 @@ set( DEPENDENCIES
     fwAndroid
     fwGui
 )
-set( REQUIREMENTS visu visuVTK )
+set( REQUIREMENTS visuVTK )
 set( PLATFORM DROID )
