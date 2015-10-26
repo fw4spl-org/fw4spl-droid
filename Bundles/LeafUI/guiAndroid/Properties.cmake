@@ -2,7 +2,7 @@
 set( NAME guiAndroid )
 set( VERSION 0.1 )
 set( TYPE BUNDLE )
-set( PRIORITY 3 )
+set( START ON )
 set( DEPENDENCIES
         fwCom
         fwComEd

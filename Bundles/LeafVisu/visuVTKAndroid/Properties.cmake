@@ -2,7 +2,7 @@
 set( NAME visuVTKAndroid )
 set( VERSION 0.1 )
 set( TYPE BUNDLE )
-set( PRIORITY 2 )
+set( START ON )
 set( DEPENDENCIES
     fwCom
     fwComEd
