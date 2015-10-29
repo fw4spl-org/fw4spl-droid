@@ -6,7 +6,7 @@
         <config>
             <object type="::fwData::Mesh">
 
-                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::DefaultFrame" autoConnect="no">
+                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no">
                     <gui>
                         <frame />
                     </gui>
