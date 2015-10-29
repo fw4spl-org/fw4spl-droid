@@ -111,7 +111,7 @@
 
                <item key="mesh">
                     <object uid="mesh" type="::fwData::Mesh">
-                        <service uid="meshReader" impl="::ioVTK::MeshReaderService" type="::io::IReader" autoConnect="yes">
+                        <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
                              <file>/data/data/com.fw4spl.DroidTracking/Bundles/DroidTracking_0-1/cube.vtk</file>
                         </service>
                     </object>

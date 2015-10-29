@@ -50,7 +50,7 @@
 
                 <item key="meshKey">
                     <object uid="meshUid" type="::fwData::Mesh">
-                        <service uid="meshReader" impl="::ioVTK::MeshReaderService" type="::io::IReader" autoConnect="no">
+                        <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="no">
                             <file>/data/data/com.fw4spl.DroidSimpleGui/Bundles/DroidSimpleGui_0-1/data/cube.vtk</file>
                         </service>
 
