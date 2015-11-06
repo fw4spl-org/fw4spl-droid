@@ -2,7 +2,6 @@
 set( NAME visuVTKAndroid )
 set( VERSION 0.1 )
 set( TYPE BUNDLE )
-set( START ON )
 set( DEPENDENCIES
     fwCom
     fwComEd
@@ -14,8 +13,6 @@ set( DEPENDENCIES
     fwRuntime
     fwServices
     fwTools
-    fwAndroid
-    fwGui
 )
 set( REQUIREMENTS visuVTK )
 set( PLATFORM DROID )

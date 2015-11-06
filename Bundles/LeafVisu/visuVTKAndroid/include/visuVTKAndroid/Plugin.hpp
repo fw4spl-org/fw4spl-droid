@@ -11,12 +11,6 @@
 
 #include <fwRuntime/Plugin.hpp>
 
-namespace fwThread
-{
-class Worker;
-} //namespace fwThread
-
-
 /**
  * @brief   This class is started when the bundles is loaded.
  * @class   Plugin
@@ -47,10 +41,6 @@ public:
     VISUVTKANDROID_API void stop() throw();
 
     VISUVTKANDROID_API int run() throw();
-
-private:
-
-    SPTR(::fwThread::Worker) m_worker;
 };
 
 } // namespace visuVTKAndroid

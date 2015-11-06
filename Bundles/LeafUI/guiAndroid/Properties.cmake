@@ -11,6 +11,8 @@ set( DEPENDENCIES
         fwTools
         fwServices
         fwGuiAndroid
+        fwAndroid
+        fwGui
 )
 
 set( REQUIREMENTS  )

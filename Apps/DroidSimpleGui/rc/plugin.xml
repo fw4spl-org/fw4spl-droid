@@ -1,6 +1,10 @@
 
 <plugin id="DroidSimpleGui" version="@DASH_VERSION@" >
 
+    <requirement id="dataReg" />
+    <requirement id="servicesReg" />
+    <requirement id="visuVTKAndroid" />
+
     <extension implements="::fwServices::registry::AppConfig">
         <id>DroidSimpleGuiConfig</id>
         <config>

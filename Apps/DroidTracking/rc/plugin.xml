@@ -1,6 +1,12 @@
 
 <plugin id="DroidTracking" version="@DASH_VERSION@" >
 
+    <requirement id="dataReg" />
+    <requirement id="extDataReg" />
+    <requirement id="arDataReg" />
+    <requirement id="servicesReg" />
+    <requirement id="visuVTKAndroid" />
+
     <xi:include href="configurations/deviceParameters.xml" xmlns:xi="http://www.w3.org/2003/XInclude" />
 
     <extension implements="::fwServices::registry::AppConfig">
