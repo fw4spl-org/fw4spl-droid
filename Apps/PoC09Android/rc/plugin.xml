@@ -19,7 +19,7 @@
                     </registry>
                 </service>
 
-                <service uid="renderingMesh"  impl="::vtkSimpleMesh::SRendererService" type="::fwRender::IRender" autoConnect="yes"/>
+                <service uid="renderingMesh"  impl="::vtkSimpleMesh::SRenderer" type="::fwRender::IRender" autoConnect="yes"/>
                 <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
                     <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android_0-1/cube.vtk</file>
                 </service>
