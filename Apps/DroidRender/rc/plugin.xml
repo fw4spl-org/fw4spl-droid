@@ -57,7 +57,7 @@
                     </gui>
                 </service>
 
-                <service uid="scene" impl="::fwRenderVTK::VtkRenderService" type="::fwRender::IRender" autoConnect="yes">
+                <service uid="scene" impl="::fwRenderVTK::SRender" type="::fwRender::IRender" autoConnect="yes">
                     <scene autoRender="true">
                         <renderer id="default" layer="0" background="#000000" />
 
