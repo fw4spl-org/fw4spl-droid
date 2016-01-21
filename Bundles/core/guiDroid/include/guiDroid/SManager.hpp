@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2016.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -88,7 +88,7 @@ protected:
 
     /**
      * @brief method description:
-     * @verbatim
+     * @code{.xml}
         <service uid="SManagerInstance" impl="::guiDroid::SManager" type="::fwServices::IService">
         <gui>
              <widget sid="readerButton" type="button" label="load" align="top|left" >
@@ -100,7 +100,7 @@ protected:
 
         </gui>
         </service>]
-       @endverbatim
+       @endcode
      * - \b layout : layout definition and attributes.
      * - \b widget : widget definition and attributes.
      */
