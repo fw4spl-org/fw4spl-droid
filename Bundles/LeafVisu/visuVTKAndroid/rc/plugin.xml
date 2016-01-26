@@ -1,0 +1,8 @@
+<plugin id="visuVTKAndroid" class="::visuVTKAndroid::Plugin" version="@DASH_VERSION@" >
+
+    <library name="visuVTKAndroid" />
+
+    <requirement id="dataReg"/>
+    <requirement id="servicesReg"/>
+    <requirement id="visuVTK" />
+</plugin>

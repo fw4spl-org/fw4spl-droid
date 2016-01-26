@@ -1,0 +1,98 @@
+##################################################
+#  Warning: this file is automaticly generated
+#  Do not edit manually this file
+##################################################
+include("@CMAKE_DIRECTORY@/droid_apk.cmake" REQUIRED)
+include("@CMAKE_DIRECTORY@/droid_setup.cmake" REQUIRED)
+
+# Usefull paths
+set(EXTERNAL_LIBRARIES @EXTERNAL_LIBRARIES@)
+set(APK_INSTALL_DIR @CMAKE_INSTALL_PREFIX@/apk)
+set(CMAKE_DIRECTORY @CMAKE_DIRECTORY@)
+set(WORKING_DIR @CMAKE_INSTALL_PREFIX@)
+set(SOURCE_DIR  @CMAKE_SOURCE_DIR@)
+set(ADDITIONAL_PROJECTS @ADDITIONAL_PROJECTS@)
+
+##################################################
+#  Variable for setup
+##################################################
+set(CMAKE_BUILD_TYPE @CMAKE_BUILD_TYPE@)
+set(JAR_REQUIREMENTS @JAR_REQUIREMENTS@)
+set(JAVA_PACKAGES @JAVA_PACKAGES@)
+set(QT_REQUIREMENTS @QT_REQUIREMENTS@)
+
+##################################################
+#  application variables
+##################################################
+set(FWPROJECT_NAME @FWPROJECT_NAME@)
+set(BASE_APP_NAME "@FWPROJECT_NAME@_@DASH_VERSION@")
+set(BASE_APP_LIB_NAME "launcherDroid")
+
+set(PROJECTS_TO_INSTALL @PROJECTS_TO_INSTALL@)
+
+##################################################
+#  Android variables
+##################################################
+set(ANDROID_NDK @ANDROID_NDK@)
+set(ANDROID_COMPILER_VERSION @ANDROID_COMPILER_VERSION@)
+set(ANDROID_ABI @ANDROID_ABI@)
+set(ANDROID_APK_PACKAGE "@ANDROID_APK_TOP_LEVEL_DOMAIN@.@ANDROID_APK_DOMAIN@.@FWPROJECT_NAME@")
+set(ANDROID_API_LEVEL @ANDROID_API_LEVEL@)
+set(ANDROID_MIN_API_LEVEL 9)
+set(ANDROID_APK_TOP_LEVEL_DOMAIN @ANDROID_APK_TOP_LEVEL_DOMAIN@)
+set(ANDROID_APK_DOMAIN @ANDROID_APK_DOMAIN@)
+set(ANDROID_APK_KEYSTORE @ANDROID_APK_KEYSTORE@)
+set(ANDROID_APK_KEYSTORE_PWD @ANDROID_APK_KEYSTORE_PWD@)
+set(ANDROID_APK_KEY_ALIAS @ANDROID_APK_KEY_ALIAS@)
+set(ANDROID_APK_KEY_PWD @ANDROID_APK_KEY_PWD@)
+
+set(ARM_TARGET @ARM_TARGET@)
+
+set(APK_BUILD_TOOL @APK_BUILD_TOOL@)
+
+##################################################
+# Java Qt variable
+##################################################
+#set(QT_START_ACTIVITY "org.fw4spl.bindings.Fw4splActivity")
+
+##################################################
+#  usefull programs
+##################################################
+set(ANDROID_PRG @ANDROID_PRG@)
+set(ANT_PRG @ANT_PRG@)
+set(ADB_PRG @ADB_PRG@)
+set(ZIPALIGN_PRG @ZIPALIGN_PRG@)
+set(JARSIGNER_PRG @JARSIGNER_PRG@)
+set(GRADLE_PRG @GRADLE_PRG@)
+
+##################################################
+#  dpendencies
+##################################################
+# Setup dependencies for apk build
+setup_dependencies()
+
+##################################################
+# Remove all directory
+##################################################
+# Remove old directories
+ execute_process(
+    #PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/assets
+    COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/src
+    COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/libs
+    COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/gen
+    COMMAND ${CMAKE_COMMAND} -E remove_directory @CMAKE_INSTALL_PREFIX@/apk/bin
+)
+
+##################################################
+#  Configure files
+##################################################
+# Create "AndroidManifest.xml"
+configure_file("@CMAKE_CURRENT_SOURCE_DIR@/rc/AndroidManifest.xml" "@CMAKE_INSTALL_PREFIX@/apk/AndroidManifest.xml")
+file(WRITE "@CMAKE_INSTALL_PREFIX@/apk/assets/assets.txt" "${ASSETS_FILE}" )
+
+##################################################
+#  APK création
+##################################################
+# launch apk creation
+create_apk()

@@ -1,0 +1,37 @@
+
+<plugin id="PoC09Android" version="@DASH_VERSION@" >
+
+    <requirement id="dataReg" />
+    <requirement id="servicesReg" />
+    <requirement id="visuVTKAndroid" />
+
+    <extension implements="::fwServices::registry::AppConfig">
+        <id>PoC09AndroidConfig</id>
+        <config>
+            <object type="::fwData::Mesh">
+
+                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no">
+                    <gui>
+                        <frame />
+                    </gui>
+                    <registry>
+                        <view sid="renderingMesh" start="no" />
+                    </registry>
+                </service>
+
+                <service uid="renderingMesh"  impl="::vtkSimpleMesh::SRenderer" type="::fwRender::IRender" autoConnect="yes"/>
+                <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
+                    <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android_0-1/cube.vtk</file>
+                </service>
+
+                <start uid="frame" />
+                <start uid="renderingMesh" />
+                <start uid="meshReader" />
+
+                <update uid="renderingMesh" />
+                <update uid="meshReader" />
+
+            </object>
+        </config>
+    </extension>
+</plugin>

@@ -1,0 +1,73 @@
+
+<plugin id="DroidSimpleGui" version="@DASH_VERSION@" >
+
+    <requirement id="dataReg" />
+    <requirement id="servicesReg" />
+    <requirement id="visuVTKAndroid" />
+
+    <extension implements="::fwServices::registry::AppConfig">
+        <id>DroidSimpleGuiConfig</id>
+        <config>
+
+            <object type="::fwData::Composite">
+
+                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no">
+                    <gui>
+                        <frame />
+                    </gui>
+                    <registry>
+                        <view sid="renderingMesh" start="yes" />
+                    </registry>
+                </service>
+
+                <service uid="guiManagerUID" impl="::guiDroid::SManager" type="::fwServices::IService" autoConnect="no">
+                    <gui>
+                        <widget type="button" label="load" align="top|left" >
+                            <width>200</width>
+                            <height>150</height>
+                            <margins>40,40,40,40</margins>
+                            <slot>meshReader/update</slot>
+                        </widget>
+                        <widget type="button" label="show/hide" align="top|left">
+                            <width>200</width>
+                            <height>150</height>
+                            <margins>40,180,40,40</margins>
+                            <slot>meshAdaptorUid/updateVisibility</slot>
+                        </widget>
+                        <widget type="textview" label="NDK GUI test" align="top|center">
+                            <margins>40,40,40,40</margins>
+                            <textSize>50</textSize>
+                        </widget>
+                    </gui>
+                </service>
+
+                <service uid="renderingMesh" impl="::fwRenderVTK::SRender" type="::fwRender::IRender" autoConnect="yes">
+                    <scene autoRender="true">
+                       <renderer id="default" layer="0" background="#000000"/>
+
+                         <adaptor id="meshAdaptor" uid="meshAdaptorUid" class="::visuVTKAdaptor::Mesh" objectId="meshKey">
+                            <config renderer="default" picker="" />
+                        </adaptor>
+
+                    </scene>
+                    </service>
+
+                <item key="meshKey">
+                    <object uid="meshUid" type="::fwData::Mesh">
+                        <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="no">
+                            <file>/data/data/com.fw4spl.DroidSimpleGui/Bundles/DroidSimpleGui_0-1/data/cube.vtk</file>
+                        </service>
+
+                    </object>
+                </item>
+
+                <start uid="frame" />
+                <start uid="meshReader" />
+                <start uid="guiManagerUID" />
+
+                <update uid="renderingMesh" />
+
+            </object>
+        </config>
+    </extension>
+</plugin>
