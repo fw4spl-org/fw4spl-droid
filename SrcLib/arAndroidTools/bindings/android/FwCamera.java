@@ -68,13 +68,13 @@ public class FwCamera implements Camera.ShutterCallback,
             Camera.Parameters parameters = m_camera.getParameters();
 
             List<String> focusModes = parameters.getSupportedFocusModes();
-            if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO) && m_autoFocus)
+            if (focusModes.contains(Camera.Parameters.FOCUS_MODE_FIXED) && !m_autoFocus)
             {
-                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
             }
             else
             {
-                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
             }
             //
             Camera.Size size = getBestPreviewSize(m_width, m_height, parameters);
