@@ -21,6 +21,7 @@ set( REQUIREMENTS
     vtkSimpleMesh
     io
     ioVTK
+    ioIGTL
     tracker
     trackerAruco
     gui

@@ -92,6 +92,12 @@
                     </matrices>
                     <framerate>60</framerate>
                 </service>
+                
+                <service uid="actionStartSending" impl="::gui::action::SSlotCaller" autoConnect="no">
+                    <slots>
+                        <slot>matrixNetworkSender/startSending</slot>
+                    </slots>
+                </service>
 
                 <item key="markerTL">
                     <object uid="markerTLUid" type="::arData::MarkerTL" />
@@ -103,6 +109,9 @@
 
                 <item key="transform">
                     <object uid="transform" type="::fwData::TransformationMatrix3D">
+                        <service uid="matrixNetworkSender" type="::ioNetwork::INetworkSender" impl="::ioIGTL::SOpenIGTLinkSender" autoConnect="no">
+                           <port>4242</port>
+                        </service>
                     </object>
                 </item>
 
@@ -154,10 +163,14 @@
                 <start uid="synchronizer" />
                 <start uid="tracker" />
                 <start uid="markerRegistration" />
+                <start uid="matrixNetworkSender" />
+                <start uid="actionStartSending" />
 
                 <update uid="extractDeviceInfo" />
                 <update uid="meshReader" />
                 <update uid="androidCamera" />
+                <update uid="matrixNetworkSender" />
+                <update uid="actionStartSending" />
 
             </object>
         </config>
