@@ -12,3 +12,4 @@ syntax: glob
 *.autosave
 #qtcreator cmake preferences
 *.txt.user
+*.DS_Store
