@@ -1,12 +1,4 @@
 fwLoadProperties()
-fwUseForwardInclude(
-    fwCom
-    fwData
-    fwRender
-    fwRenderVTK
-    fwRuntime
-    fwServices
-)
 
 find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})

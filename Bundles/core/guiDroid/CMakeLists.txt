@@ -1,8 +1,4 @@
 fwLoadProperties()
-fwUseForwardInclude(
-        fwComEd 
-        fwCore 
-)
 
 find_library(JNIHELPER NAMES JNIHelper)
 find_library(JUIHELPER NAMES JUIHelper)

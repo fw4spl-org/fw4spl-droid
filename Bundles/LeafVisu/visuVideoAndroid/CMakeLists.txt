@@ -1,12 +1,4 @@
 fwLoadProperties()
-fwUseForwardInclude(
-    fwCom
-    fwActivities
-    arAndroidTools
-    fwRuntime
-    fwServices
-    fwTools
-)
 
 find_package(Boost COMPONENTS signals REQUIRED)
 
