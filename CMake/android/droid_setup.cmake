@@ -32,21 +32,21 @@ macro(setup_dependencies)
             string(REPLACE "\n" ";" DEPENDS_LINE "${DEPENDS_OUTPUT}")
             
             string(LENGTH "${DEPENDS_LINE}" LINE_LENGHT)
-            MATH( EXPR FINAL_LENGTH "${LINE_LENGHT} - 1 " )
+            math( EXPR FINAL_LENGTH "${LINE_LENGHT} - 1 " )
             string(SUBSTRING "${DEPENDS_LINE}" 0 ${FINAL_LENGTH} DEPENDS_LINE)
 
             foreach(CURRENT_DEPS ${DEPENDS_LINE})
                 string(LENGTH "${CURRENT_DEPS}" DEP_LENGHT)
                 string(FIND "${CURRENT_DEPS}" "->" ARROW_POSITION)
-                MATH( EXPR BEGIN_POSTION "${ARROW_POSITION} + 3 " )
-                MATH( EXPR FINAL_LENGTH "${DEP_LENGHT} - ${BEGIN_POSTION} " )
+                math( EXPR BEGIN_POSTION "${ARROW_POSITION} + 3 " )
+                math( EXPR FINAL_LENGTH "${DEP_LENGHT} - ${BEGIN_POSTION} " )
                 string(SUBSTRING "${CURRENT_DEPS}" ${BEGIN_POSTION} ${FINAL_LENGTH} DEPS_PATH)
                 string(FIND "${DEPS_PATH}" "$" TEST_SYSTEM)
                 string(FIND "${DEPS_PATH}" "!!" TEST_EXT)
 
                 if(${TEST_SYSTEM} EQUAL -1)
                     if(NOT ${TEST_EXT} EQUAL -1)
-                        MATH( EXPR FINAL_POSTION "${ARROW_POSITION} - 1 " )
+                        math( EXPR FINAL_POSTION "${ARROW_POSITION} - 1 " )
                         string(SUBSTRING "${CURRENT_DEPS}" 0 ${FINAL_POSTION} EXT_PATH)
                     else()
                         list(APPEND LIBS "${DEPS_PATH}")
@@ -72,7 +72,7 @@ macro(setup_dependencies)
     setup_java()
     setup_qt()
     
-endmacro(setup_dependencies)
+endmacro()
   
 # Search and set fw4spl bundles and shared
 macro(setup_bundles_and_shared )
@@ -89,7 +89,7 @@ macro(setup_bundles_and_shared )
         get_filename_component(DIR_NAME ${DIR_PATH} NAME)
 
         string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
-        MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" ) 
+        math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" ) 
         string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
     
         if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
@@ -97,7 +97,7 @@ macro(setup_bundles_and_shared )
                 list(APPEND LIBS_ASSETS ${SUB_DIR})
                 
                 string(LENGTH ${SUB_DIR} SUB_LENGTH)
-                MATH( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
+                math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
                 string(SUBSTRING ${SUB_DIR} 1 ${SUB_LENGTH} FINAL_DIR)
                 list(APPEND ASSETS_FILE ${FINAL_DIR})
     
@@ -115,7 +115,7 @@ macro(setup_bundles_and_shared )
         get_filename_component(DIR_NAME ${DIR_PATH} NAME)
 
         string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
-        MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" )
+        math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" )
         string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
 
         if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
@@ -125,14 +125,14 @@ macro(setup_bundles_and_shared )
                 list(APPEND LIBS_ASSETS ${SUB_DIR})
 
                 string(LENGTH ${SUB_DIR} SUB_LENGTH)
-                MATH( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
+                math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
                 string(SUBSTRING ${SUB_DIR} 1 ${SUB_LENGTH} FINAL_DIR)
                 list(APPEND ASSETS_FILE ${FINAL_DIR})
                 
             endif()
         endif()
     endforeach()
-endmacro(setup_bundles_and_shared )
+endmacro()
 
 # Search and set jar dependencies
 macro(setup_java )
@@ -192,7 +192,7 @@ macro(setup_java )
         endif()
     endif()
     
-endmacro(setup_java )
+endmacro()
 
 # Search and set QT dependencies
 macro(setup_qt )
@@ -210,7 +210,7 @@ macro(setup_qt )
                 get_filename_component(FILE_NAME ${CURRENT_FILE} NAME)
             
                  string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
-                 MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${QT_LENGTH}" )
+                 math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${QT_LENGTH}" )
                  string(SUBSTRING ${CURRENT_FILE} ${QT_LENGTH} ${FINAL_LENGTH} SUB_DIR)
 
                 if(NOT "${EXTENSION}" STREQUAL ".DS_Store" ) # osx problem
@@ -223,5 +223,5 @@ macro(setup_qt )
             endforeach()
         endif()
      endforeach()
-endmacro(setup_qt )
+endmacro()
     

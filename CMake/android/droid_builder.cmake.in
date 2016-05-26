@@ -64,6 +64,7 @@ set(ADB_PRG @ADB_PRG@)
 set(ZIPALIGN_PRG @ZIPALIGN_PRG@)
 set(JARSIGNER_PRG @JARSIGNER_PRG@)
 set(GRADLE_PRG @GRADLE_PRG@)
+set(NDK_DEPENDS_PRG @NDK_DEPENDS_PRG@)
 
 ##################################################
 #  dpendencies
