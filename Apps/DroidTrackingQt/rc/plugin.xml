@@ -15,8 +15,8 @@
            <service uid="myFrame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no" >
                 <gui>
                     <frame>
-                        <name>TestSimpleQt</name>
-                        <icon>/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/tuto.ico</icon>
+                        <name>TestTrackingQt</name>
+                        <icon>/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/tuto.ico</icon>
 <!--                        <minSize width="2048" height="1440"/> -->
                     </frame>
                     <toolBar >
@@ -32,11 +32,11 @@
             <service uid="toolBar" type="::fwGui::IToolBarSrv" impl="::gui::aspect::SDefaultToolBar" autoConnect="no" >
                 <gui>
                     <layout>
-                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/showHide.png" />
+                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/showHide.png" />
                         <separator />
-                        <menuItem name="Show/Hide" icon="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/show.png" icon2="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/hide.png" style="check" />
+                        <menuItem name="Show/Hide" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/show.png" icon2="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/hide.png" style="check" />
                         <separator />
-                        <menuItem name="start" icon="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/start.png" />
+                        <menuItem name="start" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/start.png" />
                     </layout>
                 </gui>
                 <registry>
@@ -184,7 +184,7 @@
 
                <!--<service uid="scene" impl="::vtkSimpleMesh::SRenderer" autoConnect="yes" />-->
                    <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
-                       <file>/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/cube.vtk</file>
+                       <file>/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/cube.vtk</file>
                    </service>
                </object>
             </item>

@@ -1,6 +1,6 @@
 fwLoadProperties()
 
-if(DroidSimpleQt_INSTALL AND ANDROID)
+if(DroidTrackingQt_INSTALL AND ANDROID)
 
     set(CMAKE_DIRECTORY ${CMAKE_DROID_SOURCE_DIR}/CMake/android)
 
