@@ -161,13 +161,14 @@ macro(setup_java )
     set(JAR_DIR  "${EXTERNAL_LIBRARIES}/jar")
 
     file(GLOB_RECURSE JAR_FILES  "${JAR_DIR}/*")
+
     foreach(CURRENT_FILE ${JAR_FILES})
-        
         get_filename_component(EXTENSION ${CURRENT_FILE} EXT)
         get_filename_component(FILE_NAME ${CURRENT_FILE} NAME_WE)
     
         string(FIND "${JAR_REQUIREMENTS}" ${FILE_NAME} JAR_TEST)
         string(FIND ${FILE_NAME} "bundled" BUNDLED_TEST)
+        
         if( NOT ${JAR_TEST} EQUAL -1 AND NOT ${BUNDLED_TEST} EQUAL -1 )
             list(APPEND JAR_LIBS ${CURRENT_FILE})
         endif()
@@ -196,8 +197,12 @@ endmacro()
 
 # Search and set QT dependencies
 macro(setup_qt )
+    list(APPEND LIBS "${EXTERNAL_LIBRARIES}/lib/libfreetype.so")
+    list(APPEND LIBS "${EXTERNAL_LIBRARIES}/lib/libQt5Multimedia.so")
+    list(APPEND LIBS "${EXTERNAL_LIBRARIES}/lib/libQt5Network.so")
+    
     string(LENGTH "${EXTERNAL_LIBRARIES}/" QT_LENGTH)
-    file(GLOB QT_DIRS  "${EXTERNAL_LIBRARIES}/qml/*" "${EXTERNAL_LIBRARIES}/plugins/*")
+    file(GLOB QT_DIRS "${EXTERNAL_LIBRARIES}/plugins/*")
     foreach(CURRENT_DIR ${QT_DIRS})
     
         get_filename_component(QT_NAME ${CURRENT_DIR} NAME)
@@ -216,9 +221,9 @@ macro(setup_qt )
                 if(NOT "${EXTENSION}" STREQUAL ".DS_Store" ) # osx problem
                     if("${EXTENSION}" STREQUAL ".so")
                         list(APPEND LIBS ${CURRENT_FILE})
-                    elseif(QT_NAME)
-                        list(APPEND LIBS_ASSETS ${SUB_DIR})
                     endif()
+                    list(APPEND LIBS_ASSETS ${SUB_DIR})
+                    list(APPEND ASSETS_FILE ${SUB_DIR})
                 endif()
             endforeach()
         endif()

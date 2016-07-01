@@ -10,4 +10,5 @@ fwInclude(
 fwLink(
     vtkRenderingOpenGL2
     vtkInteractionStyle
+    vtkRenderingFreeType
 )

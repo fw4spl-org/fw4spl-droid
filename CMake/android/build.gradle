@@ -53,6 +53,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-project.txt')
             signingConfig signingConfigs.release
                 
+            ndk {
+                debuggable = true
+            }
+                
         }
         
         applicationVariants.all { variant ->

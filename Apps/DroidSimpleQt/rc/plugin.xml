@@ -1,0 +1,84 @@
+
+<plugin id="DroidSimpleQt" version="@DASH_VERSION@" >
+
+    <requirement id="dataReg" />
+    <requirement id="servicesReg" />
+    <requirement id="visuVTKQt" />
+
+    <extension implements="::fwServices::registry::AppConfig">
+        <id>DroidSimpleQtConfig</id>
+        <config>
+        <object type="::fwData::Composite">
+           <service uid="myFrame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no" >
+                <gui>
+                    <frame>
+                        <name>TestSimpleQt</name>
+                        <icon>/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/tuto.ico</icon>
+<!--                        <minSize width="2048" height="1440"/> -->
+                    </frame>
+                    <toolBar >
+                        <toolBitmapSize height= "100" width="100" />
+                    </toolBar>
+                </gui>
+                <registry>
+                    <toolBar sid="toolBar" start="yes" />
+                    <view sid="scene" start="yes" />
+                </registry>
+            </service>
+
+            <service uid="toolBar" type="::fwGui::IToolBarSrv" impl="::gui::aspect::SDefaultToolBar" autoConnect="no" >
+                <gui>
+                    <layout>
+                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/showHide.png" />
+                        <separator />
+                        <menuItem name="Show/Hide" icon="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/show.png" icon2="/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/icons/hide.png" style="check" />
+                    </layout>
+                </gui>
+                <registry>
+                    <menuItem sid="load" start="yes" />
+                    <menuItem sid="showMesh" start="yes" />
+                </registry>
+            </service>
+
+            <service uid="load" type="::fwGui::IActionSrv" impl="::gui::action::SSlotCaller" autoConnect="no">
+                <slots>
+                    <slot>meshReader/update</slot>
+                </slots>
+            </service>
+
+           <service uid="showMesh" type="::fwGui::IActionSrv" impl="::gui::action::SBooleanSlotCaller" autoConnect="no">
+                <state active="true" />
+                <slots>
+                    <slot>meshAdaptorUid/updateVisibility</slot>
+                </slots>
+            </service>
+
+            <service uid="scene" impl="::fwRenderVTK::SRender" type="::fwRender::IRender" autoConnect="yes">
+                <scene autoRender="true">
+                    <renderer id="background" layer="0" background="#000000"/>
+                    <renderer id="default" layer="1" background="#000000" />
+                    <picker id="myPicker" vtkclass="fwVtkCellPicker" />
+
+                   <adaptor id="meshAdaptor" uid="meshAdaptorUid" class="::visuVTKAdaptor::Mesh" objectId="mesh">
+                        <config renderer="default" transform="transformMesh" autoresetcamera="yes" picker="myPicker" />
+                   </adaptor>
+                </scene>
+            </service>
+
+            <item key="mesh">
+                 <object uid="mesh" type="::fwData::Mesh">
+
+               <!--<service uid="scene" impl="::vtkSimpleMesh::SRenderer" autoConnect="yes" />-->
+                   <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
+                       <file>/data/data/com.fw4spl.DroidSimpleQt/Bundles/DroidSimpleQt_0-1/cube.vtk</file>
+                   </service>
+               </object>
+            </item>
+
+            <start uid="myFrame" />
+            <start uid="meshReader" />
+
+        </object>
+        </config>
+    </extension>
+</plugin>

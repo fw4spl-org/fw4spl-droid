@@ -21,8 +21,9 @@ macro(create_apk)
     #JAR files:
     message("- Copying JAR libraries ...")
     foreach(JAR_FILE ${JAR_LIBS})
+        get_filename_component(CURRENT_NAME ${JAR_FILE} NAME)
         execute_process(
-             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${JAR_FILE}" "${APK_INSTALL_DIR}/libs"
+             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${JAR_FILE}" "${APK_INSTALL_DIR}/libs/${CURRENT_NAME}"
          )
     endforeach()
 
@@ -64,6 +65,32 @@ macro(create_apk)
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${value} "${APK_INSTALL_DIR}/libs/${ARM_TARGET}"
         )
     endforeach()
+    
+    
+    ##################################################
+    #  Copy libs
+    ##################################################
+    # message("- Copying Qt plugins ...")
+  #   execute_process(
+  #       COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_INSTALL_DIR}/libs/${ARM_TARGET}/plugins"
+  #   )
+  #
+  #   # Copy the used shared libraries
+  #   foreach(value ${PLUGINS_LIBS})
+  #
+  #       string(LENGTH ${value} CURRENT_LENGTH)
+  #       string(LENGTH "${EXTERNAL_LIBRARIES}/plugins*" PLUGINS_LENGTH)
+  #       MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${PLUGINS_LENGTH}" )
+  #       string(SUBSTRING ${value} ${PLUGINS_LENGTH} ${CURRENT_LENGTH} SUB_DIR)
+  #       message(" SUB_DIR = ${SUB_DIR}")
+  #       execute_process(
+  #           COMMAND ${CMAKE_COMMAND} -E copy_if_different ${value} "${APK_INSTALL_DIR}/libs/${ARM_TARGET}/plugins/${SUB_DIR}"
+  #       )
+  #   endforeach()
+    
+    
+
+    
     
     ##################################################
     #  Copy assets

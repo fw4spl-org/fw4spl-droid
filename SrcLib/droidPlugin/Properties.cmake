@@ -1,10 +1,10 @@
 
-set( NAME launcherDroid )
+set( NAME droidPlugin )
 set( VERSION 0.1 )
 set( TYPE LIBRARY )
-set( DEPENDENCIES
+set( DEPENDENCIES 
     fwCore
+    fwGui
     fwRuntime
- )
+)
 set( REQUIREMENTS  )
-set( PLATFORM DROID )

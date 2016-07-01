@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2009-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2009-2016.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -15,7 +15,6 @@
 
 #include <android_native_app_glue.h>
 #include <android/asset_manager.h>
-
 
 #include <string>
 
@@ -34,10 +33,23 @@ char* readAsset(AAssetManager* assetManager, const std::string &assetName, size_
     SLM_ASSERT("Cannot open '"+assetName+"'", assetFile);
 
     assetLength = AAsset_getLength(assetFile);
-    char* assetBuffer = new char[assetLength+1];
 
-    AAsset_read(assetFile,assetBuffer, assetLength);
-    assetBuffer[assetLength] = 0;
+    size_t dotIndex       = assetName.find_last_of(".");
+    std::string extension = assetName.substr(dotIndex, assetName.size());
+
+    char* assetBuffer;
+    if( extension != ".so")
+    {
+        assetBuffer = new char[assetLength+1];
+        AAsset_read(assetFile,assetBuffer, assetLength);
+        assetBuffer[assetLength] = 0;
+    }
+    else
+    {
+        assetBuffer = new char[assetLength];
+        AAsset_read(assetFile,assetBuffer, assetLength);
+    }
+
     AAsset_close(assetFile);
 
     return assetBuffer;
@@ -80,7 +92,6 @@ void writeAsset(AAssetManager* assetManager, const std::string &assetList, const
         }
     }
 }
-
 //------------------------------------------------------------------------------
 
 void android_main(struct android_app* app)

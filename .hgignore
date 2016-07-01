@@ -12,4 +12,8 @@ syntax: glob
 *.autosave
 #qtcreator cmake preferences
 *.txt.user
+CMakeCache.txt
+#OSX
 *.DS_Store
+#hg
+*.hg-*
