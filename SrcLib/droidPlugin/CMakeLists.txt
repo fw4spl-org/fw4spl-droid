@@ -25,7 +25,7 @@ fwLink(
     ${Qt5Gui_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
     ${FREETYPE_LIBRARIES}
-    /Users/fchamp/Dev/CMake/v0.10/Deps-droid/Install_debug/lib/libQt5PlatformSupport.a
+    ${EXTERNAL_LIBRARIES}/lib/libQt5PlatformSupport.a
     android
     log
     EGL
@@ -40,5 +40,5 @@ set_target_properties(${FWPROJECT_NAME} PROPERTIES
 )
 
 install(TARGETS ${FWPROJECT_NAME}
-    LIBRARY DESTINATION /Users/fchamp/Dev/CMake/v0.10/Deps-droid/Install_debug/plugins/platforms/
+    LIBRARY DESTINATION ${EXTERNAL_LIBRARIES}/plugins/platforms/
 )
