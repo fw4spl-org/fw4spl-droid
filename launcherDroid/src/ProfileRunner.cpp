@@ -94,6 +94,61 @@ void writeAsset(AAssetManager* assetManager, const std::string &assetList, const
 }
 //------------------------------------------------------------------------------
 
+/**
+ * Process the next main command.
+ */
+void handleCommand(struct android_app* app, int32_t cmd)
+{
+    switch (cmd)
+    {
+        case APP_CMD_INIT_WINDOW:
+            // The window is being shown, get it ready.
+            OSLM_DEBUG("APP_CMD_INIT_WINDOW ");
+
+            ::boost::filesystem::path bundlePath(::fwRuntime::Runtime::getDefault()->getWorkingPath()/"Bundles/");
+
+            OSLM_FATAL_IF( "Bundle path " << bundlePath << " doesn't exist or isn't a directory.",
+                           !::boost::filesystem::is_directory(bundlePath));
+
+            bundlePath = ::boost::filesystem::absolute(bundlePath);
+            ::fwRuntime::addBundles( bundlePath );
+
+            ::boost::filesystem::path profileFile(::fwRuntime::Runtime::getDefault()->getWorkingPath()/"profile.xml");
+            if ( ::boost::filesystem::is_regular_file(profileFile))
+            {
+                ::fwRuntime::profile::Profile::sptr profile;
+
+                try
+                {
+                    profile = ::fwRuntime::io::ProfileReader::createProfile(profileFile);
+                    ::fwRuntime::profile::setCurrentProfile(profile);
+
+                    profile->setApp(app);
+
+                    profile->start();
+                    profile->run();
+                    profile->stop();
+                }
+                catch(std::exception &e)
+                {
+                    OSLM_FATAL( e.what() );
+                }
+                catch(...)
+                {
+                    SLM_FATAL( "An unrecoverable error has occurred." );
+                }
+            }
+            else
+            {
+                OSLM_ERROR( "Profile file " << profileFile << " do not exists or is not a regular file.");
+            }
+            break;
+    }
+    return;
+}
+
+//------------------------------------------------------------------------------
+
 void android_main(struct android_app* app)
 {
     // Make sure glue isn't stripped.
@@ -119,42 +174,70 @@ void android_main(struct android_app* app)
 
     ::fwRuntime::Runtime::getDefault()->setWorkingPath(intPath);
 
-    ::boost::filesystem::path bundlePath(intPath/"Bundles/");
-
-    OSLM_FATAL_IF( "Bundle path " << bundlePath << " doesn't exist or isn't a directory.",
-                   !::boost::filesystem::is_directory(bundlePath));
-
-    bundlePath = ::boost::filesystem::absolute(bundlePath);
-    ::fwRuntime::addBundles( bundlePath );
-
-    ::boost::filesystem::path profileFile(intPath/"profile.xml");
-    if ( ::boost::filesystem::is_regular_file(profileFile))
+    app->onAppCmd = handleCommand;
+    while (1)
     {
-        ::fwRuntime::profile::Profile::sptr profile;
-
-        try
+        // Read all pending events.
+        int ident;
+        int events;
+        struct android_poll_source* source;
+        while ((ident = ALooper_pollAll(0, NULL, &events, (void**)&source)) >= 0)
         {
-            profile = ::fwRuntime::io::ProfileReader::createProfile(profileFile);
-            ::fwRuntime::profile::setCurrentProfile(profile);
+            if (ident >= 0)
+            {
+                SLM_TRACE("Processing Event");
+                // Process this event.
+                if (source != NULL)
+                {
+                    source->process(app, source);
+                }
 
-            profile->setApp(app);
+                // Check if we are exiting.
+                if (app->destroyRequested != 0)
+                {
+                    return;
+                }
+            }
+        }
 
-            profile->start();
-            profile->run();
-            profile->stop();
-        }
-        catch(std::exception &e)
-        {
-            OSLM_FATAL( e.what() );
-        }
-        catch(...)
-        {
-            SLM_FATAL( "An unrecoverable error has occurred." );
-        }
     }
-    else
-    {
-        OSLM_ERROR( "Profile file " << profileFile << " do not exists or is not a regular file.");
-    }
+
+//    ::boost::filesystem::path bundlePath(intPath/"Bundles/");
+
+//    OSLM_FATAL_IF( "Bundle path " << bundlePath << " doesn't exist or isn't a directory.",
+//                   !::boost::filesystem::is_directory(bundlePath));
+
+//    bundlePath = ::boost::filesystem::absolute(bundlePath);
+//    ::fwRuntime::addBundles( bundlePath );
+
+//    ::boost::filesystem::path profileFile(intPath/"profile.xml");
+//    if ( ::boost::filesystem::is_regular_file(profileFile))
+//    {
+//        ::fwRuntime::profile::Profile::sptr profile;
+
+//        try
+//        {
+//            profile = ::fwRuntime::io::ProfileReader::createProfile(profileFile);
+//            ::fwRuntime::profile::setCurrentProfile(profile);
+
+//            profile->setApp(app);
+
+//            profile->start();
+//            profile->run();
+//            profile->stop();
+//        }
+//        catch(std::exception &e)
+//        {
+//            OSLM_FATAL( e.what() );
+//        }
+//        catch(...)
+//        {
+//            SLM_FATAL( "An unrecoverable error has occurred." );
+//        }
+//    }
+//    else
+//    {
+//        OSLM_ERROR( "Profile file " << profileFile << " do not exists or is not a regular file.");
+//    }
 
 }
