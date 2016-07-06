@@ -7,6 +7,7 @@
 #ifdef ANDROID
 
 #include "droidPlugin/DroidEvent.hpp"
+#include "droidPlugin/DroidContext.hpp"
 
 #include <fwRuntime/profile/Profile.hpp>
 
@@ -220,6 +221,7 @@ int32_t DroidEvent::handleInput(struct android_app* app, AInputEvent* event)
     return 0;
 
 }
+
 //-----------------------------------------------------------------------------
 
 /**
@@ -240,6 +242,8 @@ void DroidEvent::handleCommand(struct android_app* app, int32_t cmd)
             QWindowSystemInterface::handleApplicationStateChanged(Qt::ApplicationActive);
             break;
         case APP_CMD_TERM_WINDOW:
+            OSLM_DEBUG("APP_CMD_TERM_WINDOW ");
+            DroidContext::getInstance()->invalidate();
             // The window is being hidden or closed, clean it up.;
             break;
         case APP_CMD_GAINED_FOCUS:
@@ -252,6 +256,7 @@ void DroidEvent::handleCommand(struct android_app* app, int32_t cmd)
             break;
         case APP_CMD_RESUME:
             OSLM_DEBUG("APP_CMD_RESUME ");
+            DroidContext::getInstance()->resume(app->window);
             QWindowSystemInterface::handleApplicationStateChanged(Qt::ApplicationActive);
             break;
         case APP_CMD_PAUSE:
@@ -260,6 +265,7 @@ void DroidEvent::handleCommand(struct android_app* app, int32_t cmd)
             break;
         case APP_CMD_STOP:
             OSLM_DEBUG("APP_CMD_STOP ");
+            DroidContext::getInstance()->suspend();
             QWindowSystemInterface::handleApplicationStateChanged(Qt::ApplicationSuspended);
             break;
     }

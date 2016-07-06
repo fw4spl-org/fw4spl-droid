@@ -5,10 +5,13 @@
  * ****** END LICENSE BLOCK ****** */
 
 #include "droidPlugin/DroidTheme.hpp"
-#include <QCoreApplication>
+#include <QApplication>
 
 #include <QVariant>
 #include <QPalette>
+#include <QStyleFactory>
+
+#include <fwServices/macros.hpp>
 
 #include <private/qguiapplication_p.h>
 
@@ -16,6 +19,8 @@
 
 DroidTheme::DroidTheme()
 {
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+
     QColor background(229, 229, 229);
     QColor light = background.lighter(150);
     QColor mid(background.darker(130));
@@ -48,10 +53,13 @@ DroidTheme::DroidTheme()
     m_defaultPalette.setBrush(QPalette::Active, QPalette::Highlight, highlight);
     m_defaultPalette.setBrush(QPalette::Inactive, QPalette::Highlight, highlight);
     m_defaultPalette.setBrush(QPalette::Disabled, QPalette::Highlight, highlight.lighter(150));
-    QGuiApplication::setPalette(m_defaultPalette);
+    QApplication::setPalette(m_defaultPalette);
+
 
     // default in case the style has not set a font
+    setenv("QT_QPA_FONTDIR","/system/fonts",false);
     m_systemFont = QFont(QLatin1String("Roboto"), 14.0 * 100 / 72); // keep default size the same after changing from 100 dpi to 72 dpi
+    QApplication::setFont(m_systemFont);
 }
 
 //-----------------------------------------------------------------------------

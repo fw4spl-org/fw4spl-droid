@@ -21,29 +21,32 @@
 
 // Internal Qt
 #include <QGuiApplication>
+#include <QtPlatformSupport/private/qgenericunixfontdatabase_p.h>
 #include <QtPlatformSupport/private/qgenericunixeventdispatcher_p.h>
 #include <qpa/qplatformwindow.h>
 
+#include <QApplication>
+#include <QStyleFactory>
 
 #include <EGL/egl.h>
 
 DroidIntegration::DroidIntegration() :
-    mScreen(new DroidScreen(EGL_DEFAULT_DISPLAY))
+    m_fontDatabase(new QGenericUnixFontDatabase()),
+    m_screen(new DroidScreen(EGL_DEFAULT_DISPLAY))
 {
-
     ::fwRuntime::profile::Profile::sptr profile = ::fwRuntime::profile::getCurrentProfile();
     android_app* app = profile->getApp();
     app->onInputEvent = DroidEvent::handleInput;
     app->onAppCmd     = DroidEvent::handleCommand;
 
-    screenAdded(mScreen);
+    screenAdded(m_screen);
 }
 
 //-----------------------------------------------------------------------------
 
 DroidIntegration::~DroidIntegration()
 {
-    destroyScreen(mScreen);
+    destroyScreen(m_screen);
 
 }
 
@@ -96,8 +99,33 @@ QAbstractEventDispatcher *DroidIntegration::createEventDispatcher() const
 
 //-----------------------------------------------------------------------------
 
+QStringList DroidIntegration::themeNames() const
+{
+    return QStringList(QString(QLatin1String("android")));
+}
+
+
 QPlatformTheme *DroidIntegration::createPlatformTheme(const QString &name) const
 {
     return new DroidTheme();
+}
+
+//-----------------------------------------------------------------------------
+
+QPlatformFontDatabase *DroidIntegration::fontDatabase() const
+{
+    return m_fontDatabase;
+}
+
+//-----------------------------------------------------------------------------
+
+QVariant DroidIntegration::styleHint(QPlatformIntegration::StyleHint hint) const
+{
+    if (hint == QPlatformIntegration::ShowIsFullScreen)
+    {
+        return true;
+    }
+
+    return QPlatformIntegration::styleHint(hint);
 }
 

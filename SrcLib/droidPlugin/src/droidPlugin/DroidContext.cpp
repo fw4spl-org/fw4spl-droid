@@ -7,7 +7,6 @@
 #include "droidPlugin/DroidContext.hpp"
 
 #include <fwServices/macros.hpp>
-#include <unistd.h>
 
 //--------------------------------------------------------------------------------
 
@@ -44,9 +43,7 @@ void DroidContext::initGLES()
         return;
     }
 
-    // We could had test to check if GL ES 3.0 is supported
-
-    m_glVersion       = 2.0f;
+    m_glVersion       = 3.0f;
     m_glesInitialized = true;
 }
 
@@ -109,6 +106,7 @@ bool DroidContext::initEGLSurface()
     m_colorSize = 8;
     m_depthSize = 24;
 
+
     EGLint num_configs;
     eglChooseConfig(m_display, attribs, &m_config, 1, &num_configs);
 
@@ -158,6 +156,14 @@ bool DroidContext::initEGLSurface()
     m_surface = eglCreateWindowSurface(m_display, m_config, m_window, NULL);
     eglQuerySurface(m_display, m_surface, EGL_WIDTH, &m_width);
     eglQuerySurface(m_display, m_surface, EGL_HEIGHT, &m_height);
+
+    /* EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
+    * guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
+    * As soon as we picked a EGLConfig, we can safely reconfigure the
+    * ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID. */
+    EGLint format;
+    eglGetConfigAttrib( m_display, m_config, EGL_NATIVE_VISUAL_ID, &format );
+    ANativeWindow_setBuffersGeometry( m_window, 0, 0, format );
 
     return true;
 }
