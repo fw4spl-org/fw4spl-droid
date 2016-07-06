@@ -17,7 +17,7 @@ macro(add_push_lib)
         add_custom_target(${FWPROJECT_NAME}_push
             COMMAND ${ADB_PRG} push ${CMAKE_BINARY_DIR}/${LIBRARY_OUTPUT_DIR}/lib${FWPROJECT_NAME}.so /sdcard/fw4spl_tmp/${FWPROJECT_NAME}_${DASH_VERSION}/lib${FWPROJECT_NAME}.so
             # COMMAND ${ADB_PRG} shell "su -c 'rm -rf /data/data/${PACKAGE_DOT}/lib/lib${FWPROJECT_NAME}.so'"
-            COMMAND ${ADB_PRG} shell "su -c 'mv -v /storage/emulated/0/fw4spl_tmp/${FWPROJECT_NAME}_${DASH_VERSION}/lib${FWPROJECT_NAME}.so /data/data/${PACKAGE_DOT}/plugins/platforms/ib${FWPROJECT_NAME}.so'"
+            COMMAND ${ADB_PRG} shell "su -c 'mv -v /storage/emulated/0/fw4spl_tmp/${FWPROJECT_NAME}_${DASH_VERSION}/lib${FWPROJECT_NAME}.so /data/data/${PACKAGE_DOT}/plugins/platforms/lib${FWPROJECT_NAME}.so'"
             # COMMAND ${ADB_PRG} shell "su -c 'chmod 755 /data/data/${PACKAGE_DOT}/lib/lib${FWPROJECT_NAME}.so'"
             #
             COMMAND ${ADB_PRG} shell "su -c 'rm -r /storage/emulated/0/fw4spl_tmp/${FWPROJECT_NAME}_${DASH_VERSION}'"
