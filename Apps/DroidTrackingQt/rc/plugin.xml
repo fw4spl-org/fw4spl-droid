@@ -48,7 +48,8 @@
 
             <service uid="load" type="::fwGui::IActionSrv" impl="::gui::action::SSlotCaller" autoConnect="no">
                 <slots>
-                    <slot>meshReader/update</slot>
+                    <slot>loader/update</slot>
+                    <slot>extractObject/update</slot>
                 </slots>
             </service>
 
@@ -71,11 +72,11 @@
                     <renderer id="default" layer="1" background="#000000" />
                     <picker id="myPicker" vtkclass="fwVtkCellPicker" />
 
-                   <adaptor id="meshAdaptor" uid="meshAdaptorUid" class="::visuVTKAdaptor::Mesh" objectId="mesh">
-                        <config renderer="default" transform="transformMesh" autoresetcamera="no" picker="myPicker" />
-                   </adaptor>
+                    <adaptor id="modelSeries" uid="modelseriesAdaptor" class="::visuVTKAdaptor::ModelSeries" objectId="modelSeries">
+                         <config renderer="default" transform="transformMesh" autoresetcamera="no" picker="myPicker" />
+                    </adaptor>
 
-                   <adaptor id="transformAdaptor" class="::visuVTKAdaptor::Transform" objectId="transform">
+                   <adaptor id="transformAdaptor" class="::visuVTKAdaptor::Transform" objectId="resultMatrix">
                        <config renderer="default" transform="transformMesh"/>
                    </adaptor>
 
@@ -136,6 +137,10 @@
                 <framerate>60</framerate>
             </service>
 
+            <service uid="extractObject" type="::ctrlCamp::ICamp" impl="::ctrlCamp::SExtractObj" autoConnect="no">
+                <extract from="@values.seriesDB.values.0" to="modelSeries" />
+            </service>
+
             <item key="markerTL">
                 <object uid="markerTLUid" type="::arData::MarkerTL" />
             </item>
@@ -146,6 +151,14 @@
 
             <item key="transform">
                 <object uid="transform" type="::fwData::TransformationMatrix3D" />
+            </item>
+
+            <item key="modelSeries">
+                <object uid="modelSeries" type="::fwMedData::ModelSeries"/>
+            </item>
+
+            <item key="image">
+                <object uid="image" type="::fwData::Image"/>
             </item>
 
             <item key="camera">
@@ -170,30 +183,60 @@
                 </object>
             </item>
 
+            <item key="staticTransform">
+                <object uid="staticTransform" type="::fwData::TransformationMatrix3D">
+                    <matrix>
+                    <![CDATA[
+                        1 0 0 -200
+                        0 1 0 -246
+                        0 0 1 -256
+                        0 0 0 1
+                    ]]>
+                    </matrix>
+                </object>
+            </item>
+
+            <item key="resultMatrix">
+                <object uid="resultMatrix" type="::fwData::TransformationMatrix3D">
+                    <service uid="concatenate" impl="::maths::SConcatenateMatrices">
+                        <matrix>transform</matrix>
+                        <matrix>staticTransform</matrix>
+                    </service>
+                </object>
+            </item>
+
+
             <item key="cameraTransform">
                 <object uid="cameraTransform" type="::fwData::TransformationMatrix3D" />
             </item>
 
-            <item key="image">
-                <object uid="image" type="::fwData::Image" />
+            <item key="seriesDB" >
+                <object uid="seriesDB" type="::fwMedData::SeriesDB">
+                    <service uid="loader" type="::io::IReader" impl="::ioAtoms::SReader" autoConnect="no">
+                        <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/liver.jsonz</file>
+                        <patcher context="MedicalData" version="V09ALA" />
+
+                        <archive backend="jsonz">
+                            <extension>.jsonz</extension>
+                        </archive>
+
+                        <extensions>
+                            <extension>.jsonz</extension>
+                        </extensions>
+
+                    </service>
+                </object>
             </item>
 
-
-            <item key="mesh">
-                 <object uid="mesh" type="::fwData::Mesh">
-
-               <!--<service uid="scene" impl="::vtkSimpleMesh::SRenderer" autoConnect="yes" />-->
-                   <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
-                       <file>/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/cube.vtk</file>
-                   </service>
-               </object>
-            </item>
 
             <start uid="androidCamera" />
             <start uid="extractDeviceInfo" />
             <start uid="myFrame" />
 
-            <start uid="meshReader" />
+            <start uid="loader" />
+            <start uid="extractObject"/>
+            <start uid="concatenate" />
+
 
             <start uid="synchronizer" />
             <start uid="tracker" />

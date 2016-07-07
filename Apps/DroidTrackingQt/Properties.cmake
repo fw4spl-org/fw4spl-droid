@@ -13,6 +13,8 @@ set( REQUIREMENTS
     dataReg
     arDataReg
 
+    ctrlCamp
+
     servicesReg
     launcherDroid
     droidPlugin
@@ -24,13 +26,16 @@ set( REQUIREMENTS
 
     io
     ioVTK
+    ioAtoms
     
     ctrlCamera
     videoTools
     visuVideoAndroid
+    maths
     
     tracker
     trackerAruco
+    patchMedicalData
 )
 set( PLATFORM DROID)
 
