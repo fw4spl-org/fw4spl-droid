@@ -23,6 +23,7 @@
 #include <QGuiApplication>
 #include <QtPlatformSupport/private/qgenericunixfontdatabase_p.h>
 #include <QtPlatformSupport/private/qgenericunixeventdispatcher_p.h>
+#include <QtPlatformSupport/private/qopenglcompositorbackingstore_p.h>
 #include <qpa/qplatformwindow.h>
 
 #include <QApplication>
@@ -56,12 +57,8 @@ bool DroidIntegration::hasCapability(QPlatformIntegration::Capability cap) const
 {
     switch (cap)
     {
-        case ThreadedPixmaps: return true;
         case OpenGL: return true;
         case ThreadedOpenGL: return true;
-        case ApplicationState: return true;
-        case NativeWidgets: return true;
-        case ForeignWindows: return true;
         default: return QPlatformIntegration::hasCapability(cap);
     }
 }

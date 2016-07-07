@@ -41,6 +41,4 @@ private:
     QPlatformScreen* m_screen;
 };
 
-QT_END_NAMESPACE
-
 #endif // __DROIDPLUGIN_DROIDINTEGRATION_HPP__

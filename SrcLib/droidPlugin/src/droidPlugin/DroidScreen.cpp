@@ -12,6 +12,7 @@
 
 #include <fwRuntime/profile/Profile.hpp>
 
+
 class DroidPlatformContext : public QEGLPlatformContext
 {
 
@@ -80,13 +81,8 @@ void DroidScreen::createAndSetPlatformContext()
         platformFormat.setRedBufferSize(eglContext->getColorSize());
         platformFormat.setGreenBufferSize(eglContext->getColorSize());
         platformFormat.setBlueBufferSize(eglContext->getColorSize());
-        m_depth  = 32;
-        m_format = QImage::Format_RGB32;
-
-        if (!qEnvironmentVariableIsEmpty("QT_QPA_EGLFS_MULTISAMPLE"))
-        {
-            platformFormat.setSamples(4);
-        }
+        m_depth  = eglContext->getDepthSize();
+        m_format = QImage::Format_ARGB32;
 
         QEGLPlatformContext *platformContext = new DroidPlatformContext(platformFormat, 0, eglContext->getDisplay());
         m_platformContext = platformContext;
