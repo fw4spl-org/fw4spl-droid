@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2016.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -26,6 +26,8 @@ public:
     ARANDROIDTOOLS_API virtual ~Camera();
 
     ARANDROIDTOOLS_API void open(unsigned int cameraId);
+
+    ARANDROIDTOOLS_API void release();
 
     ARANDROIDTOOLS_API void fetchFrame(unsigned char* frame);
 
@@ -69,9 +71,14 @@ public:
         return m_autoFocus;
     }
 
+    ARANDROIDTOOLS_API void startPreview();
+
+    ARANDROIDTOOLS_API void stopPreview();
+
     ::boost::signals2::signal<void( unsigned char*)> m_sigFrameFetched;
 
 private:
+
     unsigned int m_cameraId;
 
     int m_format;
@@ -81,6 +88,7 @@ private:
     int m_frameRate;
 
     bool m_autoFocus;
+    bool m_isOpen;
 
 };
 

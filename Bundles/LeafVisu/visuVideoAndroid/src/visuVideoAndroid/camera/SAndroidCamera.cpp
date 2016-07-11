@@ -25,38 +25,20 @@ namespace camera
 fwServicesRegisterMacro( ::fwServices::IService, ::visuVideoAndroid::camera::SAndroidCamera, ::extData::FrameTL );
 
 //-----------------------------------------------------------------------------
-
-const ::fwCom::Signals::SignalKeyType SAndroidCamera::s_FRAME_FETCHED_SIG      = "frameFetched";
-const ::fwCom::Signals::SignalKeyType SAndroidCamera::s_GRAY_FRAME_FETCHED_SIG = "grayFrameFetched";
-const ::fwCom::Signals::SignalKeyType SAndroidCamera::s_CAMERA_OPENED_SIG      = "cameraOpened";
-
-const ::fwCom::Slots::SlotKeyType SAndroidCamera::s_OPEN_CAMERA_SLOT = "openCamera";
-
+const ::fwCom::Signals::SignalKeyType SAndroidCamera::s_CAMERA_OPENED_SIG = "cameraOpened";
+const ::fwCom::Slots::SlotKeyType SAndroidCamera::s_START_CAMERA_SLOT     = "startCamera";
 //-----------------------------------------------------------------------------
 
-SAndroidCamera::SAndroidCamera() throw()
+SAndroidCamera::SAndroidCamera() throw() : m_cameraId(0),
+                                           m_width(320),
+                                           m_height(240),
+                                           m_frameRate(60),
+                                           m_autoFocus(true),
+                                           m_camIsStarted(false)
 {
     SLM_TRACE_FUNC();
-
-    m_sigFrameFetched = FrameFetchedSignalType::New();
-    ::fwCom::HasSignals::m_signals(s_FRAME_FETCHED_SIG, m_sigFrameFetched);
-
-    m_sigGrayFrameFetched = GrayFrameFetchedSignalType::New();
-    ::fwCom::HasSignals::m_signals(s_GRAY_FRAME_FETCHED_SIG, m_sigGrayFrameFetched);
-
-    m_sigCameraOpened = CameraOpenedSignalType::New();
-    ::fwCom::HasSignals::m_signals(s_CAMERA_OPENED_SIG, m_sigCameraOpened);
-
-    m_slotOpenCamera = ::fwCom::newSlot( &SAndroidCamera::openCamera, this );
-    ::fwCom::HasSlots::m_slots( s_OPEN_CAMERA_SLOT, m_slotOpenCamera);
-
-
-    ::fwCom::HasSlots::m_slots.setWorker( m_associatedWorker );
-
-    m_cameraId  = 0;
-    m_autoFocus = true;
-    m_width     = 320;
-    m_height    = 240;
+    m_sigCameraOpened = newSignal< CameraOpenedSignalType >( s_CAMERA_OPENED_SIG );
+    newSlot(s_START_CAMERA_SLOT, &SAndroidCamera::startCamera, this);
 }
 
 //-----------------------------------------------------------------------------
@@ -111,6 +93,10 @@ void SAndroidCamera::starting() throw(::fwTools::Failed)
 void SAndroidCamera::stopping() throw(::fwTools::Failed)
 {
     SLM_TRACE_FUNC();
+    if(m_camIsStarted)
+    {
+        m_camera->release();
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -125,23 +111,33 @@ void SAndroidCamera::info(std::ostream &_sstream )
 void SAndroidCamera::updating() throw(::fwTools::Failed)
 {
     SLM_TRACE_FUNC();
-    this->openCamera();
+    this->startCamera();
 }
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::openCamera()
+void SAndroidCamera::startCamera(bool state)
 {
     SLM_TRACE_FUNC();
+    if(state)
+    {
+        m_camera->open(m_cameraId);
 
-    m_camera->open( m_cameraId);
+        m_sigCameraOpened->asyncEmit( m_camera->getFormat(), m_camera->getWidth(), m_camera->getHeight() );
 
-    m_sigCameraOpened->asyncEmit( m_camera->getFormat(), m_camera->getWidth(), m_camera->getHeight() );
+        const size_t width  = static_cast<size_t>(m_camera->getWidth());
+        const size_t height = static_cast<size_t>(m_camera->getHeight());
+        m_timeline->setMaximumSize(10);
+        m_timeline->initPoolSize(width, height, ::fwTools::Type::s_UINT8, 4);
 
-    const size_t width  = static_cast<size_t>(m_camera->getWidth());
-    const size_t height = static_cast<size_t>(m_camera->getHeight());
-    m_timeline->setMaximumSize(10);
-    m_timeline->initPoolSize(width, height, ::fwTools::Type::s_UINT8, 4);
+        m_camera->startPreview();
+        m_camIsStarted = true;
+    }
+    else
+    {
+        m_camera->stopPreview();
+        m_camIsStarted = false;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -153,7 +149,6 @@ void SAndroidCamera::fetchFrame(unsigned char* rgb)
     const ::fwCore::HiResClock::HiResClockType timestamp = ::fwCore::HiResClock::getTimeInMilliSec();
 
     SPTR(::extData::FrameTL::BufferType) buffer = m_timeline->createBuffer(timestamp);
-//    ::boost::uint64_t* destBuffer               = reinterpret_cast< ::boost::uint64_t* >( buffer->addElement(0) );
 
     ::boost::uint32_t* destBuffer = reinterpret_cast< ::boost::uint32_t* >( buffer->addElement(0) );
 
@@ -177,11 +172,10 @@ void SAndroidCamera::fetchFrame(unsigned char* rgb)
     ::extData::TimeLine::ObjectPushedSignalType::sptr sig;
     sig = m_timeline->signal< ::extData::TimeLine::ObjectPushedSignalType >(::extData::TimeLine::s_OBJECT_PUSHED_SIG );
     sig->asyncEmit(timestamp);
-
 }
 
 //-----------------------------------------------------------------------------
 
-}
-}
+} //namespace camera
+} //namespace visuVideoAndroid
 

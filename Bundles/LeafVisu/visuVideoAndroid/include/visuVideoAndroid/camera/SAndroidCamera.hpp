@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2016.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -40,19 +40,10 @@ public:
     VISUVIDEOANDROID_API SAndroidCamera() throw();
     VISUVIDEOANDROID_API virtual ~SAndroidCamera() throw();
 
-    void fetchFrame(unsigned char* rgb);
-
-    VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_FRAME_FETCHED_SIG;
-    typedef ::fwCom::Signal<void (const unsigned char *)> FrameFetchedSignalType;
-
-    VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_GRAY_FRAME_FETCHED_SIG;
-    typedef ::fwCom::Signal<void (const unsigned char *, int, int)> GrayFrameFetchedSignalType;
-
     VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_CAMERA_OPENED_SIG;
     typedef ::fwCom::Signal<void (int,int,int)> CameraOpenedSignalType;
 
-    VISUVIDEOANDROID_API static const ::fwCom::Slots::SlotKeyType s_OPEN_CAMERA_SLOT;
-    typedef ::fwCom::Slot<void ()> OpenCameraSlotType;
+    VISUVIDEOANDROID_API static const ::fwCom::Slots::SlotKeyType s_START_CAMERA_SLOT;
 
 protected:
 
@@ -62,9 +53,10 @@ protected:
     VISUVIDEOANDROID_API virtual void updating() throw(::fwTools::Failed);
     VISUVIDEOANDROID_API virtual void info(std::ostream &_sstream );
 
-    VISUVIDEOANDROID_API void openCamera();
-
 private:
+
+    void startCamera(bool state = true);
+    void fetchFrame(unsigned char* rgb);
 
     unsigned int m_cameraId;
 
@@ -73,13 +65,11 @@ private:
     int m_frameRate;
 
     bool m_autoFocus;
+    bool m_camIsStarted;
 
     ::extData::FrameTL::sptr m_timeline;
 
-    FrameFetchedSignalType::sptr m_sigFrameFetched;
-    GrayFrameFetchedSignalType::sptr m_sigGrayFrameFetched;
     CameraOpenedSignalType::sptr m_sigCameraOpened;
-    OpenCameraSlotType::sptr m_slotOpenCamera;
 
     ::arAndroidTools::Camera* m_camera;
 };

@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2016.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -183,7 +183,13 @@ static void notifyFrameFetched(JNIEnv *env, jobject thiz, int id, jbyteArray dat
 
 //-----------------------------------------------------------------------------
 
-Camera::Camera()
+Camera::Camera() : m_cameraId(0),
+                   m_format(0),
+                   m_width(600),
+                   m_height(800),
+                   m_frameRate(0),
+                   m_autoFocus(false),
+                   m_isOpen(false)
 {
     SLM_TRACE_FUNC();
     current_camera = this;
@@ -208,38 +214,78 @@ Camera::Camera()
 Camera::~Camera()
 {
     SLM_TRACE_FUNC();
+    this->release();
 }
+
+//-----------------------------------------------------------------------------
+
+void Camera::release()
+{
+    if(m_isOpen)
+    {
+        JNIHelper* helper = JNIHelper::getInstance();
+        helper->callMethod("release");
+        m_isOpen = false;
+    }
+}
+
 //-----------------------------------------------------------------------------
 
 void Camera::open(unsigned int cameraId)
 {
     SLM_TRACE_FUNC();
-    JNIHelper* helper = JNIHelper::getInstance();
+    if(!m_isOpen)
+    {
+        JNIHelper* helper = JNIHelper::getInstance();
 
-    m_cameraId = cameraId;
+        m_cameraId = cameraId;
 
-    // Setup camera
-    helper->callMethodBool("setAutoFocus", m_autoFocus);
-    helper->callMethodInt("setPreviewWidth", m_width);
-    helper->callMethodInt("setPreviewHeight", m_height);
-    helper->callMethodInt("setPreviewFrameRate", m_frameRate);
+        // Setup camera
+        helper->callMethodBool("setAutoFocus", m_autoFocus);
+        helper->callMethodInt("setPreviewWidth", m_width);
+        helper->callMethodInt("setPreviewHeight", m_height);
+        helper->callMethodInt("setPreviewFrameRate", m_frameRate);
 
-    // camera new instance !
-    helper->callMethodInt("open",m_cameraId);
-    helper->callMethodInt("setCameraDisplayOrientation",0);
+        // camera new instance !
+        helper->callMethodInt("open", m_cameraId);
+        helper->callMethodInt("setCameraDisplayOrientation",0);
 
-    // get camera parameters
-    m_format    = helper->callIntMethod("getPreviewFormat");
-    m_width     = helper->callIntMethod("getPreviewWidth");
-    m_height    = helper->callIntMethod("getPreviewHeight");
-    m_frameRate = helper->callIntMethod("getPreviewFrameRate");
+        // get camera parameters
+        m_format    = helper->callIntMethod("getPreviewFormat");
+        m_width     = helper->callIntMethod("getPreviewWidth");
+        m_height    = helper->callIntMethod("getPreviewHeight");
+        m_frameRate = helper->callIntMethod("getPreviewFrameRate");
 
-    g_width  = m_width;
-    g_height = m_height;
+        g_width  = m_width;
+        g_height = m_height;
 
-    helper->callMethodBool("fetchEachFrame", true);
-    helper->callMethod("startPreview");
+        helper->callMethodBool("fetchEachFrame", true);
+        m_isOpen = true;
+    }
+}
 
+//-----------------------------------------------------------------------------
+
+void Camera::startPreview()
+{
+    SLM_WARN_IF("Camera must be openned", !m_isOpen);
+    if(m_isOpen)
+    {
+        JNIHelper* helper = JNIHelper::getInstance();
+        helper->callMethod("startPreview");
+    }
+}
+
+//-----------------------------------------------------------------------------
+
+void Camera::stopPreview()
+{
+    SLM_WARN_IF("Camera must be openned", !m_isOpen);
+    if(m_isOpen)
+    {
+        JNIHelper* helper = JNIHelper::getInstance();
+        helper->callMethod("stopPreview");
+    }
 }
 
 //-----------------------------------------------------------------------------
