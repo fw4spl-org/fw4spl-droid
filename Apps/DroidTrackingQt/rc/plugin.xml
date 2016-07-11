@@ -54,6 +54,7 @@
                 <state active="false" />
                 <slots>
                     <slot>androidCamera/startCamera</slot>
+                    <slot>load/setInexecutable</slot>
                 </slots>
             </service>
 
@@ -196,7 +197,6 @@
                 </object>
             </item>
 
-
             <item key="cameraTransform">
                 <object uid="cameraTransform" type="::fwData::TransformationMatrix3D" />
             </item>
@@ -218,7 +218,6 @@
                     </service>
                 </object>
             </item>
-
 
             <start uid="androidCamera" />
             <start uid="extractDeviceInfo" />
