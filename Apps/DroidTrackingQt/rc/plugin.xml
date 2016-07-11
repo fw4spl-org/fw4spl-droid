@@ -32,13 +32,13 @@
             <service uid="toolBar" type="::fwGui::IToolBarSrv" impl="::gui::aspect::SDefaultToolBar" autoConnect="no" >
                 <gui>
                     <layout>
-                        <menuItem name="start" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/camera.png" />
+                        <menuItem name="start/pause" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/start.png" icon2="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/pause.png" style="check" />
                         <separator />
                         <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/plus.png" />
                     </layout>
                 </gui>
                 <registry>
-                     <menuItem sid="start" start="yes" />
+                     <menuItem sid="startPause" start="yes" />
                     <menuItem sid="load" start="yes" />
                 </registry>
             </service>
@@ -50,9 +50,10 @@
                 </slots>
             </service>
 
-            <service uid="start" type="::fwGui::IActionSrv" impl="::gui::action::SSlotCaller" autoConnect="no">
+           <service uid="startPause" type="::fwGui::IActionSrv" impl="::gui::action::SBooleanSlotCaller" autoConnect="no">
+                <state active="false" />
                 <slots>
-                    <slot>androidCamera/update</slot>
+                    <slot>androidCamera/startCamera</slot>
                 </slots>
             </service>
 
