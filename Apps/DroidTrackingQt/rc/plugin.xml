@@ -12,7 +12,7 @@
         <id>DroidTrackingQtConfig</id>
         <config>
         <object type="::fwData::Composite">
-           <service uid="myFrame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no" >
+           <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no" >
                 <gui>
                     <frame>
                         <name>TestTrackingQt</name>
@@ -32,17 +32,14 @@
             <service uid="toolBar" type="::fwGui::IToolBarSrv" impl="::gui::aspect::SDefaultToolBar" autoConnect="no" >
                 <gui>
                     <layout>
-                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/showHide.png" />
+                        <menuItem name="start" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/camera.png" />
                         <separator />
-                        <menuItem name="Show/Hide" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/show.png" icon2="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/hide.png" style="check" />
-                        <separator />
-                        <menuItem name="start" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/start.png" />
+                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/plus.png" />
                     </layout>
                 </gui>
                 <registry>
+                     <menuItem sid="start" start="yes" />
                     <menuItem sid="load" start="yes" />
-                    <menuItem sid="showMesh" start="yes" />
-                    <menuItem sid="start" start="yes" />
                 </registry>
             </service>
 
@@ -50,13 +47,6 @@
                 <slots>
                     <slot>loader/update</slot>
                     <slot>extractObject/update</slot>
-                </slots>
-            </service>
-
-           <service uid="showMesh" type="::fwGui::IActionSrv" impl="::gui::action::SBooleanSlotCaller" autoConnect="no">
-                <state active="true" />
-                <slots>
-                    <slot>meshAdaptorUid/updateVisibility</slot>
                 </slots>
             </service>
 
@@ -231,12 +221,11 @@
 
             <start uid="androidCamera" />
             <start uid="extractDeviceInfo" />
-            <start uid="myFrame" />
+            <start uid="frame" />
 
             <start uid="loader" />
             <start uid="extractObject"/>
             <start uid="concatenate" />
-
 
             <start uid="synchronizer" />
             <start uid="tracker" />
