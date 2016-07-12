@@ -35,11 +35,14 @@
                         <menuItem name="start/pause" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/start.png" icon2="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/pause.png" style="check" />
                         <separator />
                         <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/plus.png" />
+                        <separator />
+                        <editor />
                     </layout>
                 </gui>
                 <registry>
-                     <menuItem sid="startPause" start="yes" />
+                    <menuItem sid="startPause" start="yes" />
                     <menuItem sid="load" start="yes" />
+                    <editor sid="transformEditor" start="yes"/>
                 </registry>
             </service>
 
@@ -193,7 +196,15 @@
                     <service uid="concatenate" impl="::maths::SConcatenateMatrices">
                         <matrix>transform</matrix>
                         <matrix>staticTransform</matrix>
+                        <matrix>registrationMatrix</matrix>
                     </service>
+                </object>
+            </item>
+
+            <item key="registrationMatrix">
+                <object uid="registrationMatrix" type="::fwData::TransformationMatrix3D">
+                    <service uid="transformEditor" impl="::uiDroidQt::STransformEditor" type="::gui::editor::IEditor" autoConnect="no"/>
+                    <service uid="transformManager" impl="::droidTools::STransformManager" type="::fwServices::IController" autoConnect="yes" />
                 </object>
             </item>
 
@@ -219,6 +230,11 @@
                 </object>
             </item>
 
+           <connect>
+                <signal>transformEditor/incremented</signal>
+                <slot>transformManager/increment</slot>
+            </connect>
+
             <start uid="androidCamera" />
             <start uid="extractDeviceInfo" />
             <start uid="frame" />
@@ -230,6 +246,8 @@
             <start uid="synchronizer" />
             <start uid="tracker" />
             <start uid="markerRegistration" />
+
+            <start uid="transformManager" />
 
             <update uid="extractDeviceInfo" />
 

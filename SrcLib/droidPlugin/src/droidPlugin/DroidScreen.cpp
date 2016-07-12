@@ -30,6 +30,12 @@ public:
         DroidScreen *screen = static_cast<DroidScreen *>(window->screen());
         return screen->surface();
     }
+
+//    void swapBuffers(QPlatformSurface *surface)
+//    {
+//        DroidContext* eglContext = DroidContext::getInstance();
+//        eglContext->swap();
+//    }
 };
 
 //-----------------------------------------------------------------------------
@@ -37,7 +43,7 @@ public:
 DroidScreen::DroidScreen(EGLNativeDisplayType display) :
     m_depth(32),
     m_format(QImage::Format_Invalid),
-    m_platformContext(0),
+    m_platformContext(nullptr),
     m_surface(0)
 {
     SLM_TRACE_FUNC();
@@ -84,8 +90,10 @@ void DroidScreen::createAndSetPlatformContext()
         m_depth  = eglContext->getDepthSize();
         m_format = QImage::Format_ARGB32;
 
+
         QEGLPlatformContext *platformContext = new DroidPlatformContext(platformFormat, 0, eglContext->getDisplay());
         m_platformContext = platformContext;
+
 
         OSLM_DEBUG(" w = "<<eglContext->getWidth()<<" h = "<<eglContext->getHeight());
         m_geometry = QRect(0,0,eglContext->getWidth(),eglContext->getHeight());

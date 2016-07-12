@@ -36,6 +36,9 @@ set( REQUIREMENTS
     tracker
     trackerAruco
     patchMedicalData
+
+    droidTools
+    uiDroidQt
 )
 set( PLATFORM DROID)
 
