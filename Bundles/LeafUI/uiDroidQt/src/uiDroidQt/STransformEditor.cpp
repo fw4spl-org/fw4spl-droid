@@ -71,15 +71,18 @@ void STransformEditor::starting() throw (::fwTools::Failed)
     m_buttonGroupAxis = new QButtonGroup(groupBoxAxis);
 
     QRadioButton *buttonX = new QRadioButton ( tr("X"), groupBoxAxis );
+    buttonX->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_buttonGroupAxis->addButton(buttonX, 0);
     layoutGroupBoxAxis->addWidget(buttonX);
     buttonX->setChecked(true);
 
     QRadioButton *buttonY = new QRadioButton ( tr("Y"), groupBoxAxis );
+    buttonY->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_buttonGroupAxis->addButton(buttonY, 1);
     layoutGroupBoxAxis->addWidget(buttonY);
 
     QRadioButton *buttonZ = new QRadioButton ( tr("Z"), groupBoxAxis );
+    buttonZ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_buttonGroupAxis->addButton(buttonZ, 2);
     layoutGroupBoxAxis->addWidget(buttonZ);
 
