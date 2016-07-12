@@ -100,6 +100,7 @@ bool DroidContext::initEGLSurface()
         EGL_BLUE_SIZE, 8,
         EGL_GREEN_SIZE, 8,
         EGL_RED_SIZE, 8,
+        EGL_ALPHA_SIZE, 8,
         EGL_DEPTH_SIZE,24,
         EGL_SAMPLES, m_msaaSize,
         EGL_NONE
@@ -122,12 +123,14 @@ bool DroidContext::initEGLSurface()
             EGL_BLUE_SIZE, 8,
             EGL_GREEN_SIZE, 8,
             EGL_RED_SIZE, 8,
+            EGL_ALPHA_SIZE, 8,
             EGL_DEPTH_SIZE, 24,
             EGL_NONE
         };
 
         m_msaaSize = 1;
         eglChooseConfig(m_display, attribs, &m_config, 1, &num_configs);
+
     }
 
     if (!num_configs)
@@ -141,6 +144,7 @@ bool DroidContext::initEGLSurface()
             EGL_BLUE_SIZE, 8,
             EGL_GREEN_SIZE, 8,
             EGL_RED_SIZE, 8,
+            EGL_ALPHA_SIZE, 8,
             EGL_DEPTH_SIZE, 16,
             EGL_NONE
         };
@@ -180,7 +184,7 @@ bool DroidContext::initEGLContext()
         EGL_NONE
     };
 
-    m_context = eglCreateContext(m_display, m_config, NULL, context_attribs);
+    m_context = eglCreateContext(m_display, m_config, EGL_NO_CONTEXT, context_attribs);
 
     if (eglMakeCurrent(m_display, m_surface, m_surface, m_context) == EGL_FALSE)
     {
