@@ -58,7 +58,7 @@ DroidTheme::DroidTheme()
 
     // default in case the style has not set a font
     setenv("QT_QPA_FONTDIR","/system/fonts",false);
-    m_systemFont = QFont(QLatin1String("Roboto"), 14.0 * 100 / 72); // keep default size the same after changing from 100 dpi to 72 dpi
+    m_systemFont = QFont(QLatin1String("Roboto"), 14.0); // keep default size the same after changing from 100 dpi to 72 dpi
     QApplication::setFont(m_systemFont);
 }
 
