@@ -87,7 +87,9 @@ void STransformEditor::starting() throw (::fwTools::Failed)
     layoutGroupBoxAxis->addWidget(buttonZ);
 
     m_buttonIncr = new QPushButton(tr("+"));
+    m_buttonIncr->setAutoRepeat(true);
     m_buttonDecr = new QPushButton(tr("-"));
+    m_buttonDecr->setAutoRepeat(true);
     QHBoxLayout* layoutGroupBoxButton = new QHBoxLayout(container);
     layoutGroupBoxButton->addWidget(m_buttonIncr);
     layoutGroupBoxButton->addWidget(m_buttonDecr);
