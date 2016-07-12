@@ -1,0 +1,10 @@
+<plugin id="uiDroidQt" class="::uiDroidQt::Plugin" version="@DASH_VERSION@">
+    <library name="uiDroidQt" />
+    
+    <extension implements="::fwServices::registry::ServiceFactory">
+        <type>::gui::editor::IEditor</type>
+        <service>::uiDroidQt::STransformEditor</service>
+        <object>::fwData::TransformationMatrix3D</object>
+    </extension>
+
+</plugin>
