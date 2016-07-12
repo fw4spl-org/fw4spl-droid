@@ -182,9 +182,9 @@
                 <object uid="staticTransform" type="::fwData::TransformationMatrix3D">
                     <matrix>
                     <![CDATA[
-                        1 0 0 -200
-                        0 1 0 -246
-                        0 0 1 -256
+                        1 0 0 1
+                        0 1 0 1
+                        0 0 1 350
                         0 0 0 1
                     ]]>
                     </matrix>
@@ -215,7 +215,8 @@
             <item key="seriesDB" >
                 <object uid="seriesDB" type="::fwMedData::SeriesDB">
                     <service uid="loader" type="::io::IReader" impl="::ioAtoms::SReader" autoConnect="no">
-                        <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/liver.jsonz</file>
+                        <!--<file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/liver.jsonz</file>-->
+                        <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/Liver_ColorectalMetastasis.jsonz</file>
                         <patcher context="MedicalData" version="V09ALA" />
 
                         <archive backend="jsonz">
