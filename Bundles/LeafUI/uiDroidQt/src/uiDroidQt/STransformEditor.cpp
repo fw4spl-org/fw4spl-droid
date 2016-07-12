@@ -35,7 +35,7 @@ fwServicesRegisterMacro( ::gui::editor::IEditor, ::uiDroidQt::STransformEditor, 
 static const ::fwCom::Signals::SignalKeyType s_INCREMENTED_SIG = "incremented";
 //------------------------------------------------------------------------------
 
-STransformEditor::STransformEditor() throw() : m_selectedAxis("x"), m_increment(1)
+STransformEditor::STransformEditor() throw() : m_selectedAxis("x"), m_increment(10)
 {
     m_sigIncremented = newSignal< IncrSignalType >(s_INCREMENTED_SIG);
 }
@@ -66,7 +66,7 @@ void STransformEditor::starting() throw (::fwTools::Failed)
     QHBoxLayout* layout = new QHBoxLayout(container);
 
     QGroupBox* groupBoxAxis         = new QGroupBox(container);
-    QVBoxLayout* layoutGroupBoxAxis = new QVBoxLayout(groupBoxAxis);
+    QHBoxLayout* layoutGroupBoxAxis = new QHBoxLayout(groupBoxAxis);
     groupBoxAxis->setLayout(layoutGroupBoxAxis);
     m_buttonGroupAxis = new QButtonGroup(groupBoxAxis);
 
@@ -85,14 +85,16 @@ void STransformEditor::starting() throw (::fwTools::Failed)
 
     m_buttonIncr = new QPushButton(tr("+"));
     m_buttonDecr = new QPushButton(tr("-"));
+    QHBoxLayout* layoutGroupBoxButton = new QHBoxLayout(container);
+    layoutGroupBoxButton->addWidget(m_buttonIncr);
+    layoutGroupBoxButton->addWidget(m_buttonDecr);
 
     layout->addWidget(groupBoxAxis);
-    layout->addWidget(m_buttonIncr);
-    layout->addWidget(m_buttonDecr);
+    layout->addLayout(layoutGroupBoxButton);
 
     QObject::connect(m_buttonGroupAxis.data(), SIGNAL(buttonClicked(int)), this, SLOT(onChangeAxis(int)));
-    QObject::connect(m_buttonIncr.data(), &QPushButton::clicked, this, &STransformEditor::onIncrement );
-    QObject::connect(m_buttonDecr.data(), &QPushButton::clicked, this, &STransformEditor::onDecrement );
+    QObject::connect(m_buttonIncr.data(), &QPushButton::pressed, this, &STransformEditor::onIncrement );
+    QObject::connect(m_buttonDecr.data(), &QPushButton::pressed, this, &STransformEditor::onDecrement );
 }
 
 //------------------------------------------------------------------------------
@@ -100,8 +102,8 @@ void STransformEditor::starting() throw (::fwTools::Failed)
 void STransformEditor::stopping() throw (::fwTools::Failed)
 {
     QObject::disconnect(m_buttonGroupAxis.data(), SIGNAL(buttonClicked(int)), this, SLOT(onChangeAxis(int)));
-    QObject::disconnect(m_buttonIncr.data(), &QPushButton::clicked, this, &STransformEditor::onIncrement );
-    QObject::disconnect(m_buttonDecr.data(), &QPushButton::clicked, this, &STransformEditor::onDecrement );
+    QObject::disconnect(m_buttonIncr.data(), &QPushButton::pressed, this, &STransformEditor::onIncrement );
+    QObject::disconnect(m_buttonDecr.data(), &QPushButton::pressed, this, &STransformEditor::onDecrement );
 
     this->getContainer()->clean();
     this->destroy();
