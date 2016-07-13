@@ -8,6 +8,8 @@
 
 #include <fwServices/macros.hpp>
 
+#include <android_native_app_glue.h>
+
 //--------------------------------------------------------------------------------
 
 const int32_t SWAPINTERVAL_DEFAULT = 1;

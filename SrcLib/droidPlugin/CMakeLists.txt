@@ -13,11 +13,11 @@ fwInclude(${CMAKE_CURRENT_BINARY_DIR}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${FREETYPE_INCLUDE_DIRS}
-    ${EXTERNAL_LIBRARIES}/include/QtGui/5.5.1/
-    ${EXTERNAL_LIBRARIES}/include/QtGui/5.5.1/QtGui
-    ${EXTERNAL_LIBRARIES}/include/QtCore/5.5.1/
-    ${EXTERNAL_LIBRARIES}/include/QtCore/5.5.1/QtCore
-    ${EXTERNAL_LIBRARIES}/include/QtPlatformSupport/5.5.1/
+    ${EXTERNAL_LIBRARIES}/include/QtGui/${Qt5_VERSION}/
+    ${EXTERNAL_LIBRARIES}/include/QtGui/${Qt5_VERSION}/QtGui
+    ${EXTERNAL_LIBRARIES}/include/QtCore/${Qt5_VERSION}/
+    ${EXTERNAL_LIBRARIES}/include/QtCore/${Qt5_VERSION}/QtCore
+    ${EXTERNAL_LIBRARIES}/include/QtPlatformSupport/${Qt5_VERSION}/
 )
 
 fwLink(
