@@ -1,0 +1,251 @@
+
+<plugin id="DesktopTrackingQt" version="@DASH_VERSION@" >
+
+    <requirement id="dataReg" />
+    <requirement id="arDataReg" />
+    <requirement id="servicesReg" />
+    <requirement id="visuVTKQt" />
+
+    <xi:include href="configurations/deviceParameters.xml" xmlns:xi="http://www.w3.org/2003/XInclude" />
+
+    <extension implements="::fwServices::registry::AppConfig">
+        <id>DesktopTrackingQtConfig</id>
+        <config>
+        <object type="::fwData::Composite">
+           <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no" >
+                <gui>
+                    <frame>
+                        <name>TestTrackingQt</name>
+                        <icon>@BUNDLE_PREFIX@/DesktopTrackingQt_0-1/tuto.ico</icon>
+<!--                        <minSize width="2048" height="1440"/> -->
+                    </frame>
+                    <toolBar >
+                        <toolBitmapSize height= "100" width="100" />
+                    </toolBar>
+                </gui>
+                <registry>
+                    <toolBar sid="toolBar" start="yes" />
+                    <view sid="scene" start="yes" />
+                </registry>
+            </service>
+
+            <service uid="toolBar" type="::fwGui::IToolBarSrv" impl="::gui::aspect::SDefaultToolBar" autoConnect="no" >
+                <gui>
+                    <layout>
+                        <menuItem name="start/pause" icon="@BUNDLE_PREFIX@/DesktopTrackingQt_0-1/icons/start.png" icon2="@BUNDLE_PREFIX@/DesktopTrackingQt_0-1/icons/pause.png" style="check" />
+                        <separator />
+                        <menuItem name="load" icon="@BUNDLE_PREFIX@/DesktopTrackingQt_0-1/icons/plus.png" />
+                        <separator />
+                        <editor />
+                        <editor />
+                    </layout>
+                </gui>
+                <registry>
+                    <menuItem sid="startPause" start="yes" />
+                    <menuItem sid="load" start="yes" />
+                    <editor sid="transformEditor" start="yes"/>
+                    <editor sid="cameraSelector" start="yes"/>                    
+                </registry>
+            </service>
+
+            <service uid="load" type="::fwGui::IActionSrv" impl="::gui::action::SSlotCaller" autoConnect="no">
+                <slots>
+                    <slot>loader/update</slot>
+                    <slot>extractObject/update</slot>
+                </slots>
+            </service>
+
+           <service uid="startPause" type="::fwGui::IActionSrv" impl="::gui::action::SBooleanSlotCaller" autoConnect="no">
+                <state active="false" />
+                <slots>
+                    <slot>androidCamera/startCamera</slot>
+                    <slot>load/setInexecutable</slot>
+                </slots>
+            </service>
+
+            <service uid="scene" impl="::fwRenderVTK::SRender" type="::fwRender::IRender" autoConnect="yes">
+                <scene autoRender="true">
+                    <renderer id="background" layer="0" background="#000000"/>
+                    <renderer id="default" layer="1" background="#000000" />
+                    <picker id="myPicker" vtkclass="fwVtkCellPicker" />
+
+                    <adaptor id="modelSeries" uid="modelseriesAdaptor" class="::visuVTKAdaptor::ModelSeries" objectId="modelSeries">
+                         <config renderer="default" transform="transformMesh" autoresetcamera="no" picker="myPicker" />
+                    </adaptor>
+
+                   <adaptor id="transformAdaptor" class="::visuVTKAdaptor::Transform" objectId="resultMatrix">
+                       <config renderer="default" transform="transformMesh"/>
+                   </adaptor>
+
+                   <adaptor id="cameraAdaptor" class="::visuVTKARAdaptor::SCamera" objectId="cameraTransform">
+                       <config renderer="default" cameraUID="camera" imageUID="image" />
+                   </adaptor>
+
+                   <adaptor id="videoAdapter" class="::visuVTKARAdaptor::SVideoAdapter" objectId="image">
+                       <config renderer="background" cameraUID="camera"/>
+                   </adaptor>
+
+                    <adaptor id="interactorStyle" class="::visuVTKAdaptor::InteractorStyle" objectId="self">
+                       <config renderer="default" style="FixedInteractorStyle" />
+                   </adaptor>
+
+                </scene>
+            </service>
+
+            <service uid="tracker" impl="::trackerAruco::SArucoTracker" autoConnect="no" worker="tracking">
+                <config>
+                    <timelineVideo>frameTL</timelineVideo>
+                    <camera>camera</camera>
+                    <track>
+                        <marker id="101" timeline="markerTL" />
+                    </track>
+                    <threshold>
+                        <method>ADPT_THRES</method>
+                        <blockSize>7</blockSize>
+                        <constant>7</constant>
+                    </threshold>
+                    <patternWidth>60</patternWidth>
+                    <debugMarkers>yes</debugMarkers>
+                </config>
+            </service>
+
+            <service uid="markerRegistration" impl="::tracker::SHomography" autoConnect="no" worker="registration">
+                <config>
+                    <markerTL>
+                        <key>markerTL</key>
+                    </markerTL>
+                    <camera>
+                        <key>camera</key>
+                    </camera>
+                    <matrixTL>markerMatrixTL</matrixTL>
+                    <patternWidth>60</patternWidth>
+                </config>
+            </service>
+
+            <service uid="synchronizer" impl="::videoTools::SFrameMatrixSynchronizer" autoConnect="no" worker="videoWorker">
+                <frames>
+                    <frame from="frameTL" to="image" />
+                </frames>
+                <matrices>
+                    <timeline from="markerMatrixTL">
+                        <matrix index="0" to="transform" />
+                    </timeline>
+                </matrices>
+                <framerate>60</framerate>
+            </service>
+
+            <service uid="extractObject" type="::ctrlCamp::ICamp" impl="::ctrlCamp::SExtractObj" autoConnect="no">
+                <extract from="@values.seriesDB.values.0" to="modelSeries" />
+            </service>
+
+            <item key="markerTL">
+                <object uid="markerTLUid" type="::arData::MarkerTL" />
+            </item>
+
+            <item key="markerMatrixTL">
+                <object uid="markerMatrixTLUid" type="::extData::MatrixTL" />
+            </item>
+
+            <item key="transform">
+                <object uid="transform" type="::fwData::TransformationMatrix3D" />
+            </item>
+
+            <item key="modelSeries">
+                <object uid="modelSeries" type="::fwMedData::ModelSeries"/>
+            </item>
+
+            <item key="image">
+                <object uid="image" type="::fwData::Image"/>
+            </item>
+
+            <item key="camera">
+                <object uid="camera" type="::arData::Camera">
+                    <service uid="extractDeviceInfo" impl="::ctrlCamera::SExtractDeviceInfo" type="::fwServices::IController" autoConnect="no">
+                        <cameraUid>camera</cameraUid>
+                        <configId>DeviceSelectorServiceConfig</configId>
+                    </service>
+                    <service uid="cameraSelector" impl="::videoQt::editor::SCamera" type="::gui::editor::IEditor" autoConnect="no">
+                        <videoSupport>yes</videoSupport>
+                    </service>
+                </object>
+            </item>
+
+            <item key="frameTL">
+                <object uid="frameTLUid" type="::extData::FrameTL">
+                    <service uid="androidCamera" impl="::videoQt::SFrameGrabber" type="::fwServices::IController" autoConnect="no">
+                        <cameraFwId>camera</cameraFwId>
+                    </service>
+                    <value>50</value>
+                </object>
+            </item>
+
+            <item key="staticTransform">
+                <object uid="staticTransform" type="::fwData::TransformationMatrix3D">
+                    <matrix>
+                    <![CDATA[
+                        1 0 0 -200
+                        0 1 0 -246
+                        0 0 1 -256
+                        0 0 0 1
+                    ]]>
+                    </matrix>
+                </object>
+            </item>
+
+            <item key="resultMatrix">
+                <object uid="resultMatrix" type="::fwData::TransformationMatrix3D">
+                    <service uid="concatenate" impl="::maths::SConcatenateMatrices">
+                        <matrix>transform</matrix>
+                        <!--matrix>staticTransform</matrix-->
+                        <matrix>registrationMatrix</matrix>
+                    </service>
+                </object>
+            </item>
+
+            <item key="registrationMatrix">
+                <object uid="registrationMatrix" type="::fwData::TransformationMatrix3D">
+                    <service uid="transformEditor" impl="::uiData::STransformEditor" type="::gui::editor::IEditor" autoConnect="no"/>
+                </object>
+            </item>
+
+            <item key="cameraTransform">
+                <object uid="cameraTransform" type="::fwData::TransformationMatrix3D" />
+            </item>
+
+            <item key="seriesDB" >
+                <object uid="seriesDB" type="::fwMedData::SeriesDB">
+                    <service uid="loader" type="::io::IReader" impl="::ioAtoms::SReader" autoConnect="no">
+                        <file>@BUNDLE_PREFIX@/DesktopTrackingQt_0-1/Liver_ColorectalMetastasis_opaque.jsonz</file>
+                        <patcher context="MedicalData" version="V09ALA" />
+
+                        <archive backend="jsonz">
+                            <extension>.jsonz</extension>
+                        </archive>
+
+                        <extensions>
+                            <extension>.jsonz</extension>
+                        </extensions>
+
+                    </service>
+                </object>
+            </item>
+ 
+
+            <start uid="androidCamera" />
+            <start uid="extractDeviceInfo" />
+            <start uid="frame" />
+
+            <start uid="loader" />
+            <start uid="extractObject"/>
+            <start uid="concatenate" />
+
+            <start uid="synchronizer" />
+            <start uid="tracker" />
+            <start uid="markerRegistration" />
+ 
+            <update uid="extractDeviceInfo" />
+
+        </object>
+        </config>
+    </extension>
+</plugin>
