@@ -16,5 +16,8 @@ set( DEPENDENCIES
         gui 
 )
 set( REQUIREMENTS  )
-set( PLATFORM DROID )
+
+if(ANDROID)
+    set( PLATFORM DROID )
+endif()
 
