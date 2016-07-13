@@ -46,7 +46,6 @@ public:
 //-----------------------------------------------------------------------------
 
 DroidScreen::DroidScreen(EGLNativeDisplayType display) :
-    QEGLPlatformScreen(display),
     m_depth(32),
     m_format(QImage::Format_Invalid),
     m_platformContext(nullptr),

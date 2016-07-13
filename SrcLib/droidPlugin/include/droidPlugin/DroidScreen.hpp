@@ -15,7 +15,6 @@
 
 // Internal Qt
 #include <qpa/qplatformscreen.h>
-#include <QtPlatformSupport/private/qeglplatformscreen_p.h>
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
@@ -23,7 +22,7 @@
 
 class QPlatformOpenGLContext;
 
-class DroidScreen : public QEGLPlatformScreen
+class DroidScreen : public QPlatformScreen
 {
 
 public:
