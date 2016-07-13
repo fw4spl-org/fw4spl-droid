@@ -37,6 +37,7 @@ set( REQUIREMENTS
     patchMedicalData
 
     droidTools
+    uiDroidQt
     uiData
 )
 

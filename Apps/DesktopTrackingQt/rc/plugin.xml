@@ -38,15 +38,18 @@
                         <separator />
                         <editor />
                         <editor />
+                        <editor />
                     </layout>
                 </gui>
                 <registry>
                     <menuItem sid="startPause" start="yes" />
                     <menuItem sid="load" start="yes" />
                     <editor sid="transformEditor" start="yes"/>
-                    <editor sid="cameraSelector" start="yes"/>                    
+                    <editor sid="cameraSelector" start="yes"/>
+                    <editor sid="opacityEditor" start="yes"/>
                 </registry>
             </service>
+
 
             <service uid="load" type="::fwGui::IActionSrv" impl="::gui::action::SSlotCaller" autoConnect="no">
                 <slots>
@@ -132,11 +135,12 @@
                     </timeline>
                 </matrices>
                 <framerate>60</framerate>
-            </service>
-
-            <service uid="extractObject" type="::ctrlCamp::ICamp" impl="::ctrlCamp::SExtractObj" autoConnect="no">
-                <extract from="@values.seriesDB.values.0" to="modelSeries" />
-            </service>
+            </service> 
+            
+            <service uid="extractObject" type="::ctrlCamp::ICamp" impl="::ctrlCamp::SCopy" autoConnect="no">
+                <source>@values.seriesDB.values.0</source>
+                <target>modelSeries</target>
+            </service> 
 
             <item key="markerTL">
                 <object uid="markerTLUid" type="::arData::MarkerTL" />
@@ -151,7 +155,10 @@
             </item>
 
             <item key="modelSeries">
-                <object uid="modelSeries" type="::fwMedData::ModelSeries"/>
+                <object uid="modelSeries" type="::fwMedData::ModelSeries">
+                    <service uid="opacityEditor" impl="::uiDroidQt::SOrganMaterialEditor" type="::gui::editor::IEditor" autoConnect="no">
+                    </service>
+                </object>
             </item>
 
             <item key="image">
