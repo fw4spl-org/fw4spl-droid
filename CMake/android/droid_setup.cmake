@@ -14,7 +14,12 @@ macro(setup_dependencies)
     unset(DEPENDS_OUTPUT)
     
     # Find programs android, adb, ant, jarsigner and zipalign
-    find_program(NDK_DEPENDS_PRG ndk-depends NAMES ndk-depends.bat PATHS ${ANDROID_NDK} NO_CMAKE_FIND_ROOT_PATH )
+    if(CMAKE_HOST_WIN32)
+        set(NDK_DEPENDS_PATH "${ANDROID_NDK}/prebuilt/windows-x86_64/bin")
+    else()
+        set(NDK_DEPENDS_PATH ${ANDROID_NDK})
+    endif()
+    find_program(NDK_DEPENDS_PRG ndk-depends NAMES ndk-depends PATHS ${NDK_DEPENDS_PATH} NO_CMAKE_FIND_ROOT_PATH )
     if (NOT NDK_DEPENDS_PRG)
         message(FATAL_ERROR "ndk-depends command is not found.")
     endif()
