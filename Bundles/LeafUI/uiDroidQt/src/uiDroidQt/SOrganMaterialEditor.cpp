@@ -47,6 +47,15 @@ SOrganMaterialEditor::~SOrganMaterialEditor() throw()
 void SOrganMaterialEditor::configuring() throw (::fwTools::Failed)
 {
     this->initialize();
+
+    // <organ>
+    {
+        ::fwRuntime::ConfigurationElement::sptr config = m_configuration->findConfigurationElement("organ");
+        if (config)
+        {
+            m_organName = QString::fromStdString(config->getValue());
+        }
+    }
 }
 //------------------------------------------------------------------------------
 
@@ -92,7 +101,7 @@ void SOrganMaterialEditor::changeOpacity(int _iValue)
 
     for (auto rec : reconstructionDB)
     {
-        if ("Liver" == rec->getStructureType())
+        if (m_organName.toStdString() == rec->getStructureType())
         {
             ::fwData::Material::sptr material = rec->getMaterial();
             material->diffuse()->alpha()      = _iValue / 100.0f;

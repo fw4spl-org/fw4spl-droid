@@ -33,12 +33,13 @@ namespace uiDroidQt
  * @section XML XML Configuration
  *
  * @code{.xml}
-    <service uid="..." type="::uiDroidQt::SOrganMaterialEditor" autoConnect="no">
+    <service uid="..." impl="::uiDroidQt::SOrganMaterialEditor" type="::gui::editor::IEditor" autoConnect="no">
+        <organ>Liver</organ>
     </service>
    @endcode
  *
  * @subsection In-Out In-Out
- * - \b matrix [::fwData::TransformationMatrix3D]: matrix modified by the editor
+ * - \b organ : name of the organ to work on
  */
 class UIDROIDQT_CLASS_API SOrganMaterialEditor : public QObject,
                                                  public ::gui::editor::IEditor
@@ -83,7 +84,8 @@ private:
     void changeOpacity( int _iValue = 50);
 
 
-    QPointer<QSlider> m_opacitySlider;
+    QPointer<QSlider>   m_opacitySlider;
+    QString m_organName;
 };
 
 } // namespace uiDroidQt
