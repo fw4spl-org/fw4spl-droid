@@ -154,6 +154,7 @@
             <item key="modelSeries">
                 <object uid="modelSeries" type="::fwMedData::ModelSeries">
                     <service uid="opacityEditor" impl="::uiDroidQt::SOrganMaterialEditor" type="::gui::editor::IEditor" autoConnect="no">
+                        <organ>Liver</organ>
                     </service>
                 </object>
             </item>
