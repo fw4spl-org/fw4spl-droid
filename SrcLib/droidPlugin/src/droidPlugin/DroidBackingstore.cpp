@@ -15,7 +15,7 @@
 DroidBackingStore::DroidBackingStore(QWindow *window)
     : QPlatformBackingStore(window)
       , m_context(new QOpenGLContext)
-      , m_device(0)
+      , m_device(nullptr)
 {
     SLM_TRACE_FUNC();
     m_context->setFormat(window->requestedFormat());
@@ -48,7 +48,7 @@ void DroidBackingStore::flush(QWindow *window, const QRegion &region, const QPoi
     Q_UNUSED(region);
     Q_UNUSED(offset);
 
-    OSLM_DEBUG("QEglBackingStore::flush "<< window);
+    OSLM_DEBUG("DroidBackingStore::flush "<< window);
 
     m_context->makeCurrent(window);
     m_context->swapBuffers(window);

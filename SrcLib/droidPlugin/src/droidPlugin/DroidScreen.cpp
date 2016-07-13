@@ -9,9 +9,8 @@
 
 #include <QtPlatformSupport/private/qeglconvenience_p.h>
 #include <QtPlatformSupport/private/qeglplatformcontext_p.h>
-
+#include <private/qopenglcontext_p.h>
 #include <fwRuntime/profile/Profile.hpp>
-
 
 class DroidPlatformContext : public QEGLPlatformContext
 {
@@ -31,20 +30,27 @@ public:
         return screen->surface();
     }
 
-//    void swapBuffers(QPlatformSurface *surface)
-//    {
-//        DroidContext* eglContext = DroidContext::getInstance();
-//        eglContext->swap();
-//    }
+    bool makeCurrent(QPlatformSurface *surface)
+    {
+        bool ret                     = QEGLPlatformContext::makeCurrent(surface);
+        QOpenGLContextPrivate *ctx_d = QOpenGLContextPrivate::get(context());
+        if (!ctx_d->workaround_brokenFBOReadBack)
+        {
+            ctx_d->workaround_brokenFBOReadBack = true;
+        }
+
+        return ret;
+    }
 };
 
 //-----------------------------------------------------------------------------
 
 DroidScreen::DroidScreen(EGLNativeDisplayType display) :
+    QEGLPlatformScreen(display),
     m_depth(32),
     m_format(QImage::Format_Invalid),
     m_platformContext(nullptr),
-    m_surface(0)
+    m_surface(nullptr)
 {
     SLM_TRACE_FUNC();
 }
@@ -82,6 +88,7 @@ void DroidScreen::createAndSetPlatformContext()
     {
         DroidContext* eglContext = DroidContext::getInstance();
         eglContext->init(eglWindow);
+        m_surface = eglContext->getSurface();
 
         platformFormat.setDepthBufferSize(eglContext->getDepthSize());
         platformFormat.setRedBufferSize(eglContext->getColorSize());
@@ -155,8 +162,7 @@ QPlatformOpenGLContext *DroidScreen::platformContext() const
 EGLSurface DroidScreen::surface() const
 {
     SLM_TRACE_FUNC();
-    DroidContext* eglContext = DroidContext::getInstance();
-    return eglContext->getSurface();
+    return m_surface;
 }
 
 //-----------------------------------------------------------------------------
