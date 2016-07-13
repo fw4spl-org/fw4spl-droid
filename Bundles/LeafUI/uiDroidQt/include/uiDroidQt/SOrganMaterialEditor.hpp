@@ -24,6 +24,7 @@
 
 class QButtonGroup;
 class QPushButton;
+class QSlider;
 
 namespace uiDroidQt
 {
@@ -79,10 +80,10 @@ protected:
 
 private:
 
-    void changeOpacity();
+    void changeOpacity( int _iValue = 50);
 
 
-    QPointer<QPushButton> m_button;
+    QPointer<QSlider> m_opacitySlider;
 };
 
 } // namespace uiDroidQt

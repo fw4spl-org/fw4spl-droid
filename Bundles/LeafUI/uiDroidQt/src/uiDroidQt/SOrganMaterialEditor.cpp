@@ -22,7 +22,7 @@
 #include <fwServices/macros.hpp>
 
 #include <QHBoxLayout>
-#include <QPushButton>
+#include <QSlider>
 
 namespace uiDroidQt
 {
@@ -61,21 +61,21 @@ void SOrganMaterialEditor::starting() throw (::fwTools::Failed)
 
     QHBoxLayout* layout = new QHBoxLayout(container);
 
-    m_button = new QPushButton(tr("+"));
-    m_button->setAutoRepeat(true);
+    m_opacitySlider = new QSlider(Qt::Horizontal);
+    m_opacitySlider->setRange(0, 100);
 
     QHBoxLayout* layoutGroupBoxButton = new QHBoxLayout(container);
-    layoutGroupBoxButton->addWidget(m_button);
+    layoutGroupBoxButton->addWidget(m_opacitySlider);
     layout->addLayout(layoutGroupBoxButton);
 
-    QObject::connect(m_button.data(), &QPushButton::pressed, this, &SOrganMaterialEditor::changeOpacity);
+    QObject::connect(m_opacitySlider.data(), &QSlider::valueChanged, this, &SOrganMaterialEditor::changeOpacity);
 }
 
 //------------------------------------------------------------------------------
 
 void SOrganMaterialEditor::stopping() throw (::fwTools::Failed)
 {
-    QObject::disconnect(m_button.data(), &QPushButton::pressed, this, &SOrganMaterialEditor::changeOpacity);
+    QObject::disconnect(m_opacitySlider.data(), &QSlider::valueChanged, this, &SOrganMaterialEditor::changeOpacity);
 
     this->getContainer()->clean();
     this->destroy();
@@ -83,7 +83,7 @@ void SOrganMaterialEditor::stopping() throw (::fwTools::Failed)
 
 //------------------------------------------------------------------------------
 
-void SOrganMaterialEditor::changeOpacity()
+void SOrganMaterialEditor::changeOpacity(int _iValue)
 {
     ::fwMedData::ModelSeries::sptr modelSeries = this->getObject< ::fwMedData::ModelSeries>();
     SLM_ASSERT("No modelSeries!", modelSeries);
@@ -95,7 +95,7 @@ void SOrganMaterialEditor::changeOpacity()
         if ("Liver" == rec->getStructureType())
         {
             ::fwData::Material::sptr material = rec->getMaterial();
-            material->diffuse()->alpha()      = 0.5f;
+            material->diffuse()->alpha()      = _iValue / 100.0f;
 
             ::fwData::Object::ModifiedSignalType::sptr sig;
             sig = material->signal< ::fwData::Object::ModifiedSignalType >(::fwData::Object::s_MODIFIED_SIG);
