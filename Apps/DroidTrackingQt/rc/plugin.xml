@@ -37,12 +37,14 @@
                         <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/plus.png" />
                         <separator />
                         <editor />
+                        <editor />
                     </layout>
                 </gui>
                 <registry>
                     <menuItem sid="startPause" start="yes" />
                     <menuItem sid="load" start="yes" />
                     <editor sid="transformEditor" start="yes"/>
+                    <editor sid="opacityEditor" start="yes"/>
                 </registry>
             </service>
 
@@ -132,9 +134,10 @@
                 <framerate>60</framerate>
             </service>
 
-            <service uid="extractObject" type="::ctrlCamp::ICamp" impl="::ctrlCamp::SExtractObj" autoConnect="no">
-                <extract from="@values.seriesDB.values.0" to="modelSeries" />
-            </service>
+            <service uid="extractObject" type="::ctrlCamp::ICamp" impl="::ctrlCamp::SCopy" autoConnect="no">
+                <source>@values.seriesDB.values.0</source>
+                <target>modelSeries</target>
+            </service> 
 
             <item key="markerTL">
                 <object uid="markerTLUid" type="::arData::MarkerTL" />
@@ -149,7 +152,10 @@
             </item>
 
             <item key="modelSeries">
-                <object uid="modelSeries" type="::fwMedData::ModelSeries"/>
+                <object uid="modelSeries" type="::fwMedData::ModelSeries">
+                    <service uid="opacityEditor" impl="::uiDroidQt::SOrganMaterialEditor" type="::gui::editor::IEditor" autoConnect="no">
+                    </service>
+                </object>
             </item>
 
             <item key="image">
@@ -216,7 +222,7 @@
                 <object uid="seriesDB" type="::fwMedData::SeriesDB">
                     <service uid="loader" type="::io::IReader" impl="::ioAtoms::SReader" autoConnect="no">
                         <!--<file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/liver.jsonz</file>-->
-                        <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/Liver_ColorectalMetastasis.jsonz</file>
+                        <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/Liver_ColorectalMetastasis_opaque.jsonz</file>
                         <patcher context="MedicalData" version="V09ALA" />
 
                         <archive backend="jsonz">
