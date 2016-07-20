@@ -4,12 +4,12 @@ set( VERSION 0.1 )
 set( TYPE APP )
 set( DEPENDENCIES
 )
-set( REQUIREMENTS 
+set( REQUIREMENTS
     gui
     guiQt
-    
-    appXml
-    
+
+    appXml2
+
     dataReg
     arDataReg
 
@@ -27,12 +27,12 @@ set( REQUIREMENTS
     io
     ioVTK
     ioAtoms
-    
+
     ctrlCamera
     videoTools
     visuVideoAndroid
     maths
-    
+
     tracker
     trackerAruco
     patchMedicalData
@@ -42,4 +42,4 @@ set( REQUIREMENTS
 )
 set( PLATFORM DROID)
 
-bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidTrackingQtConfig)
+bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DroidTrackingQtConfig)
