@@ -156,11 +156,12 @@
                 <inout group="image">
                     <key uid="image" />
                 </inout>
-                <matrices>
-                    <timeline from="markerMatrixTL">
-                        <matrix index="0" to="transform" />
-                    </timeline>
-                </matrices>
+                <in group="matrixTL">
+                    <key uid="markerMatrixTL" />
+                </in>
+                <inout group="matrices0">
+                    <key uid="transform" />
+                </inout>
                 <framerate>60</framerate>
             </service>
 
