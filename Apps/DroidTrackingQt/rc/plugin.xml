@@ -15,7 +15,7 @@
             <object uid="markerTL" type="::arData::MarkerTL" />
             <object uid="markerMatrixTL" type="::extData::MatrixTL" />
             <object uid="transform" type="::fwData::TransformationMatrix3D" />
-            <object uid="modelSeries" type="::fwMedData::ModelSeries" />
+            <object uid="modelSeries" type="::fwMedData::ModelSeries" src="deferred"/>
             <object uid="image" type="::fwData::Image" />
             <object uid="camera" type="::arData::Camera" />
             <object uid="frameTL" type="::extData::FrameTL" />
@@ -86,10 +86,11 @@
             </service>
 
             <service uid="scene" type="::fwRenderVTK::SRender" autoConnect="yes">
-                <in key="modelSeries" uid="modelSeries" />
+                <in key="modelSeries" uid="modelSeries" optional="yes"/>
                 <in key="resultMatrix" uid="resultMatrix" />
                 <in key="cameraTransform" uid="cameraTransform" />
                 <in key="image" uid="image" />
+                <in key="camera" uid="camera"/>
                 <scene autoRender="true">
                     <renderer id="background" layer="0" background="#000000" />
                     <renderer id="default" layer="1" background="#000000" />
