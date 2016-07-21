@@ -66,7 +66,7 @@
                     <menuItem sid="startPause" start="yes" />
                     <menuItem sid="load" start="yes" />
                     <editor sid="transformEditor" start="yes" />
-                    <editor sid="opacityEditor" start="yes" />
+                    <editor sid="opacityEditor" start="no" />
                 </registry>
             </service>
 
