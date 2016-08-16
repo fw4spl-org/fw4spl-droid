@@ -8,7 +8,8 @@ set( REQUIREMENTS
     gui
     guiQt
     
-    appXml
+    activities
+    appXml2
     
     dataReg
     arDataReg
@@ -26,6 +27,7 @@ set( REQUIREMENTS
     io
     ioVTK
     ioAtoms
+    ioActivity
     
     ctrlCamera
     videoTools
@@ -39,6 +41,8 @@ set( REQUIREMENTS
     droidTools
     uiDroidQt
     uiData
+    uiIO
+    uiLogo
 )
 
-bundleParam(appXml PARAM_LIST config PARAM_VALUES DesktopTrackingQtConfig)
+bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DesktopTrackingQtConfig)
