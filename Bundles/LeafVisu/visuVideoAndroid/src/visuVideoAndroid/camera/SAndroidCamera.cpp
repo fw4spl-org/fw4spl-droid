@@ -26,7 +26,10 @@ fwServicesRegisterMacro( ::fwServices::IService, ::visuVideoAndroid::camera::SAn
 
 //-----------------------------------------------------------------------------
 const ::fwCom::Signals::SignalKeyType SAndroidCamera::s_CAMERA_OPENED_SIG = "cameraOpened";
-const ::fwCom::Slots::SlotKeyType SAndroidCamera::s_START_CAMERA_SLOT     = "startCamera";
+
+const ::fwCom::Slots::SlotKeyType s_START_OR_STOP_SLOT = "startOrStop";
+const ::fwCom::Slots::SlotKeyType s_START_CAMERA_SLOT  = "startCamera";
+const ::fwCom::Slots::SlotKeyType s_STOP_CAMERA_SLOT   = "stopCamera";
 //-----------------------------------------------------------------------------
 
 SAndroidCamera::SAndroidCamera() throw() : m_cameraId(0),
@@ -38,6 +41,10 @@ SAndroidCamera::SAndroidCamera() throw() : m_cameraId(0),
 {
     SLM_TRACE_FUNC();
     m_sigCameraOpened = newSignal< CameraOpenedSignalType >( s_CAMERA_OPENED_SIG );
+
+
+    newSlot(s_START_OR_STOP_SLOT, &SAndroidCamera::startOrStop, this);
+    newSlot(s_STOP_CAMERA_SLOT, &SAndroidCamera::stopCamera, this);
     newSlot(s_START_CAMERA_SLOT, &SAndroidCamera::startCamera, this);
 }
 
@@ -116,7 +123,7 @@ void SAndroidCamera::updating() throw(::fwTools::Failed)
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::startCamera(bool state)
+void SAndroidCamera::startOrStop(bool state)
 {
     SLM_TRACE_FUNC();
     if(state)
@@ -172,6 +179,21 @@ void SAndroidCamera::fetchFrame(unsigned char* rgb)
     ::extData::TimeLine::ObjectPushedSignalType::sptr sig;
     sig = m_timeline->signal< ::extData::TimeLine::ObjectPushedSignalType >(::extData::TimeLine::s_OBJECT_PUSHED_SIG );
     sig->asyncEmit(timestamp);
+}
+
+//-----------------------------------------------------------------------------
+
+void SAndroidCamera::startCamera()
+{
+    this->startOrStop(true);
+}
+
+//-----------------------------------------------------------------------------
+
+void SAndroidCamera::stopCamera()
+{
+    this->startOrStop(false);
+    this->stopping();
 }
 
 //-----------------------------------------------------------------------------

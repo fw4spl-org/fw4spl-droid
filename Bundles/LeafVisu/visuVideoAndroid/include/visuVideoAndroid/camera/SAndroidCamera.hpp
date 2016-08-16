@@ -29,7 +29,40 @@ namespace visuVideoAndroid
 {
 namespace camera
 {
-
+/**
+ * @brief SAndroidCamera service handle the camera on Android platform.
+ *
+ * @section Signals Signals
+ * - \b cameraOpened(int format,int width,int height) : Emitted when the android camera is openned.
+ *
+ * @section Slots Slots
+ * - \b startOrStop(bool state) : if state = true the camera will be started, else the camera will be stopped.
+ * - \b startCamera() : Start the camera.
+ * - \b stopCamera() : Stop the camera.
+ *
+ * @section XML XML Configuration
+ *
+ * @code{.xml}
+        <service type="::visuVideoAndroid::camera::SAndroidCamera">
+            <inout key="frameTL" uid="frameTL" />
+            <cameraId>0</cameraId>
+            <autoFocus>true</autoFocus>
+            <width>640</width>
+            <height>480</height>
+            <fps>60</fps>
+       </service>
+   @endcode
+ *
+ * @subsection In-Out In-Out
+ * - \b frameTL [::extData::FrameTL]: Timeline used to register frames.
+ *
+ * @subsection Configuration Configuration
+ * - \b cameraId defines the android ID of the camera (usualy 0 is the back camera, and 1 the front one).
+ * - \b autoFocus defines if the autofocus is enable or not.
+ * - \b width defines the width resolution.
+ * - \b height defines the height resolution.
+ * - \b fps defines the desired framerate.
+ */
 class VISUVIDEOANDROID_CLASS_API SAndroidCamera : public ::fwServices::IService
 {
 
@@ -43,8 +76,6 @@ public:
     VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_CAMERA_OPENED_SIG;
     typedef ::fwCom::Signal<void (int,int,int)> CameraOpenedSignalType;
 
-    VISUVIDEOANDROID_API static const ::fwCom::Slots::SlotKeyType s_START_CAMERA_SLOT;
-
 protected:
 
     VISUVIDEOANDROID_API virtual void configuring() throw( ::fwTools::Failed );
@@ -55,7 +86,9 @@ protected:
 
 private:
 
-    void startCamera(bool state = true);
+    void startOrStop(bool state = true);
+    void startCamera();
+    void stopCamera();
     void fetchFrame(unsigned char* rgb);
 
     unsigned int m_cameraId;
