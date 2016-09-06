@@ -10,6 +10,10 @@ if(DroidTracking_INSTALL AND ANDROID)
     file(DOWNLOAD https://owncloud.u-strasbg.fr/index.php/s/GmdjdFqZ9h7xDp7/download 
          "${CMAKE_BINARY_DIR}/Bundles/DroidTracking_0-1/liver.jsonz"
          EXPECTED_HASH SHA256=ea7295d06d05aa416c7bf64997da009df509a761d354bf2f5d28e131b1a3465e)
+         
+    # make sure the paths contain no '\', because configure_file would produce a bad droid_builder.cmake, which would then mess up the install process SILENTLY on some platforms 
+    file(TO_CMAKE_PATH ${ANDROID_APK_KEYSTORE} ANDROID_APK_KEYSTORE)
+    
     configure_file("${CMAKE_DIRECTORY}/droid_builder.cmake.in" "${CMAKE_BINARY_DIR}/CMakeFiles/droid_builder.cmake" @ONLY)
     install(SCRIPT "${CMAKE_BINARY_DIR}/CMakeFiles/droid_builder.cmake")
 
