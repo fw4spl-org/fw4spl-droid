@@ -1,5 +1,3 @@
-if(ANDROID)
-
 cmake_minimum_required (VERSION 2.8.11)
 
 project (fw4spl-droid)
@@ -32,4 +30,3 @@ macro(fwBundleExtra)
     add_push_bundle()
 endmacro()
 
-endif()
