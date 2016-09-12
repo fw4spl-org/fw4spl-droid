@@ -1,9 +1,9 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.+'
+        classpath "com.android.tools.build:gradle:2.+"
     }
 }
 
@@ -50,7 +50,7 @@ android {
 
             debuggable false
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-project.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
             signingConfig signingConfigs.release
                 
             ndk {
