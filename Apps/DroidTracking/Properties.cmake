@@ -29,5 +29,5 @@ set( REQUIREMENTS
     guiDroid
     maths
 )
-set(JAVA_PACKAGES ndkgui)
+
 bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DroidTrackingConfig )
