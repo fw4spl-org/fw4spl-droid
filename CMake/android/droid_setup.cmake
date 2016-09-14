@@ -137,6 +137,29 @@ macro(setup_bundles_and_shared )
             endif()
         endif()
     endforeach()
+    
+    #set Ogre plugins as asset files
+    file(GLOB_RECURSE  CURRENT_DIR ${WORKING_DIR}/ogreplugins/* )
+    foreach(CURRENT_FILE ${CURRENT_DIR})
+        get_filename_component(EXTENSION ${CURRENT_FILE} EXT)
+        get_filename_component(LIB_NAME ${CURRENT_FILE} NAME)
+        get_filename_component(LIB_NAME_WE ${CURRENT_FILE} NAME_WE)
+
+        string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
+        math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" )
+        string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
+        if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
+            if("${EXTENSION}" STREQUAL ".so")
+                message("${SUB_DIR} ")
+                list(APPEND LIBS_ASSETS ${SUB_DIR})
+                string(LENGTH ${SUB_DIR} SUB_LENGTH)
+                math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
+                string(SUBSTRING ${SUB_DIR} 1 ${SUB_LENGTH} FINAL_DIR)
+                list(APPEND ASSETS_FILE ${FINAL_DIR})
+                
+            endif()
+        endif()
+    endforeach()
 endmacro()
 
 # Search and set jar dependencies

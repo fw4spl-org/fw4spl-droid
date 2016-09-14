@@ -112,7 +112,6 @@ macro(create_apk)
         endif()
 
         set(dest "${APK_INSTALL_DIR}/assets/${value}")
-        #message(" src = ${src}")
         execute_process(
              COMMAND ${CMAKE_COMMAND} -E copy_if_different ${src} ${dest}
          )
