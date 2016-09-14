@@ -150,7 +150,6 @@ macro(setup_bundles_and_shared )
         string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
         if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
             if("${EXTENSION}" STREQUAL ".so")
-                message("${SUB_DIR} ")
                 list(APPEND LIBS_ASSETS ${SUB_DIR})
                 string(LENGTH ${SUB_DIR} SUB_LENGTH)
                 math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
