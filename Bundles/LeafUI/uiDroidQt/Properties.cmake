@@ -6,7 +6,6 @@ set( DEPENDENCIES
         fwCore
         fwData
         fwDataTools
-        fwComEd
         fwRuntime
         fwServices
         fwTools
