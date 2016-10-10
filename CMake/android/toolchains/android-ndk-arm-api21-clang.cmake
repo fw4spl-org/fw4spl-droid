@@ -16,3 +16,7 @@ set(CMAKE_ANDROID_STL_TYPE c++_shared)
 set(CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION clang)
 remove_definitions( -DANDROID )
 add_definitions( -DANDROID )
+
+# for compatibility with taka-no-me toolchain
+set(ANDROID_API_LEVEL ${CMAKE_SYSTEM_VERSION}) 
+

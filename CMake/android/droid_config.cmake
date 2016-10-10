@@ -117,12 +117,12 @@ endif()
 
 ########################################
 # Find ndk-depends
-find_host_program(NDK_DEPENDS
+find_host_program(NDK_DEPENDS_PRG
     NAMES ndk-depends
     PATHS ${ANDROID_NDK_PATH} "${ANDROID_NDK_PATH}/prebuilt/windows-x86_64/bin"
     DOC   "The ndk-depends command-line tool"
 )
-if(NOT NDK_DEPENDS)
+if(NOT NDK_DEPENDS_PRG)
     message(FATAL_ERROR "Can not find android command line tool: ndk-depends")
 endif()
 
