@@ -7,13 +7,13 @@
 ########################################
 # Find Android NDK
 if(DEFINED ENV{ANDROID_NDK})
-    set(ANDROID_NDK_PATH "$ENV{ANDROID_NDK}" CACHE PATH "Path to the Android NDK")
+    set(ANDROID_NDK "$ENV{ANDROID_NDK}" CACHE PATH "Path to the Android NDK")
 else()
     message(FATAL_ERROR "Can not find android NDK path, please set the path in env var 'ANDROID_NDK'")
 endif()
-file(TO_CMAKE_PATH "${ANDROID_NDK_PATH}" ANDROID_NDK_PATH)
+file(TO_CMAKE_PATH "${ANDROID_NDK}" ANDROID_NDK)
 # for compatibility with taka-no-me toolchain
-set(ANDROID_NDK ${ANDROID_NDK_PATH})
+set(ANDROID_NDK ${ANDROID_NDK})
 
 ########################################
 # Find Android SDK
@@ -119,7 +119,7 @@ endif()
 # Find ndk-depends
 find_host_program(NDK_DEPENDS_PRG
     NAMES ndk-depends
-    PATHS ${ANDROID_NDK_PATH} "${ANDROID_NDK_PATH}/prebuilt/windows-x86_64/bin"
+    PATHS ${ANDROID_NDK} "${ANDROID_NDK}/prebuilt/windows-x86_64/bin"
     DOC   "The ndk-depends command-line tool"
 )
 if(NOT NDK_DEPENDS_PRG)
