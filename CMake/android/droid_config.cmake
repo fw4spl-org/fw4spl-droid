@@ -156,44 +156,27 @@ if (NOT ZIPALIGN_PRG)
     message(FATAL_ERROR "zipalign command is not found.")
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+########################################
+# Find gradle
+find_host_program(GRADLE_PRG
+    NAMES gradle.bat gradle
+    PATHS /usr/bin/
+    DOC   "The gradle build tool"
+)
+if(NOT GRADLE_PRG)
+    message(FATAL_ERROR "Can not find ant build tool: gradle")
+endif()
 
-set(APK_BUILD_TOOL               "gradle"                    CACHE STRING    "Build tool name will be used to create the apk (ant or gradle)")
-set(ANDROID_APK_RELEASE          "0"                         CACHE BOOL      "Create apk file ready for release? (signed, you have to enter a password during build, do also setup \"ANDROID_APK_SIGNER_KEYSTORE\" and \"ANDROID_APK_SIGNER_ALIAS\")")
-set(ANDROID_APK_TOP_LEVEL_DOMAIN "com"                       CACHE STRING    "Top level domain name of the organization (follow the package naming conventions (http://en.wikipedia.org/wiki/Java_package#Package_naming_conventions))")
-set(ANDROID_APK_DOMAIN           "fw4spl"                    CACHE STRING    "Organization's domain (follow the package naming conventions (http://en.wikipedia.org/wiki/Java_package#Package_naming_conventions))")
-set(ANDROID_APK_KEYSTORE         "~/keystore/android.jks"    CACHE PATH      "Keystore for signing the apk file (only required for release apk)")
-set(ANDROID_APK_KEYSTORE_PWD     "123456"                    CACHE STRING    "Keystore password (only required for release apk)")
-set(ANDROID_APK_KEY_ALIAS        "keyAlias"                  CACHE STRING    "Alias for signing the apk file (only required for release apk)")
-set(ANDROID_APK_KEY_PWD          "123456"                    CACHE STRING    "Alias password (only required for release apk)")
+########################################
+# Variables used to build APK
+set(ANDROID_APK_RELEASE          OFF                      CACHE BOOL      "Create apk file ready for release? (signed, you have to enter a password during build, do also setup \"ANDROID_APK_SIGNER_KEYSTORE\" and \"ANDROID_APK_SIGNER_ALIAS\")")
+set(ANDROID_APK_TOP_LEVEL_DOMAIN "com"                    CACHE STRING    "Top level domain name of the organization (follow the package naming conventions (http://en.wikipedia.org/wiki/Java_package#Package_naming_conventions))")
+set(ANDROID_APK_DOMAIN           "fw4spl"                 CACHE STRING    "Organization's domain (follow the package naming conventions (http://en.wikipedia.org/wiki/Java_package#Package_naming_conventions))")
+set(ANDROID_APK_KEYSTORE         "~/keystore/android.jks" CACHE PATH      "Keystore for signing the apk file (only required for release apk)")
+set(ANDROID_APK_KEYSTORE_PWD     "123456"                 CACHE STRING    "Keystore password (only required for release apk)")
+set(ANDROID_APK_KEY_ALIAS        "keyAlias"               CACHE STRING    "Alias for signing the apk file (only required for release apk)")
+set(ANDROID_APK_KEY_PWD          "123456"                 CACHE STRING    "Alias password (only required for release apk)")
 
 set(CMAKE_ANDROID_APK_PACKAGE \"${ANDROID_APK_TOP_LEVEL_DOMAIN}/${ANDROID_APK_DOMAIN}/${PROJECTS_TO_INSTALL}\" PARENT_SCOPE)
 set(PACKAGE_DOT ${ANDROID_APK_TOP_LEVEL_DOMAIN}.${ANDROID_APK_DOMAIN}.${PROJECTS_TO_INSTALL} PARENT_SCOPE)
-
-file(TO_CMAKE_PATH "${ANDROID_APK_KEYSTORE}" ANDROID_APK_KEYSTORE) #fix issue on Windows host
-
-
-if( ${APK_BUILD_TOOL} STREQUAL "ant" )
-    ########################################
-    # Find ant
-    find_host_program(ANT_PRG
-        NAMES ant.bat ant
-        PATHS /usr/bin/
-        DOC   "The ant build tool")
-    if(NOT ANT_PRG)
-        message(FATAL_ERROR "Can not find ant build tool: ant")
-    endif()
-elseif( ${APK_BUILD_TOOL} STREQUAL "gradle" )
-    ########################################
-    # Find gradle
-    find_host_program(GRADLE_PRG
-        NAMES gradle.bat gradle
-        PATHS /usr/bin/
-        DOC   "The gradle build tool")
-    if(NOT GRADLE_PRG)
-        message(FATAL_ERROR "Can not find ant build tool: gradle")
-    endif()
-else()
-    message(FATAL_ERROR "Unknown apk build tool \"${APK_BUILD_TOOL}\". Set ant or gradle")
-endif()
 

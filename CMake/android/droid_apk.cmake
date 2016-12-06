@@ -4,11 +4,7 @@
 
 macro(create_apk)
     
-    if( ${APK_BUILD_TOOL} STREQUAL "ant" )
-        include(${CMAKE_DIRECTORY}/ant_build.cmake REQUIRED)
-    elseif( ${APK_BUILD_TOOL} STREQUAL "gradle" )
-        include(${CMAKE_DIRECTORY}/gradle_build.cmake REQUIRED)
-    endif()
+    include(${CMAKE_DIRECTORY}/gradle_build.cmake REQUIRED)
 
     set(ANDROID_APK_THEME "android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\"")
         
@@ -139,11 +135,7 @@ macro(create_apk)
     )
 
     # Build the apk file
-    if( ${APK_BUILD_TOOL} STREQUAL "ant" )
-        ant_build()
-    elseif( ${APK_BUILD_TOOL} STREQUAL "gradle" )
-        gradle_build()
-    endif()
+    gradle_build()
 
     #Start the application
     # execute_process(
