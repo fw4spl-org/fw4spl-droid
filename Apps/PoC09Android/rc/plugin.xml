@@ -5,33 +5,33 @@
     <requirement id="servicesReg" />
     <requirement id="visuVTKAndroid" />
 
-    <extension implements="::fwServices::registry::AppConfig">
+    <extension implements="::fwServices::registry::AppConfig2">
         <id>PoC09AndroidConfig</id>
         <config>
-            <object type="::fwData::Mesh">
+            <object uid="meshUID" type="::fwData::Mesh" />
 
-                <service uid="frame" type="::fwGui::IFrameSrv" impl="::gui::frame::SDefaultFrame" autoConnect="no">
-                    <gui>
-                        <frame />
-                    </gui>
-                    <registry>
-                        <view sid="renderingMesh" start="no" />
-                    </registry>
-                </service>
+            <service uid="frame" type="::gui::frame::SDefaultFrame" autoConnect="no">
+                <gui>
+                    <frame />
+                </gui>
+                <registry>
+                    <view sid="renderingMesh" start="yes" />
+                </registry>
+            </service>
 
-                <service uid="renderingMesh"  impl="::vtkSimpleMesh::SRenderer" type="::fwRender::IRender" autoConnect="yes"/>
-                <service uid="meshReader" impl="::ioVTK::SMeshReader" type="::io::IReader" autoConnect="yes">
-                    <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android_0-1/cube.vtk</file>
-                </service>
+            <service uid="renderingMesh"  type="::vtkSimpleMesh::SRenderer" autoConnect="yes">
+                <inout key="mesh" uid="meshUID" />
+            </service>
+            
+            <service uid="meshReader" type="::ioVTK::SMeshReader" autoConnect="yes">
+                <inout key="output" uid="meshUID" />
+                <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android_0-1/cube.vtk</file>
+            </service>
 
-                <start uid="frame" />
-                <start uid="renderingMesh" />
-                <start uid="meshReader" />
-
-                <update uid="renderingMesh" />
-                <update uid="meshReader" />
-
-            </object>
+            <start uid="frame" />
+            <start uid="meshReader" />
+            
+            <update uid="meshReader" />
         </config>
     </extension>
 </plugin>
