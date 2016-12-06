@@ -1,6 +1,6 @@
-# Android clang toolchain file for Android NDK >= 13
+# Android gcc toolchain file for Android NDK >= 13
 
-set(ANDROID_TOOLCHAIN clang)
+set(ANDROID_TOOLCHAIN gcc)
 set(ANDROID_ABI armeabi-v7a)
 set(ANDROID_NATIVE_API_LEVEL 21)
 set(ANDROID_PLATFORM android-21)
