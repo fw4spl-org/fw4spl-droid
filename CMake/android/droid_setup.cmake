@@ -14,7 +14,12 @@ macro(setup_dependencies)
     unset(DEPENDS_OUTPUT)
     
     # Find programs android, adb, ant, jarsigner and zipalign
-    find_program(NDK_DEPENDS_PRG ndk-depends NAMES ndk-depends.bat PATHS ${ANDROID_NDK} NO_CMAKE_FIND_ROOT_PATH )
+    if(CMAKE_HOST_WIN32)
+        set(NDK_DEPENDS_PATH "${ANDROID_NDK}/prebuilt/windows-x86_64/bin")
+    else()
+        set(NDK_DEPENDS_PATH ${ANDROID_NDK})
+    endif()
+    find_program(NDK_DEPENDS_PRG ndk-depends NAMES ndk-depends PATHS ${NDK_DEPENDS_PATH} NO_CMAKE_FIND_ROOT_PATH )
     if (NOT NDK_DEPENDS_PRG)
         message(FATAL_ERROR "ndk-depends command is not found.")
     endif()
@@ -32,21 +37,21 @@ macro(setup_dependencies)
             string(REPLACE "\n" ";" DEPENDS_LINE "${DEPENDS_OUTPUT}")
             
             string(LENGTH "${DEPENDS_LINE}" LINE_LENGHT)
-            MATH( EXPR FINAL_LENGTH "${LINE_LENGHT} - 1 " )
+            math( EXPR FINAL_LENGTH "${LINE_LENGHT} - 1 " )
             string(SUBSTRING "${DEPENDS_LINE}" 0 ${FINAL_LENGTH} DEPENDS_LINE)
 
             foreach(CURRENT_DEPS ${DEPENDS_LINE})
                 string(LENGTH "${CURRENT_DEPS}" DEP_LENGHT)
                 string(FIND "${CURRENT_DEPS}" "->" ARROW_POSITION)
-                MATH( EXPR BEGIN_POSTION "${ARROW_POSITION} + 3 " )
-                MATH( EXPR FINAL_LENGTH "${DEP_LENGHT} - ${BEGIN_POSTION} " )
+                math( EXPR BEGIN_POSTION "${ARROW_POSITION} + 3 " )
+                math( EXPR FINAL_LENGTH "${DEP_LENGHT} - ${BEGIN_POSTION} " )
                 string(SUBSTRING "${CURRENT_DEPS}" ${BEGIN_POSTION} ${FINAL_LENGTH} DEPS_PATH)
                 string(FIND "${DEPS_PATH}" "$" TEST_SYSTEM)
                 string(FIND "${DEPS_PATH}" "!!" TEST_EXT)
 
                 if(${TEST_SYSTEM} EQUAL -1)
                     if(NOT ${TEST_EXT} EQUAL -1)
-                        MATH( EXPR FINAL_POSTION "${ARROW_POSITION} - 1 " )
+                        math( EXPR FINAL_POSTION "${ARROW_POSITION} - 1 " )
                         string(SUBSTRING "${CURRENT_DEPS}" 0 ${FINAL_POSTION} EXT_PATH)
                     else()
                         list(APPEND LIBS "${DEPS_PATH}")
@@ -72,7 +77,7 @@ macro(setup_dependencies)
     setup_java()
     setup_qt()
     
-endmacro(setup_dependencies)
+endmacro()
   
 # Search and set fw4spl bundles and shared
 macro(setup_bundles_and_shared )
@@ -89,7 +94,7 @@ macro(setup_bundles_and_shared )
         get_filename_component(DIR_NAME ${DIR_PATH} NAME)
 
         string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
-        MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" ) 
+        math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" ) 
         string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
     
         if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
@@ -97,7 +102,7 @@ macro(setup_bundles_and_shared )
                 list(APPEND LIBS_ASSETS ${SUB_DIR})
                 
                 string(LENGTH ${SUB_DIR} SUB_LENGTH)
-                MATH( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
+                math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
                 string(SUBSTRING ${SUB_DIR} 1 ${SUB_LENGTH} FINAL_DIR)
                 list(APPEND ASSETS_FILE ${FINAL_DIR})
     
@@ -115,7 +120,7 @@ macro(setup_bundles_and_shared )
         get_filename_component(DIR_NAME ${DIR_PATH} NAME)
 
         string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
-        MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" )
+        math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" )
         string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
 
         if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
@@ -125,14 +130,36 @@ macro(setup_bundles_and_shared )
                 list(APPEND LIBS_ASSETS ${SUB_DIR})
 
                 string(LENGTH ${SUB_DIR} SUB_LENGTH)
-                MATH( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
+                math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
                 string(SUBSTRING ${SUB_DIR} 1 ${SUB_LENGTH} FINAL_DIR)
                 list(APPEND ASSETS_FILE ${FINAL_DIR})
                 
             endif()
         endif()
     endforeach()
-endmacro(setup_bundles_and_shared )
+    
+    #set Ogre plugins as asset files
+    file(GLOB_RECURSE  CURRENT_DIR ${WORKING_DIR}/ogreplugins/* )
+    foreach(CURRENT_FILE ${CURRENT_DIR})
+        get_filename_component(EXTENSION ${CURRENT_FILE} EXT)
+        get_filename_component(LIB_NAME ${CURRENT_FILE} NAME)
+        get_filename_component(LIB_NAME_WE ${CURRENT_FILE} NAME_WE)
+
+        string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
+        math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${WORKING_DIR_LENGTH}" )
+        string(SUBSTRING ${CURRENT_FILE} ${WORKING_DIR_LENGTH} ${FINAL_LENGTH} SUB_DIR)
+        if(NOT "${EXTENSION}" STREQUAL ".DS_Store") # osx problem
+            if("${EXTENSION}" STREQUAL ".so")
+                list(APPEND LIBS_ASSETS ${SUB_DIR})
+                string(LENGTH ${SUB_DIR} SUB_LENGTH)
+                math( EXPR SUB_LENGTH "${SUB_LENGTH} - 1" )
+                string(SUBSTRING ${SUB_DIR} 1 ${SUB_LENGTH} FINAL_DIR)
+                list(APPEND ASSETS_FILE ${FINAL_DIR})
+                
+            endif()
+        endif()
+    endforeach()
+endmacro()
 
 # Search and set jar dependencies
 macro(setup_java )
@@ -161,13 +188,14 @@ macro(setup_java )
     set(JAR_DIR  "${EXTERNAL_LIBRARIES}/jar")
 
     file(GLOB_RECURSE JAR_FILES  "${JAR_DIR}/*")
+
     foreach(CURRENT_FILE ${JAR_FILES})
-        
         get_filename_component(EXTENSION ${CURRENT_FILE} EXT)
         get_filename_component(FILE_NAME ${CURRENT_FILE} NAME_WE)
     
         string(FIND "${JAR_REQUIREMENTS}" ${FILE_NAME} JAR_TEST)
         string(FIND ${FILE_NAME} "bundled" BUNDLED_TEST)
+        
         if( NOT ${JAR_TEST} EQUAL -1 AND NOT ${BUNDLED_TEST} EQUAL -1 )
             list(APPEND JAR_LIBS ${CURRENT_FILE})
         endif()
@@ -192,12 +220,16 @@ macro(setup_java )
         endif()
     endif()
     
-endmacro(setup_java )
+endmacro()
 
 # Search and set QT dependencies
 macro(setup_qt )
+    list(APPEND LIBS "${EXTERNAL_LIBRARIES}/lib/libfreetype.so")
+    list(APPEND LIBS "${EXTERNAL_LIBRARIES}/lib/libQt5Multimedia.so")
+    list(APPEND LIBS "${EXTERNAL_LIBRARIES}/lib/libQt5Network.so")
+    
     string(LENGTH "${EXTERNAL_LIBRARIES}/" QT_LENGTH)
-    file(GLOB QT_DIRS  "${EXTERNAL_LIBRARIES}/qml/*" "${EXTERNAL_LIBRARIES}/plugins/*")
+    file(GLOB QT_DIRS "${EXTERNAL_LIBRARIES}/plugins/*")
     foreach(CURRENT_DIR ${QT_DIRS})
     
         get_filename_component(QT_NAME ${CURRENT_DIR} NAME)
@@ -210,18 +242,18 @@ macro(setup_qt )
                 get_filename_component(FILE_NAME ${CURRENT_FILE} NAME)
             
                  string(LENGTH ${CURRENT_FILE} CURRENT_LENGTH)
-                 MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${QT_LENGTH}" )
+                 math( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${QT_LENGTH}" )
                  string(SUBSTRING ${CURRENT_FILE} ${QT_LENGTH} ${FINAL_LENGTH} SUB_DIR)
 
                 if(NOT "${EXTENSION}" STREQUAL ".DS_Store" ) # osx problem
                     if("${EXTENSION}" STREQUAL ".so")
                         list(APPEND LIBS ${CURRENT_FILE})
-                    elseif(QT_NAME)
-                        list(APPEND LIBS_ASSETS ${SUB_DIR})
                     endif()
+                    list(APPEND LIBS_ASSETS ${SUB_DIR})
+                    list(APPEND ASSETS_FILE ${SUB_DIR})
                 endif()
             endforeach()
         endif()
      endforeach()
-endmacro(setup_qt )
+endmacro()
     

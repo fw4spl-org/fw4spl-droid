@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2016.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -29,7 +29,40 @@ namespace visuVideoAndroid
 {
 namespace camera
 {
-
+/**
+ * @brief SAndroidCamera service handle the camera on Android platform.
+ *
+ * @section Signals Signals
+ * - \b cameraOpened(int format,int width,int height) : Emitted when the android camera is openned.
+ *
+ * @section Slots Slots
+ * - \b startOrStop(bool state) : if state = true the camera will be started, else the camera will be stopped.
+ * - \b startCamera() : Start the camera.
+ * - \b stopCamera() : Stop the camera.
+ *
+ * @section XML XML Configuration
+ *
+ * @code{.xml}
+        <service type="::visuVideoAndroid::camera::SAndroidCamera">
+            <inout key="frameTL" uid="frameTL" />
+            <cameraId>0</cameraId>
+            <autoFocus>true</autoFocus>
+            <width>640</width>
+            <height>480</height>
+            <fps>60</fps>
+       </service>
+   @endcode
+ *
+ * @subsection In-Out In-Out
+ * - \b frameTL [::extData::FrameTL]: Timeline used to register frames.
+ *
+ * @subsection Configuration Configuration
+ * - \b cameraId defines the android ID of the camera (usualy 0 is the back camera, and 1 the front one).
+ * - \b autoFocus defines if the autofocus is enable or not.
+ * - \b width defines the width resolution.
+ * - \b height defines the height resolution.
+ * - \b fps defines the desired framerate.
+ */
 class VISUVIDEOANDROID_CLASS_API SAndroidCamera : public ::fwServices::IService
 {
 
@@ -40,19 +73,8 @@ public:
     VISUVIDEOANDROID_API SAndroidCamera() throw();
     VISUVIDEOANDROID_API virtual ~SAndroidCamera() throw();
 
-    void fetchFrame(unsigned char* rgb);
-
-    VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_FRAME_FETCHED_SIG;
-    typedef ::fwCom::Signal<void (const unsigned char *)> FrameFetchedSignalType;
-
-    VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_GRAY_FRAME_FETCHED_SIG;
-    typedef ::fwCom::Signal<void (const unsigned char *, int, int)> GrayFrameFetchedSignalType;
-
     VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_CAMERA_OPENED_SIG;
     typedef ::fwCom::Signal<void (int,int,int)> CameraOpenedSignalType;
-
-    VISUVIDEOANDROID_API static const ::fwCom::Slots::SlotKeyType s_OPEN_CAMERA_SLOT;
-    typedef ::fwCom::Slot<void ()> OpenCameraSlotType;
 
 protected:
 
@@ -62,9 +84,12 @@ protected:
     VISUVIDEOANDROID_API virtual void updating() throw(::fwTools::Failed);
     VISUVIDEOANDROID_API virtual void info(std::ostream &_sstream );
 
-    VISUVIDEOANDROID_API void openCamera();
-
 private:
+
+    void startOrStop(bool state = true);
+    void startCamera();
+    void stopCamera();
+    void fetchFrame(unsigned char* rgb);
 
     unsigned int m_cameraId;
 
@@ -73,13 +98,11 @@ private:
     int m_frameRate;
 
     bool m_autoFocus;
+    bool m_camIsStarted;
 
     ::extData::FrameTL::sptr m_timeline;
 
-    FrameFetchedSignalType::sptr m_sigFrameFetched;
-    GrayFrameFetchedSignalType::sptr m_sigGrayFrameFetched;
     CameraOpenedSignalType::sptr m_sigCameraOpened;
-    OpenCameraSlotType::sptr m_slotOpenCamera;
 
     ::arAndroidTools::Camera* m_camera;
 };

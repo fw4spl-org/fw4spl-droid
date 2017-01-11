@@ -28,10 +28,7 @@ struct WidgetConfig
     WidgetConfig() :
         m_label(""),
         m_textSize(10.f),
-        m_margins(
-        {
-            40,40,40,40
-        }),
+        m_margins{40,40,40,40},
         m_width(0),
         m_height(0),
         m_type(TYPE_COUNT)

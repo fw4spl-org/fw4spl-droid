@@ -1,0 +1,10 @@
+<plugin id="droidTools" class="::droidTools::Plugin" version="@DASH_VERSION@" >
+    <library name="droidTools" />
+    
+    <extension implements="::fwServices::registry::ServiceFactory">
+        <type>::fwServices::IController</type>
+        <service>::droidTools::STransformManager</service>
+        <object>::fwData::TransformationMatrix3D</object>
+    </extension>
+
+</plugin>

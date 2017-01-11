@@ -5,12 +5,13 @@ set( TYPE APP )
 set( PLATFORM DROID )
 set( DEPENDENCIES  )
 set( REQUIREMENTS
-    appXml
+    appXml2
     servicesReg
     dataReg
     extDataReg
     launcherDroid
     ctrlCamera
+    ctrlCamp
     arDataReg
     visuVTKAdaptor
     visuVTKAndroid
@@ -18,13 +19,15 @@ set( REQUIREMENTS
     visuVideoAndroid
     visuVTK
     videoTools
-    vtkSimpleMesh
     io
     ioVTK
+    ioAtoms
     tracker
     trackerAruco
     gui
     guiAndroid
+    guiDroid
+    maths
 )
 
-bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidTrackingConfig )
+bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DroidTrackingConfig )

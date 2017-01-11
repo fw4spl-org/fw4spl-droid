@@ -5,7 +5,6 @@ set( TYPE BUNDLE )
 set( START ON )
 set( DEPENDENCIES
         fwCom
-        fwComEd
         fwCore
         fwRuntime
         fwTools

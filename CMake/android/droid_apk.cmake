@@ -4,11 +4,7 @@
 
 macro(create_apk)
     
-    if( ${APK_BUILD_TOOL} STREQUAL "ant" )
-        include(${CMAKE_DIRECTORY}/ant_build.cmake REQUIRED)
-    elseif( ${APK_BUILD_TOOL} STREQUAL "gradle" )
-        include(${CMAKE_DIRECTORY}/gradle_build.cmake REQUIRED)
-    endif()
+    include(${CMAKE_DIRECTORY}/gradle_build.cmake REQUIRED)
 
     set(ANDROID_APK_THEME "android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\"")
         
@@ -21,8 +17,9 @@ macro(create_apk)
     #JAR files:
     message("- Copying JAR libraries ...")
     foreach(JAR_FILE ${JAR_LIBS})
+        get_filename_component(CURRENT_NAME ${JAR_FILE} NAME)
         execute_process(
-             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${JAR_FILE}" "${APK_INSTALL_DIR}/libs"
+             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${JAR_FILE}" "${APK_INSTALL_DIR}/libs/${CURRENT_NAME}"
          )
     endforeach()
 
@@ -65,6 +62,32 @@ macro(create_apk)
         )
     endforeach()
     
+    
+    ##################################################
+    #  Copy libs
+    ##################################################
+    # message("- Copying Qt plugins ...")
+  #   execute_process(
+  #       COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_INSTALL_DIR}/libs/${ARM_TARGET}/plugins"
+  #   )
+  #
+  #   # Copy the used shared libraries
+  #   foreach(value ${PLUGINS_LIBS})
+  #
+  #       string(LENGTH ${value} CURRENT_LENGTH)
+  #       string(LENGTH "${EXTERNAL_LIBRARIES}/plugins*" PLUGINS_LENGTH)
+  #       MATH( EXPR FINAL_LENGTH "${CURRENT_LENGTH} - ${PLUGINS_LENGTH}" )
+  #       string(SUBSTRING ${value} ${PLUGINS_LENGTH} ${CURRENT_LENGTH} SUB_DIR)
+  #       message(" SUB_DIR = ${SUB_DIR}")
+  #       execute_process(
+  #           COMMAND ${CMAKE_COMMAND} -E copy_if_different ${value} "${APK_INSTALL_DIR}/libs/${ARM_TARGET}/plugins/${SUB_DIR}"
+  #       )
+  #   endforeach()
+    
+    
+
+    
+    
     ##################################################
     #  Copy assets
     ##################################################
@@ -85,7 +108,6 @@ macro(create_apk)
         endif()
 
         set(dest "${APK_INSTALL_DIR}/assets/${value}")
-        #message(" src = ${src}")
         execute_process(
              COMMAND ${CMAKE_COMMAND} -E copy_if_different ${src} ${dest}
          )
@@ -113,11 +135,7 @@ macro(create_apk)
     )
 
     # Build the apk file
-    if( ${APK_BUILD_TOOL} STREQUAL "ant" )
-        ant_build()
-    elseif( ${APK_BUILD_TOOL} STREQUAL "gradle" )
-        gradle_build()
-    endif()
+    gradle_build()
 
     #Start the application
     # execute_process(
