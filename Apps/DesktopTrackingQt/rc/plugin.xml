@@ -132,7 +132,7 @@
             </service>
 
             <service uid="tracker" type="::trackerAruco::SArucoTracker" worker="tracking">
-                <in key="frameTL" uid="frameTL" autoConnect="yes" />
+                <in key="timeline" uid="frameTL" autoConnect="yes" />
                 <in key="camera" uid="camera" />
                 <inout group="tagTL">
                     <key uid="markerTL" />
