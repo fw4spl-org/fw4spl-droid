@@ -12,7 +12,7 @@
     <extension implements="::fwServices::registry::AppConfig2">
         <id>DroidTrackingConfig</id>
         <config>
-        
+
             <object uid="markerTL" type="::arData::MarkerTL" />
             <object uid="markerMatrixTL" type="::extData::MatrixTL" />
             <object uid="transform" type="::fwData::TransformationMatrix3D" />
@@ -44,7 +44,7 @@
                     <view sid="scene" start="yes" />
                 </registry>
             </service>
-                        
+
             <service uid="guiManager" type="::guiDroid::SManager" autoConnect="no">
                 <gui>
                     <widget type="button" label="load" align="top|left" >
@@ -65,7 +65,7 @@
                     </widget>
                 </gui>
             </service>
-                
+
             <service uid="scene" type="::fwRenderVTK::SRender" autoConnect="yes">
                 <in key="modelSeries" uid="modelSeries" optional="yes"/>
                 <in key="resultMatrix" uid="resultMatrix" />
@@ -101,7 +101,7 @@
             </service>
 
             <service uid="tracker" type="::trackerAruco::SArucoTracker" worker="tracking">
-                <in key="frameTL" uid="frameTL" autoConnect="yes" />
+                <in key="timeline" uid="frameTL" autoConnect="yes" />
                 <in key="camera" uid="camera" />
                 <inout group="tagTL">
                     <key uid="markerTL" />
@@ -192,14 +192,14 @@
                     <extension>.jsonz</extension>
                 </extensions>
             </service>
-            
+
             <service uid="load" type="::gui::action::SSlotCaller">
                 <slots>
                     <slot>loader/update</slot>
                     <slot>extractObject/update</slot>
                 </slots>
             </service>
-            
+
             <start uid="loader" />
             <start uid="load" />
             <start uid="androidCamera" />
@@ -207,7 +207,7 @@
             <start uid="frame" />
             <start uid="guiManager" />
 
-            
+
             <start uid="extractObject" />
             <start uid="concatenate" />
 
