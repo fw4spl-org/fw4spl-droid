@@ -4,13 +4,13 @@ set( VERSION 0.1 )
 set( TYPE APP )
 set( DEPENDENCIES
 )
-set( REQUIREMENTS 
+set( REQUIREMENTS
     gui
     guiQt
-    
+
     activities
     appXml2
-    
+
     dataReg
     arDataReg
 
@@ -28,14 +28,14 @@ set( REQUIREMENTS
     ioVTK
     ioAtoms
     ioActivity
-    
+
     ctrlCamera
     videoTools
     videoQt
     maths
-    
-    tracker
+
     trackerAruco
+    registrationARL
     patchMedicalData
 
     droidTools

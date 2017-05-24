@@ -33,8 +33,8 @@ set( REQUIREMENTS
     visuVideoAndroid
     maths
 
-    tracker
     trackerAruco
+    registrationARL
     patchMedicalData
 
     droidTools
