@@ -3,7 +3,7 @@ fwLoadProperties()
 add_definitions("-DQT_NO_KEYWORDS")
 
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
-find_package(GLM REQUIRED)
+find_package(glm REQUIRED)
 
 fwForwardInclude(
     ${Qt5Core_INCLUDE_DIRS}
