@@ -25,10 +25,10 @@ public:
     DROIDTOOLS_API static const ::fwCom::Slots::SlotKeyType s_INCREMENT_SLOT;
 
     /// Constructor. Do nothing.
-    DROIDTOOLS_API STransformManager() throw();
+    DROIDTOOLS_API STransformManager() noexcept;
 
     /// Destructor. Do nothing.
-    DROIDTOOLS_API virtual ~STransformManager() throw();
+    DROIDTOOLS_API virtual ~STransformManager() noexcept;
 
 
 protected:
@@ -39,16 +39,16 @@ protected:
        @endcode
      */
 
-    DROIDTOOLS_API virtual void configuring() throw(::fwTools::Failed);
+    DROIDTOOLS_API virtual void configuring();
 
     ///This method launches the ::fwGui::IGuiContainerSrv::create method.
-    DROIDTOOLS_API virtual void starting() throw(::fwTools::Failed);
+    DROIDTOOLS_API virtual void starting();
 
     ///This method launches the ::fwGui::IGuiContainerSrv::destroy method.
-    DROIDTOOLS_API virtual void stopping() throw(::fwTools::Failed);
+    DROIDTOOLS_API virtual void stopping();
 
     /// Updates Slider value
-    DROIDTOOLS_API virtual void updating() throw(::fwTools::Failed);
+    DROIDTOOLS_API virtual void updating();
 
 private:
 

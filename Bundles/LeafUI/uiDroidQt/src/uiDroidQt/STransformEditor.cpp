@@ -35,26 +35,26 @@ fwServicesRegisterMacro( ::gui::editor::IEditor, ::uiDroidQt::STransformEditor, 
 static const ::fwCom::Signals::SignalKeyType s_INCREMENTED_SIG = "incremented";
 //------------------------------------------------------------------------------
 
-STransformEditor::STransformEditor() throw() : m_selectedAxis("x"), m_increment(10)
+STransformEditor::STransformEditor() noexcept : m_selectedAxis("x"), m_increment(10)
 {
     m_sigIncremented = newSignal< IncrSignalType >(s_INCREMENTED_SIG);
 }
 
 //------------------------------------------------------------------------------
 
-STransformEditor::~STransformEditor() throw()
+STransformEditor::~STransformEditor() noexcept
 {
 }
 
 //------------------------------------------------------------------------------
 
-void STransformEditor::configuring() throw (::fwTools::Failed)
+void STransformEditor::configuring()
 {
     this->initialize();
 }
 //------------------------------------------------------------------------------
 
-void STransformEditor::starting() throw (::fwTools::Failed)
+void STransformEditor::starting()
 {
     this->create();
     ::fwGuiQt::container::QtContainer::sptr qtContainer =
@@ -104,7 +104,7 @@ void STransformEditor::starting() throw (::fwTools::Failed)
 
 //------------------------------------------------------------------------------
 
-void STransformEditor::stopping() throw (::fwTools::Failed)
+void STransformEditor::stopping()
 {
     QObject::disconnect(m_buttonGroupAxis.data(), SIGNAL(buttonClicked(int)), this, SLOT(onChangeAxis(int)));
     QObject::disconnect(m_buttonIncr.data(), &QPushButton::pressed, this, &STransformEditor::onIncrement );
@@ -154,7 +154,7 @@ void STransformEditor::onChangeAxis(int axis)
 
 //------------------------------------------------------------------------------
 
-void STransformEditor::updating() throw (::fwTools::Failed)
+void STransformEditor::updating()
 {
 }
 

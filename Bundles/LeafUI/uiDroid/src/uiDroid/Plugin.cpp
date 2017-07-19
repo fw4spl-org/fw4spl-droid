@@ -24,7 +24,7 @@ namespace uiDroid
 static ::fwRuntime::utils::GenericExecutableFactoryRegistrar<Plugin> registrar("::uiDroid::Plugin");
 
 // Overrides
-void Plugin::start() throw(::fwRuntime::RuntimeException)
+void Plugin::start()
 {
     ::fwRuntime::profile::Profile::sptr profile = ::fwRuntime::profile::getCurrentProfile();
 

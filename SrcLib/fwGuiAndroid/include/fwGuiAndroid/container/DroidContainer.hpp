@@ -32,9 +32,9 @@ public:
                                             (()),
                                             ::fwGui::factory::New< DroidContainer > );
 
-    FWGUIANDROID_API DroidContainer(::fwGui::GuiBaseObject::Key key) throw();
+    FWGUIANDROID_API DroidContainer(::fwGui::GuiBaseObject::Key key) noexcept;
 
-    FWGUIANDROID_API virtual ~DroidContainer() throw();
+    FWGUIANDROID_API virtual ~DroidContainer() noexcept;
 
 
     FWGUIANDROID_API virtual void clean();

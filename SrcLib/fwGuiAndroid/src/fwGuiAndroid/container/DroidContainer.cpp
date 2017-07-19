@@ -13,13 +13,13 @@ namespace container
 
 //-----------------------------------------------------------------------------
 
-DroidContainer::DroidContainer(::fwGui::GuiBaseObject::Key key) throw()
+DroidContainer::DroidContainer(::fwGui::GuiBaseObject::Key key) noexcept
 {
 }
 
 //-----------------------------------------------------------------------------
 
-DroidContainer::~DroidContainer() throw()
+DroidContainer::~DroidContainer() noexcept
 {
 }
 

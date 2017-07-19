@@ -29,7 +29,7 @@ const ::fwCom::Slots::SlotKeyType STransformManager::s_INCREMENT_SLOT = "increme
 
 //------------------------------------------------------------------------------
 
-STransformManager::STransformManager() throw() :
+STransformManager::STransformManager() noexcept :
     m_tx(0),
     m_ty(0),
     m_tz(0)
@@ -40,35 +40,35 @@ STransformManager::STransformManager() throw() :
 
 //------------------------------------------------------------------------------
 
-STransformManager::~STransformManager() throw()
+STransformManager::~STransformManager() noexcept
 {
     //---
 }
 
 //------------------------------------------------------------------------------
 
-void STransformManager::configuring() throw(::fwTools::Failed)
+void STransformManager::configuring()
 {
     //---
 }
 
 //------------------------------------------------------------------------------
 
-void STransformManager::starting() throw(::fwTools::Failed)
+void STransformManager::starting()
 {
     //---
 }
 
 //------------------------------------------------------------------------------
 
-void STransformManager::stopping() throw(::fwTools::Failed)
+void STransformManager::stopping()
 {
     //---
 }
 
 //------------------------------------------------------------------------------
 
-void STransformManager::updating() throw(::fwTools::Failed)
+void STransformManager::updating()
 {
     ::fwData::TransformationMatrix3D::sptr matrix = this->getObject< ::fwData::TransformationMatrix3D >();
 

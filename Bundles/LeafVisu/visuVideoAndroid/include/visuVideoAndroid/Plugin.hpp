@@ -25,13 +25,13 @@ public:
     /**
      * @brief   destructor
      */
-    VISUVIDEOANDROID_API ~Plugin() throw();
+    VISUVIDEOANDROID_API ~Plugin() noexcept;
 
     // Overrides
-    VISUVIDEOANDROID_API void start() throw(::fwRuntime::RuntimeException);
+    VISUVIDEOANDROID_API void start();
 
     // Overrides
-    VISUVIDEOANDROID_API void stop() throw();
+    VISUVIDEOANDROID_API void stop() noexcept;
 
 };
 

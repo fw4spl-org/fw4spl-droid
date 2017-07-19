@@ -70,18 +70,18 @@ public:
 
     fwCoreServiceClassDefinitionsMacro ( (SAndroidCamera)(::fwServices::IService) );
 
-    VISUVIDEOANDROID_API SAndroidCamera() throw();
-    VISUVIDEOANDROID_API virtual ~SAndroidCamera() throw();
+    VISUVIDEOANDROID_API SAndroidCamera() noexcept;
+    VISUVIDEOANDROID_API virtual ~SAndroidCamera() noexcept;
 
     VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_CAMERA_OPENED_SIG;
     typedef ::fwCom::Signal<void (int,int,int)> CameraOpenedSignalType;
 
 protected:
 
-    VISUVIDEOANDROID_API virtual void configuring() throw( ::fwTools::Failed );
-    VISUVIDEOANDROID_API virtual void starting() throw(::fwTools::Failed);
-    VISUVIDEOANDROID_API virtual void stopping() throw(::fwTools::Failed);
-    VISUVIDEOANDROID_API virtual void updating() throw(::fwTools::Failed);
+    VISUVIDEOANDROID_API virtual void configuring();
+    VISUVIDEOANDROID_API virtual void starting();
+    VISUVIDEOANDROID_API virtual void stopping();
+    VISUVIDEOANDROID_API virtual void updating();
     VISUVIDEOANDROID_API virtual void info(std::ostream &_sstream );
 
 private:

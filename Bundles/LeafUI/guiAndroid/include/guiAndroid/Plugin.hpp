@@ -28,7 +28,7 @@ public:
     /**
      * @brief   Destructor
      */
-    GUIANDROID_API ~Plugin() throw();
+    GUIANDROID_API ~Plugin() noexcept;
 
     /**
      * @brief Start method.
@@ -36,16 +36,16 @@ public:
      * @exception ::fwRuntime::RuntimeException.
      * This method is used by runtime to initialize the bundle.
      */
-    GUIANDROID_API void start() throw(::fwRuntime::RuntimeException);
+    GUIANDROID_API void start();
 
     /**
      * @brief Stop method.
      *
      * This method is used by runtime to stop the bundle.
      */
-    GUIANDROID_API void stop() throw();
+    GUIANDROID_API void stop() noexcept;
 
-    GUIANDROID_API int run() throw();
+    GUIANDROID_API int run() noexcept;
 
 private:
 

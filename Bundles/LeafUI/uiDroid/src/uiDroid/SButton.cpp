@@ -27,20 +27,20 @@ fwServicesRegisterMacro( ::fwServices::IService, ::uiDroid::SButton, ::fwData::O
 
 //------------------------------------------------------------------------------
 
-SButton::SButton() throw() :
+SButton::SButton() noexcept :
     m_boolState(true)
 {
 }
 
 //------------------------------------------------------------------------------
 
-SButton::~SButton() throw()
+SButton::~SButton() noexcept
 {
 }
 
 //------------------------------------------------------------------------------
 
-void SButton::configuring() throw (fwTools::Failed)
+void SButton::configuring()
 {
     SLM_TRACE_FUNC();
 
@@ -68,7 +68,7 @@ void SButton::configuring() throw (fwTools::Failed)
 }
 //------------------------------------------------------------------------------
 
-void SButton::starting() throw (fwTools::Failed)
+void SButton::starting()
 {
     SLM_TRACE_FUNC();
 
@@ -138,13 +138,13 @@ void SButton::starting() throw (fwTools::Failed)
 
 //------------------------------------------------------------------------------
 
-void SButton::stopping() throw (fwTools::Failed)
+void SButton::stopping()
 {
 }
 
 //------------------------------------------------------------------------------
 
-void SButton::updating() throw (fwTools::Failed)
+void SButton::updating()
 {
 }
 

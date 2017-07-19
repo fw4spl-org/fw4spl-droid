@@ -22,13 +22,13 @@ struct GUIDROID_CLASS_API Plugin : public ::fwRuntime::Plugin
     /**
      * @brief   destructor
      */
-    GUIDROID_API ~Plugin() throw();
+    GUIDROID_API ~Plugin() noexcept;
 
     // Overrides
-    GUIDROID_API void start() throw(::fwRuntime::RuntimeException);
+    GUIDROID_API void start();
 
     // Overrides
-    GUIDROID_API void stop() throw();
+    GUIDROID_API void stop() noexcept;
 
 };
 
