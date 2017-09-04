@@ -3,8 +3,10 @@
     <requirement id="arDataReg" />
     <requirement id="servicesReg" />
     <requirement id="visuVTKQt" />
-    <xi:include xmlns:xi="http://www.w3.org/2003/XInclude" href="configurations/deviceParameters.xml" />
-    <extension implements="::fwServices::registry::AppConfig2">
+
+    <xi:include href="configurations/deviceParameters.xml" xmlns:xi="http://www.w3.org/2003/XInclude" />
+
+    <extension implements="::fwServices::registry::AppConfig">
         <id>DroidTrackingQtConfig</id>
         <config>
             <object uid="markerTL" type="::arData::MarkerTL" />
