@@ -52,32 +52,32 @@ public:
     /**
      * @brief Constructor.
      */
-    UIDROIDQT_API SOrganMaterialEditor() throw ();
+    UIDROIDQT_API SOrganMaterialEditor() noexcept;
 
     /**
      * @brief Destructor.
      */
-    UIDROIDQT_API ~SOrganMaterialEditor() throw ();
+    UIDROIDQT_API ~SOrganMaterialEditor() noexcept;
 
 protected:
 
     ///nothing
-    UIDROIDQT_API void configuring() throw (::fwTools::Failed);
+    UIDROIDQT_API void configuring();
 
     /**
      * @brief Starting method : This method is used to initialize the service.
      */
-    UIDROIDQT_API void starting() throw (::fwTools::Failed);
+    UIDROIDQT_API void starting();
 
     /**
      * @brief Stopping method : This method is used to stop the service.
      */
-    UIDROIDQT_API void stopping() throw (::fwTools::Failed);
+    UIDROIDQT_API void stopping();
 
     /**
      * @brief Updating method : This method is used to update the service.
      */
-    UIDROIDQT_API void updating() throw (::fwTools::Failed);
+    UIDROIDQT_API void updating();
 
 private:
 

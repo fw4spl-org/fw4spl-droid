@@ -23,7 +23,7 @@ public:
     /**
      * @brief   Destructor
      */
-    VISUVTKANDROID_API ~Plugin() throw();
+    VISUVTKANDROID_API ~Plugin() noexcept;
 
     /**
      * @brief Start method.
@@ -31,16 +31,16 @@ public:
      * @exception ::fwRuntime::RuntimeException.
      * This method is used by runtime to initialize the bundle.
      */
-    VISUVTKANDROID_API void start() throw(::fwRuntime::RuntimeException);
+    VISUVTKANDROID_API void start();
 
     /**
      * @brief Stop method.
      *
      * This method is used by runtime to stop the bundle.
      */
-    VISUVTKANDROID_API void stop() throw();
+    VISUVTKANDROID_API void stop() noexcept;
 
-    VISUVTKANDROID_API int run() throw();
+    VISUVTKANDROID_API int run() noexcept;
 };
 
 } // namespace visuVTKAndroid

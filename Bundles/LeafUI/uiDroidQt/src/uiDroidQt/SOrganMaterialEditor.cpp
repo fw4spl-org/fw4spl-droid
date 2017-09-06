@@ -32,19 +32,19 @@ fwServicesRegisterMacro( ::gui::editor::IEditor, ::uiDroidQt::SOrganMaterialEdit
 
 //------------------------------------------------------------------------------
 
-SOrganMaterialEditor::SOrganMaterialEditor() throw()
+SOrganMaterialEditor::SOrganMaterialEditor() noexcept
 {
 }
 
 //------------------------------------------------------------------------------
 
-SOrganMaterialEditor::~SOrganMaterialEditor() throw()
+SOrganMaterialEditor::~SOrganMaterialEditor() noexcept
 {
 }
 
 //------------------------------------------------------------------------------
 
-void SOrganMaterialEditor::configuring() throw (::fwTools::Failed)
+void SOrganMaterialEditor::configuring()
 {
     this->initialize();
 
@@ -59,7 +59,7 @@ void SOrganMaterialEditor::configuring() throw (::fwTools::Failed)
 }
 //------------------------------------------------------------------------------
 
-void SOrganMaterialEditor::starting() throw (::fwTools::Failed)
+void SOrganMaterialEditor::starting()
 {
     this->create();
     ::fwGuiQt::container::QtContainer::sptr qtContainer =
@@ -82,7 +82,7 @@ void SOrganMaterialEditor::starting() throw (::fwTools::Failed)
 
 //------------------------------------------------------------------------------
 
-void SOrganMaterialEditor::stopping() throw (::fwTools::Failed)
+void SOrganMaterialEditor::stopping()
 {
     QObject::disconnect(m_opacitySlider.data(), &QSlider::valueChanged, this, &SOrganMaterialEditor::changeOpacity);
 
@@ -117,7 +117,7 @@ void SOrganMaterialEditor::changeOpacity(int _iValue)
 
 //------------------------------------------------------------------------------
 
-void SOrganMaterialEditor::updating() throw (::fwTools::Failed)
+void SOrganMaterialEditor::updating()
 {
 }
 

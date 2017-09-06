@@ -40,30 +40,30 @@ public:
     /**
      * @brief Constructor.
      */
-    UIDROID_API SButton() throw ();
+    UIDROID_API SButton() noexcept;
 
     /**
      * @brief Destructor.
      */
-    UIDROID_API ~SButton() throw ();
+    UIDROID_API ~SButton() noexcept;
 
     ///nothing
-    UIDROID_API void configuring() throw (fwTools::Failed);
+    UIDROID_API void configuring();
 
     /**
      * @brief Starting method : This method is used to initialize the service.
      */
-    UIDROID_API void starting() throw (fwTools::Failed);
+    UIDROID_API void starting();
 
     /**
      * @brief Stopping method : This method is used to stop the service.
      */
-    UIDROID_API void stopping() throw (fwTools::Failed);
+    UIDROID_API void stopping();
 
     /**
      * @brief Updating method : This method is used to update the service.
      */
-    UIDROID_API void updating() throw (fwTools::Failed);
+    UIDROID_API void updating();
 
 
 protected:

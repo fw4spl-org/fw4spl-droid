@@ -32,7 +32,7 @@ const ::fwCom::Slots::SlotKeyType s_START_CAMERA_SLOT  = "startCamera";
 const ::fwCom::Slots::SlotKeyType s_STOP_CAMERA_SLOT   = "stopCamera";
 //-----------------------------------------------------------------------------
 
-SAndroidCamera::SAndroidCamera() throw() : m_cameraId(0),
+SAndroidCamera::SAndroidCamera() noexcept : m_cameraId(0),
                                            m_width(320),
                                            m_height(240),
                                            m_frameRate(60),
@@ -50,14 +50,14 @@ SAndroidCamera::SAndroidCamera() throw() : m_cameraId(0),
 
 //-----------------------------------------------------------------------------
 
-SAndroidCamera::~SAndroidCamera() throw()
+SAndroidCamera::~SAndroidCamera() noexcept
 {
     SLM_TRACE_FUNC();
 }
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::configuring() throw( ::fwTools::Failed )
+void SAndroidCamera::configuring()
 {
     SLM_TRACE_FUNC();
 
@@ -80,7 +80,7 @@ void SAndroidCamera::configuring() throw( ::fwTools::Failed )
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::starting() throw(::fwTools::Failed)
+void SAndroidCamera::starting()
 {
     SLM_TRACE_FUNC();
 
@@ -97,7 +97,7 @@ void SAndroidCamera::starting() throw(::fwTools::Failed)
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::stopping() throw(::fwTools::Failed)
+void SAndroidCamera::stopping()
 {
     SLM_TRACE_FUNC();
     if(m_camIsStarted)
@@ -115,7 +115,7 @@ void SAndroidCamera::info(std::ostream &_sstream )
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::updating() throw(::fwTools::Failed)
+void SAndroidCamera::updating()
 {
     SLM_TRACE_FUNC();
     this->startCamera();

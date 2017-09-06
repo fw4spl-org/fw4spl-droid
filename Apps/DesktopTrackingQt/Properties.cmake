@@ -9,7 +9,7 @@ set( REQUIREMENTS
     guiQt
 
     activities
-    appXml2
+    appXml
 
     dataReg
     arDataReg
@@ -45,4 +45,4 @@ set( REQUIREMENTS
     uiLogo
 )
 
-bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DesktopTrackingQtConfig)
+bundleParam(appXml PARAM_LIST config PARAM_VALUES DesktopTrackingQtConfig)

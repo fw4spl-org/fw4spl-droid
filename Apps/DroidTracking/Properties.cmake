@@ -5,7 +5,7 @@ set( TYPE APP )
 set( PLATFORM DROID )
 set( DEPENDENCIES  )
 set( REQUIREMENTS
-    appXml2
+    appXml
     servicesReg
     dataReg
     extDataReg
@@ -30,4 +30,4 @@ set( REQUIREMENTS
     maths
 )
 
-bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DroidTrackingConfig )
+bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidTrackingConfig )

@@ -76,10 +76,10 @@ public:
     fwCoreServiceClassDefinitionsMacro ( (SManager)(::fwServices::IService) );
 
     /// Constructor.
-    GUIDROID_API SManager() throw();
+    GUIDROID_API SManager() noexcept;
 
     /// Destructor. Does nothing
-    GUIDROID_API virtual ~SManager() throw();
+    GUIDROID_API virtual ~SManager() noexcept;
 
 protected:
 
@@ -101,16 +101,16 @@ protected:
      * - \b layout : layout definition and attributes.
      * - \b widget : widget definition and attributes.
      */
-    GUIDROID_API virtual void configuring()  throw ( ::fwTools::Failed );
+    GUIDROID_API virtual void configuring();
 
     /// FILL ME.
-    GUIDROID_API virtual void starting()  throw ( ::fwTools::Failed );
+    GUIDROID_API virtual void starting();
 
     /// FILL ME.
-    GUIDROID_API virtual void stopping()  throw ( ::fwTools::Failed );
+    GUIDROID_API virtual void stopping();
 
     /// FILL ME.
-    GUIDROID_API virtual void updating() throw ( ::fwTools::Failed );
+    GUIDROID_API virtual void updating();
 
 private:
 

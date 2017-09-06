@@ -17,15 +17,15 @@ struct Plugin : public ::fwRuntime::Plugin
     /**
      * @brief   destructor
      */
-    ~Plugin() throw()
+    ~Plugin() noexcept
     {
     }
 
     // Overrides
-    void start() throw(::fwRuntime::RuntimeException);
+    void start();
 
     // Overrides
-    void stop() throw()
+    void stop() noexcept
     {
     }
 };

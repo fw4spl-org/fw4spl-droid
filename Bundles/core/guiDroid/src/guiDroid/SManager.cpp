@@ -27,13 +27,13 @@ namespace guiDroid
 fwServicesRegisterMacro( ::fwServices::IService, ::guiDroid::SManager, ::fwData::Object);
 
 //------------------------------------------------------------------------------
-SManager::SManager() throw()
+SManager::SManager() noexcept
 {
 }
 
 //------------------------------------------------------------------------------
 
-SManager::~SManager() throw()
+SManager::~SManager() noexcept
 {
     for(WidgetData* widget : m_widgets)
     {
@@ -43,7 +43,7 @@ SManager::~SManager() throw()
 
 //------------------------------------------------------------------------------
 
-void SManager::configuring() throw(::fwTools::Failed)
+void SManager::configuring()
 {
     SLM_ASSERT("Service hasn't configuration", m_configuration);
 
@@ -176,7 +176,7 @@ void SManager::configuring() throw(::fwTools::Failed)
 
 //------------------------------------------------------------------------------
 
-void SManager::starting() throw(::fwTools::Failed)
+void SManager::starting()
 {
 
     for(WidgetData* widget : m_widgets)
@@ -244,13 +244,13 @@ void SManager::starting() throw(::fwTools::Failed)
 
 //------------------------------------------------------------------------------
 
-void SManager::stopping() throw(::fwTools::Failed)
+void SManager::stopping()
 {
 }
 
 //------------------------------------------------------------------------------
 
-void SManager::updating() throw(::fwTools::Failed)
+void SManager::updating()
 {
 }
 

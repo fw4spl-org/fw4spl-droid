@@ -8,7 +8,7 @@ set( REQUIREMENTS
     gui
     guiQt
 
-    appXml2
+    appXml
 
     dataReg
     arDataReg
@@ -42,4 +42,4 @@ set( REQUIREMENTS
 )
 set( PLATFORM DROID)
 
-bundleParam(appXml2 PARAM_LIST config PARAM_VALUES DroidTrackingQtConfig)
+bundleParam(appXml PARAM_LIST config PARAM_VALUES DroidTrackingQtConfig)
