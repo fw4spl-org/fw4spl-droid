@@ -1,17 +1,17 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2016.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2017.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
 
 #include "visuVideoAndroid/camera/SAndroidCamera.hpp"
 
-#include <fwCom/Slots.hxx>
 #include <fwCom/Signal.hxx>
-
-#include <fwTools/fwID.hpp>
+#include <fwCom/Slots.hxx>
 
 #include <fwServices/macros.hpp>
+
+#include <fwTools/fwID.hpp>
 
 #include <sstream>
 
@@ -32,16 +32,16 @@ const ::fwCom::Slots::SlotKeyType s_START_CAMERA_SLOT  = "startCamera";
 const ::fwCom::Slots::SlotKeyType s_STOP_CAMERA_SLOT   = "stopCamera";
 //-----------------------------------------------------------------------------
 
-SAndroidCamera::SAndroidCamera() noexcept : m_cameraId(0),
-                                           m_width(320),
-                                           m_height(240),
-                                           m_frameRate(60),
-                                           m_autoFocus(true),
-                                           m_camIsStarted(false)
+SAndroidCamera::SAndroidCamera() noexcept :
+    m_cameraId(0),
+    m_width(320),
+    m_height(240),
+    m_frameRate(60),
+    m_autoFocus(true),
+    m_camIsStarted(false)
 {
     SLM_TRACE_FUNC();
     m_sigCameraOpened = newSignal< CameraOpenedSignalType >( s_CAMERA_OPENED_SIG );
-
 
     newSlot(s_START_OR_STOP_SLOT, &SAndroidCamera::startOrStop, this);
     newSlot(s_STOP_CAMERA_SLOT, &SAndroidCamera::stopCamera, this);
@@ -108,7 +108,7 @@ void SAndroidCamera::stopping()
 
 //-----------------------------------------------------------------------------
 
-void SAndroidCamera::info(std::ostream &_sstream )
+void SAndroidCamera::info(std::ostream& _sstream )
 {
     SLM_TRACE_FUNC();
 }
@@ -157,7 +157,7 @@ void SAndroidCamera::fetchFrame(unsigned char* rgb)
 
     SPTR(::extData::FrameTL::BufferType) buffer = m_timeline->createBuffer(timestamp);
 
-    ::boost::uint32_t* destBuffer = reinterpret_cast< ::boost::uint32_t* >( buffer->addElement(0) );
+    std::uint32_t* destBuffer = reinterpret_cast< std::uint32_t* >( buffer->addElement(0) );
 
     const int width  = m_camera->getWidth();
     const int height = m_camera->getHeight();
@@ -165,10 +165,10 @@ void SAndroidCamera::fetchFrame(unsigned char* rgb)
     OSLM_DEBUG(" Fetched frame size = "<<m_camera->getWidth()<<" x "<< m_camera->getHeight());
     OSLM_DEBUG(" Fetched frame rate = "<<m_camera->getFrameRate());
 
-    const ::boost::uint32_t* frameBuffer = reinterpret_cast< const ::boost::uint32_t *>( rgb );
-    const unsigned int size              = static_cast<unsigned int>(width*height);
+    const std::uint32_t* frameBuffer = reinterpret_cast< const std::uint32_t*>( rgb );
+    const unsigned int size          = static_cast<unsigned int>(width*height);
 
-    std::copy(frameBuffer,frameBuffer+size,destBuffer);
+    std::copy(frameBuffer, frameBuffer+size, destBuffer);
 
     delete[] rgb;
 
