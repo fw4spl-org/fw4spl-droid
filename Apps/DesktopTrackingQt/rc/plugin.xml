@@ -198,7 +198,7 @@
 
             <service uid="loader" type="::ioAtoms::SReader">
                 <inout key="target" uid="seriesDB" />
-                <file>@BUNDLE_PREFIX@/DesktopTrackingQt_0-1/Liver_ColorectalMetastasis_opaque.jsonz</file>
+                <file>DesktopTrackingQt_0-1/Liver_ColorectalMetastasis_opaque.jsonz</file>
                 <patcher context="MedicalData" version="V09ALA" />
                 <archive backend="jsonz">
                     <extension>.jsonz</extension>
