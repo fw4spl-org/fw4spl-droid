@@ -1,4 +1,4 @@
-<plugin id="DesktopTrackingQt" version="@DASH_VERSION@">
+<plugin id="DesktopTrackingQt" version="@PROJECT_VERSION@">
     <requirement id="dataReg" />
     <requirement id="arDataReg" />
     <requirement id="servicesReg" />
@@ -198,7 +198,7 @@
 
             <service uid="loader" type="::ioAtoms::SReader">
                 <inout key="target" uid="seriesDB" />
-                <file>DesktopTrackingQt_0-1/Liver_ColorectalMetastasis_opaque.jsonz</file>
+                <file>DesktopTrackingQt-0.1/Liver_ColorectalMetastasis_opaque.jsonz</file>
                 <patcher context="MedicalData" version="V09ALA" />
                 <archive backend="jsonz">
                     <extension>.jsonz</extension>

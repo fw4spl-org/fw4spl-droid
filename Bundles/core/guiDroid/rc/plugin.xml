@@ -1,4 +1,4 @@
-<plugin id="guiDroid" class="::guiDroid::Plugin" version="@DASH_VERSION@">
+<plugin id="guiDroid" class="::guiDroid::Plugin" version="@PROJECT_VERSION@">
     
     <library name="guiDroid" />
 
