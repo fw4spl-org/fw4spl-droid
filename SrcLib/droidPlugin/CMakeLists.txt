@@ -34,11 +34,11 @@ fwLink(
     stdc++
 )
 
-set_target_properties(${FWPROJECT_NAME} PROPERTIES 
+set_target_properties(${FWPROJECT_NAME} PROPERTIES
     AUTOMOC TRUE
     OUTPUT_NAME "${FWPROJECT_NAME}"
 )
 
 install(TARGETS ${FWPROJECT_NAME}
-    LIBRARY DESTINATION ${EXTERNAL_LIBRARIES}/plugins/platforms/
+    LIBRARY DESTINATION ${EXTERNAL_LIBRARIES}/lib/qt5/plugins/platforms/
 )

@@ -1,4 +1,4 @@
-<plugin id="DroidTracking" version="@DASH_VERSION@">
+<plugin id="DroidTracking" version="@PROJECT_VERSION@">
     <requirement id="dataReg" />
     <requirement id="extDataReg" />
     <requirement id="arDataReg" />
@@ -185,7 +185,7 @@
 
             <service uid="loader" type="::ioAtoms::SReader">
                 <inout key="target" uid="seriesDB" />
-                <file>data/data/com.fw4spl.DroidTracking/Bundles/DroidTracking_0-1/liver.jsonz</file>
+                <file>data/data/com.fw4spl.DroidTracking/Bundles/DroidTracking-0.1/liver.jsonz</file>
                 <patcher context="MedicalData" version="V09ALA" />
                 <archive backend="jsonz">
                     <extension>.jsonz</extension>

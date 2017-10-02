@@ -1,4 +1,4 @@
-<plugin id="PoC09Android" version="@DASH_VERSION@">
+<plugin id="PoC09Android" version="@PROJECT_VERSION@">
     <requirement id="dataReg" />
     <requirement id="servicesReg" />
     <requirement id="visuVTKAndroid" />
@@ -22,7 +22,7 @@
 
             <service uid="meshReader" type="::ioVTK::SMeshReader" autoConnect="yes">
                 <inout key="output" uid="meshUID" />
-                <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android_0-1/cube.vtk</file>
+                <file>/data/data/com.fw4spl.PoC09Android/Bundles/PoC09Android-0.1/cube.vtk</file>
             </service>
 
             <start uid="frame" />

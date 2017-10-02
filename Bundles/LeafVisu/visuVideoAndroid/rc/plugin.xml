@@ -1,4 +1,4 @@
-  <plugin id="visuVideoAndroid" class="::visuVideoAndroid::Plugin" version="@DASH_VERSION@">
+  <plugin id="visuVideoAndroid" class="::visuVideoAndroid::Plugin" version="@PROJECT_VERSION@">
     <library name="visuVideoAndroid" />
     
     <extension implements="::fwServices::registry::ServiceFactory">

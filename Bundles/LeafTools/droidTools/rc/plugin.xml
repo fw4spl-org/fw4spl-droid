@@ -1,4 +1,4 @@
-<plugin id="droidTools" class="::droidTools::Plugin" version="@DASH_VERSION@" >
+<plugin id="droidTools" class="::droidTools::Plugin" version="@PROJECT_VERSION@" >
     <library name="droidTools" />
     
     <extension implements="::fwServices::registry::ServiceFactory">

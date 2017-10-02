@@ -1,4 +1,4 @@
-<plugin id="visuVTKAndroid" class="::visuVTKAndroid::Plugin" version="@DASH_VERSION@" >
+<plugin id="visuVTKAndroid" class="::visuVTKAndroid::Plugin" version="@PROJECT_VERSION@" >
 
     <library name="visuVTKAndroid" />
 
