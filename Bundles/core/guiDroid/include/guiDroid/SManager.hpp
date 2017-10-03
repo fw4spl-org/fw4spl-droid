@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2016.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2017.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -28,7 +28,7 @@ struct WidgetConfig
     WidgetConfig() :
         m_label(""),
         m_textSize(10.f),
-        m_margins{40,40,40,40},
+        m_margins{40, 40, 40, 40},
         m_width(0),
         m_height(0),
         m_type(TYPE_COUNT)
@@ -37,7 +37,7 @@ struct WidgetConfig
     }
 
     std::string m_label;                         ///< button label.
-    std::pair<std::string,std::string>  m_slotPair;
+    std::pair<std::string, std::string>  m_slotPair;
 
     float m_textSize;
 
@@ -66,14 +66,13 @@ struct WidgetData
 
 /**
  * @brief   Description of the class.
- * @class   SManager
  */
 class GUIDROID_CLASS_API SManager : public ::fwServices::IService
 {
 
 public:
 
-    fwCoreServiceClassDefinitionsMacro ( (SManager)(::fwServices::IService) );
+    fwCoreServiceClassDefinitionsMacro( (SManager)(::fwServices::IService) );
 
     /// Constructor.
     GUIDROID_API SManager() noexcept;
@@ -101,16 +100,16 @@ protected:
      * - \b layout : layout definition and attributes.
      * - \b widget : widget definition and attributes.
      */
-    GUIDROID_API virtual void configuring();
+    GUIDROID_API virtual void configuring() override;
 
     /// FILL ME.
-    GUIDROID_API virtual void starting();
+    GUIDROID_API virtual void starting() override;
 
     /// FILL ME.
-    GUIDROID_API virtual void stopping();
+    GUIDROID_API virtual void stopping() override;
 
     /// FILL ME.
-    GUIDROID_API virtual void updating();
+    GUIDROID_API virtual void updating() override;
 
 private:
 
