@@ -1,4 +1,4 @@
-<plugin id="DroidTrackingQt" version="@DASH_VERSION@">
+<plugin id="DroidTrackingQt" version="@PROJECT_VERSION@">
     <requirement id="dataReg" />
     <requirement id="arDataReg" />
     <requirement id="servicesReg" />
@@ -34,7 +34,7 @@
                 <gui>
                     <frame>
                         <name>TestTrackingQt</name>
-                        <icon>/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/tuto.ico</icon>
+                        <icon>/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt-0.1/tuto.ico</icon>
                         <!-- <minSize width="2048" height="1440" /> -->
                     </frame>
                     <toolBar>
@@ -50,9 +50,9 @@
             <service uid="toolBar" type="::gui::aspect::SDefaultToolBar">
                 <gui>
                     <layout>
-                        <menuItem name="start/pause" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/start.png" icon2="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/pause.png" style="check" />
+                        <menuItem name="start/pause" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt-0.1/icons/start.png" icon2="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt-0.1/icons/pause.png" style="check" />
                         <separator/>
-                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/icons/plus.png" />
+                        <menuItem name="load" icon="/data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt-0.1/icons/plus.png" />
                         <separator/>
                         <editor/>
                         <editor/>
@@ -215,8 +215,8 @@
 
             <service uid="loader" type="::ioAtoms::SReader">
                 <inout key="target" uid="seriesDB" />
-                <!--<file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/liver.jsonz</file> -->
-                <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt_0-1/Liver_ColorectalMetastasis_opaque.jsonz</file>
+                <!--<file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt-0.1/liver.jsonz</file> -->
+                <file>data/data/com.fw4spl.DroidTrackingQt/Bundles/DroidTrackingQt-0.1/Liver_ColorectalMetastasis_opaque.jsonz</file>
                 <patcher context="MedicalData" version="V09ALA" />
                 <archive backend="jsonz">
                     <extension>.jsonz</extension>

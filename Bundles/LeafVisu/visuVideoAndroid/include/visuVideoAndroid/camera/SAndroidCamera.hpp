@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2014-2016.
+ * FW4SPL - Copyright (C) IRCAD, 2014-2017.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -7,23 +7,22 @@
 #ifndef __VISUVIDEOANDROID_CAMERA_SANDROIDCAMERA_HPP__
 #define __VISUVIDEOANDROID_CAMERA_SANDROIDCAMERA_HPP__
 
-#include <string>
-
-#include <fwTools/Failed.hpp>
-#include <fwServices/IService.hpp>
-
-#include <fwCom/Slot.hpp>
-#include <fwCom/Slots.hpp>
-
-#include <fwCom/Signal.hpp>
-#include <fwCom/Signals.hpp>
+#include "visuVideoAndroid/config.hpp"
 
 #include <arAndroidTools/Camera.hpp>
 
+#include <fwCom/Signal.hpp>
+#include <fwCom/Signals.hpp>
+#include <fwCom/Slot.hpp>
+#include <fwCom/Slots.hpp>
+
+#include <fwServices/IService.hpp>
+
+#include <fwTools/Failed.hpp>
+
 #include <extData/FrameTL.hpp>
 
-#include "visuVideoAndroid/config.hpp"
-
+#include <string>
 
 namespace visuVideoAndroid
 {
@@ -68,21 +67,21 @@ class VISUVIDEOANDROID_CLASS_API SAndroidCamera : public ::fwServices::IService
 
 public:
 
-    fwCoreServiceClassDefinitionsMacro ( (SAndroidCamera)(::fwServices::IService) );
+    fwCoreServiceClassDefinitionsMacro( (SAndroidCamera)(::fwServices::IService) );
 
     VISUVIDEOANDROID_API SAndroidCamera() noexcept;
     VISUVIDEOANDROID_API virtual ~SAndroidCamera() noexcept;
 
     VISUVIDEOANDROID_API static const ::fwCom::Signals::SignalKeyType s_CAMERA_OPENED_SIG;
-    typedef ::fwCom::Signal<void (int,int,int)> CameraOpenedSignalType;
+    typedef ::fwCom::Signal<void (int, int, int)> CameraOpenedSignalType;
 
 protected:
 
-    VISUVIDEOANDROID_API virtual void configuring();
-    VISUVIDEOANDROID_API virtual void starting();
-    VISUVIDEOANDROID_API virtual void stopping();
-    VISUVIDEOANDROID_API virtual void updating();
-    VISUVIDEOANDROID_API virtual void info(std::ostream &_sstream );
+    VISUVIDEOANDROID_API virtual void configuring() override;
+    VISUVIDEOANDROID_API virtual void starting() override;
+    VISUVIDEOANDROID_API virtual void stopping() override;
+    VISUVIDEOANDROID_API virtual void updating() override;
+    VISUVIDEOANDROID_API virtual void info(std::ostream& _sstream ) override;
 
 private:
 

@@ -25,7 +25,7 @@ set(QT_REQUIREMENTS @QT_REQUIREMENTS@)
 #  application variables
 ##################################################
 set(FWPROJECT_NAME @FWPROJECT_NAME@)
-set(BASE_APP_NAME "@FWPROJECT_NAME@_@DASH_VERSION@")
+set(BASE_APP_NAME "@FWPROJECT_NAME@-@PROJECT_VERSION@")
 set(BASE_APP_LIB_NAME "launcherDroid")
 
 set(PROJECTS_TO_INSTALL @PROJECTS_TO_INSTALL@)

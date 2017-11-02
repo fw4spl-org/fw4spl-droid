@@ -1,5 +1,5 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2016.
+ * FW4SPL - Copyright (C) IRCAD, 2016-2017.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
@@ -9,18 +9,19 @@
 
 #include "uiDroidQt/config.hpp"
 
-#include <gui/editor/IEditor.hpp>
-
-#include <QObject>
-#include <QPointer>
-
 #include <fwCom/Signal.hpp>
 #include <fwCom/Signals.hpp>
 
 #include <fwData/Object.hpp>
 
-#include <fwTools/Failed.hpp>
 #include <fwServices/IService.hpp>
+
+#include <fwTools/Failed.hpp>
+
+#include <gui/editor/IEditor.hpp>
+
+#include <QObject>
+#include <QPointer>
 
 class QButtonGroup;
 class QPushButton;
@@ -47,7 +48,7 @@ class UIDROIDQT_CLASS_API SOrganMaterialEditor : public QObject,
 Q_OBJECT;
 public:
 
-    fwCoreServiceClassDefinitionsMacro ( (SOrganMaterialEditor)(::gui::editor::IEditor) );
+    fwCoreServiceClassDefinitionsMacro( (SOrganMaterialEditor)(::gui::editor::IEditor) );
 
     /**
      * @brief Constructor.
@@ -62,27 +63,26 @@ public:
 protected:
 
     ///nothing
-    UIDROIDQT_API void configuring();
+    UIDROIDQT_API void configuring() override;
 
     /**
      * @brief Starting method : This method is used to initialize the service.
      */
-    UIDROIDQT_API void starting();
+    UIDROIDQT_API void starting() override;
 
     /**
      * @brief Stopping method : This method is used to stop the service.
      */
-    UIDROIDQT_API void stopping();
+    UIDROIDQT_API void stopping() override;
 
     /**
      * @brief Updating method : This method is used to update the service.
      */
-    UIDROIDQT_API void updating();
+    UIDROIDQT_API void updating() override;
 
 private:
 
     void changeOpacity( int _iValue = 50);
-
 
     QPointer<QSlider>   m_opacitySlider;
     QString m_organName;

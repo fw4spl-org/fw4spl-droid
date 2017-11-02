@@ -1,22 +1,22 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2009-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2009-2017.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
 
 #include "visuVTKAndroid/VtkRenderWindowInteractorManager.hpp"
-#include "visuVTKAndroid/Plugin.hpp"
 
-#include <fwRuntime/profile/Profile.hpp>
+#include "visuVTKAndroid/Plugin.hpp"
 
 #include <fwRenderVTK/registry/macros.hpp>
 
+#include <fwRuntime/profile/Profile.hpp>
+
+#include <android_native_app_glue.h>
+#include <vtkAndroidRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkAndroidRenderWindowInteractor.h>
-
-#include <android_native_app_glue.h>
 
 //-----------------------------------------------------------------------------
 
@@ -31,7 +31,8 @@ namespace visuVTKAndroid
 //-----------------------------------------------------------------------------
 
 VtkRenderWindowInteractorManager::VtkRenderWindowInteractorManager(
-    ::fwRenderVTK::IVtkRenderWindowInteractorManager::Key key ) : m_interactor(nullptr)
+    ::fwRenderVTK::IVtkRenderWindowInteractorManager::Key key ) :
+    m_interactor(nullptr)
 {
 }
 
@@ -67,7 +68,7 @@ void VtkRenderWindowInteractorManager::installInteractor(::fwGui::container::fwC
 
     if (width != interactor->GetSize()[0] || height != interactor->GetSize()[1])
     {
-        interactor->UpdateSize(width,height);
+        interactor->UpdateSize(width, height);
         interactor->GetRenderWindow()->Render();
     }
 
@@ -80,12 +81,13 @@ void VtkRenderWindowInteractorManager::uninstallInteractor()
 {
     SLM_TRACE("Destroying Window");
     m_interactor->GetRenderWindow()->Finalize();
+    m_interactor->Delete();
     m_interactor = nullptr;
 }
 
 //-----------------------------------------------------------------------------
 
-::vtkRenderWindowInteractor * VtkRenderWindowInteractorManager::getInteractor()
+::vtkRenderWindowInteractor* VtkRenderWindowInteractorManager::getInteractor()
 {
     return m_interactor;
 }

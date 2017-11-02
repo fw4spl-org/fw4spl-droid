@@ -1,33 +1,28 @@
 /* ***** BEGIN LICENSE BLOCK *****
- * FW4SPL - Copyright (C) IRCAD, 2009-2015.
+ * FW4SPL - Copyright (C) IRCAD, 2009-2017.
  * Distributed under the terms of the GNU Lesser General Public License (LGPL) as
  * published by the Free Software Foundation.
  * ****** END LICENSE BLOCK ****** */
 
 #include "fwAndroid/WorkerDroid.hpp"
 
-#include <boost/asio/deadline_timer.hpp>
-#include <boost/asio/io_service.hpp>
-#include <boost/bind.hpp>
-#include <boost/chrono/duration.hpp>
-#include <boost/optional.hpp>
-#include <boost/thread.hpp>
-
 #include <fwCore/TimeStamp.hpp>
-
-#include <fwThread/Worker.hpp>
-#include <fwThread/Timer.hpp>
 
 #include <fwServices/registry/ActiveWorkers.hpp>
 
+#include <fwThread/Timer.hpp>
+#include <fwThread/Worker.hpp>
+
 #include <android_native_app_glue.h>
 
+#include <boost/asio/deadline_timer.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/optional.hpp>
 
 namespace fwAndroid
 {
 
 /**
- * @class TimerDroid
  * @brief Private Timer implementation for Android using ::boost::asio.
  */
 class TimerDroid : public ::fwThread::Timer
@@ -35,9 +30,9 @@ class TimerDroid : public ::fwThread::Timer
 public:
 
     /// Constructs a TimerAsio from given io_service.
-    TimerDroid(::boost::asio::io_service &ioSrv) :
+    TimerDroid(::boost::asio::io_service& ioSrv) :
         m_timer(ioSrv),
-        m_duration(::boost::chrono::seconds(1)),
+        m_duration(std::chrono::seconds(1)),
         m_oneShot(false),
         m_running(false)
     {
@@ -96,22 +91,28 @@ public:
 
 protected:
 
+    //------------------------------------------------------------------------------
+
     void cancelNoLock()
     {
         m_timer.cancel();
     }
 
+    //------------------------------------------------------------------------------
+
     void rearmNoLock(TimeDurationType duration)
     {
         this->cancelNoLock();
-        ::boost::chrono::microseconds msec =
-            ::boost::chrono::duration_cast< ::boost::chrono::microseconds >(duration);
+        std::chrono::microseconds msec =
+            std::chrono::duration_cast< std::chrono::microseconds >(duration);
         ::boost::posix_time::time_duration d = ::boost::posix_time::microseconds(msec.count());
         m_timer.expires_from_now( d );
-        m_timer.async_wait( ::boost::bind(&TimerDroid::call, this, _1));
+        m_timer.async_wait( std::bind(&TimerDroid::call, this, std::placeholders::_1));
     }
 
-    void call(const ::boost::system::error_code & error)
+    //------------------------------------------------------------------------------
+
+    void call(const ::boost::system::error_code& error)
     {
         if(!error)
         {
@@ -165,7 +166,7 @@ class WorkerDroid : public ::fwThread::Worker
 {
 public:
     using ios = ::boost::asio::io_service;
-    typedef ::boost::thread ThreadType;
+    typedef std::thread ThreadType;
 
     WorkerDroid();
 
@@ -220,11 +221,12 @@ protected:
 // WorkerDroid private implementation
 //-----------------------------------------------------------------------------
 
-WorkerDroid::WorkerDroid() : m_app(nullptr),
-                             m_done(false),
-                             m_threadId( ::fwThread::getCurrentThreadId() ),
-                             m_ioService(),
-                             m_work(ios::work(m_ioService))
+WorkerDroid::WorkerDroid() :
+    m_app(nullptr),
+    m_done(false),
+    m_threadId( ::fwThread::getCurrentThreadId() ),
+    m_ioService(),
+    m_work(ios::work(m_ioService))
 {
 }
 
@@ -289,9 +291,9 @@ int WorkerDroid::eventLoop()
 {
     if (!m_future.valid() )
     {
-        ::boost::packaged_task< ExitReturnType > task(::boost::bind(&WorkerDroid::eventLoop, this));
-        ::boost::future< ExitReturnType > ufuture = task.get_future();
-        m_future = ::boost::move(ufuture);
+        std::packaged_task< ExitReturnType() > task(std::bind(&WorkerDroid::eventLoop, this));
+        std::future< ExitReturnType > ufuture = task.get_future();
+        m_future = std::move(ufuture);
         task();
     }
     return m_future;
@@ -315,7 +317,7 @@ void WorkerDroid::stop()
 
 SPTR(::fwThread::Timer) WorkerDroid::createTimer()
 {
-    return std::make_shared< TimerDroid >(::boost::ref(m_ioService));
+    return std::make_shared< TimerDroid >(std::ref(m_ioService));
 }
 
 //-----------------------------------------------------------------------------

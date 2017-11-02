@@ -1,4 +1,4 @@
-<plugin id="uiDroidQt" class="::uiDroidQt::Plugin" version="@DASH_VERSION@">
+<plugin id="uiDroidQt" class="::uiDroidQt::Plugin" version="@PROJECT_VERSION@">
     <library name="uiDroidQt" />
 
     <extension implements="::fwServices::registry::ServiceFactory">
