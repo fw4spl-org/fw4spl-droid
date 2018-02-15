@@ -34,7 +34,7 @@ set( REQUIREMENTS
     maths
 
     trackerAruco
-    registrationARL
+    registrationCV
     patchMedicalData
 
     droidTools

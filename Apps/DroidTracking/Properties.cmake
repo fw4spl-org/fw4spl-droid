@@ -23,7 +23,7 @@ set( REQUIREMENTS
     ioVTK
     ioAtoms
     trackerAruco
-    registrationARL
+    registrationCV
     gui
     guiAndroid
     guiDroid
