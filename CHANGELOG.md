@@ -1,3 +1,14 @@
+# fw4spl-droid 17.2.0
+
+## New features:
+
+### dev
+
+*Discontinued.*
+
+
+
+
 # fw4spl-droid 17.1.0
 
 
